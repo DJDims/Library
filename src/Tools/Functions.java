@@ -23,18 +23,61 @@ public class Functions {
     }
     
     public Author addAuthor(){
-        return null;
+        Author author = new Author();
+        
+        System.out.print("Имя автора: ");
+        author.setName(scanner.next());
+        
+        System.out.print("Фамилия автора: ");
+        author.setSurename(scanner.next());
+        
+        System.out.print("Год рождения:");
+        author.setBornYear(scanner.nextInt());
+        
+        return author;
     }
     
     public Book addBook(){
-        return null;
+        Book book = new Book();
+        
+        System.out.println("Название книги");
+        book.setTitle(scanner.next());
+        
+        System.out.println("Авторы книги");
+//        book.setAuthors(authors);
+        
+        System.out.println("Год публикации книги");
+        book.setPublishYear(scanner.nextInt());
+        
+        System.out.println("Количество книг");
+        book.setCount(scanner.nextInt());
+        
+        return book;
     }
     
     public History addHistory(){
+        History history = new History();
+        
+//        for (int i = 0; i < authorsArray; i++) {
+//            Object object = arr[i];
+//            
+//        }
+        
         return null;
     }
     
     public Reader addReader(){
-        return null;
+        Reader reader = new Reader();
+        
+        System.out.print("Имя читателя");
+        reader.setFirstname(scanner.next());
+                
+        System.out.print("Фамилия читателя");
+        reader.setSurename(scanner.next());
+                
+        System.out.print("Телефон читателя");
+        reader.setPhoneNumber(scanner.next());
+                
+        return reader;
     }
 }
