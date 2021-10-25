@@ -1,1 +1,5 @@
 README.md
+/nbproject
+/.vscode
+build.xml
+manifest.mf
