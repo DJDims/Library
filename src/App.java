@@ -25,6 +25,8 @@ public class App {
             System.out.print("Опция --> ");
             task = scanner.nextInt();
             
+            int lastReader = lastReader();
+            
             switch (task){
                 case 0:
                     //выход
@@ -33,14 +35,31 @@ public class App {
                     break;
                 case 1:
                     //Добавить читателя
-                    
+                    if (lastReader < 10) {
+                        readersArray[lastReader+1] = addReader();
+                    } else {
+                        System.out.println("Максимальное количество читателей");
+                    }
                     break;
                 case 2:
-                    //Вывести список читателей
+                    if (lastReader >= 0) {
+                        System.out.println("----- Список читателей -----");
+                        for (int i = 0; i <= lastReader; i++) {
+                            System.out.println(readersArray[i].toString());
+                        }
+                        System.out.println("----- Список читателей -----");
+                    } else {
+                        System.out.println("Нет добавленных читателей");
+                    }
+                    
                     break;
                 case 3:
                     //Добавить книгу
-                    
+//                    if (lastBook() < 10) {
+//                        
+//                    } else {
+//                    }
+//                    
                     break;
                 case 4:
                     //Вывести список книг
@@ -87,6 +106,7 @@ public class App {
     public Author addAuthor(){
         Author author = new Author();
         
+        System.out.println("");
         System.out.print("Имя автора: ");
         author.setName(scanner.next());
         
@@ -95,6 +115,7 @@ public class App {
         
         System.out.print("Год рождения:");
         author.setBornYear(scanner.nextInt());
+        System.out.println("");
         
         return author;
     }
@@ -103,6 +124,7 @@ public class App {
         Book book = new Book();
         int countOfAuthors;
         
+        System.out.println("");
         System.out.print("Название книги: ");
         book.setTitle(scanner.next());
         
@@ -121,6 +143,7 @@ public class App {
         
         System.out.println("Количество книг");
         book.setCount(scanner.nextInt());
+        System.out.println("");
         
         return book;
     }
@@ -133,53 +156,61 @@ public class App {
     public Reader addReader(){
         Reader reader = new Reader();
         
-        System.out.print("Имя читателя");
+        System.out.println("");
+        System.out.print("Имя читателя: ");
         reader.setFirstname(scanner.next());
                 
-        System.out.print("Фамилия читателя");
+        System.out.print("Фамилия читателя: ");
         reader.setSurename(scanner.next());
                 
-        System.out.print("Телефон читателя");
+        System.out.print("Телефон читателя: ");
         reader.setPhoneNumber(scanner.next());
-                
+        System.out.println("");
+        
         return reader;
     }
     
     public int lastBook(){
-        //Book
         int lastElement = 0;
-        
-        for (int i = 0; i < booksArray.length; i++) {
-            if (booksArray[i] == null){
-                lastElement = i;
-                break;
+        if (booksArray[0] != null) {
+            for (int i = 0; i < booksArray.length; i++) {
+                if (booksArray[i] == null){
+                    lastElement = i-1;
+                    break;
+                }
             }
+        } else {
+            lastElement = -1;
         }
         return lastElement;
     }
     
     public int lastHistory(){
-        //History
         int lastElement = 0;
-        
-        for (int i = 0; i < historysArray.length; i++) {
-            if (historysArray[i] == null){
-                lastElement = i;
-                break;
+        if (historysArray[0] != null) {
+            for (int i = 0; i < historysArray.length; i++) {
+                if (historysArray[i] == null){
+                    lastElement = i-1;
+                    break;
+                }
             }
+        } else {
+            lastElement = -1;
         }
         return lastElement;
     }
     
     public int lastReader(){
-        //Reader
         int lastElement = 0;
-
-        for (int i = 0; i < readersArray.length; i++) {
-            if (readersArray[i] == null){
-                lastElement = i;
-                break;
+        if (readersArray[0] != null) {
+            for (int i = 0; i < readersArray.length; i++) {
+                if (readersArray[i] == null){
+                    lastElement = i-1;
+                    break;
+                }
             }
+        } else {
+            lastElement = -1;
         }
         return lastElement;
     }
