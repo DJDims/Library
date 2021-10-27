@@ -1,5 +1,6 @@
-README.md
 /nbproject
 /.vscode
+/build
 build.xml
 manifest.mf
+README.md
