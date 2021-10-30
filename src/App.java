@@ -3,6 +3,8 @@ import Classes.Author;
 import Classes.Book;
 import Classes.History;
 import Classes.Reader;
+
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -25,40 +27,44 @@ public class App {
             System.out.print("Опция --> ");
             task = scanner.nextInt();
             
-            int lastReader = lastReader();
-            
+            int countOfReaders = lastReader();
+            int lastHistory = lastHistory();
+            int lastBook = lastBook();
+
             switch (task){
                 case 0:
                     //выход
                     System.out.println("Досвидания. Приходите еще!");
                     appRunnign = false;
                     break;
+
                 case 1:
                     //Добавить читателя
-                    if (lastReader < 10) {
-                        readersArray[lastReader+1] = addReader();
+                    if (countOfReaders < 10) {
+                        readersArray[countOfReaders] = addReader();
                     } else {
                         System.out.println("Максимальное количество читателей");
                     }
                     break;
+
                 case 2:
-                    if (lastReader >= 0) {
+                    if (countOfReaders > 0) {
                         System.out.println("----- Список читателей -----");
-                        for (int i = 0; i <= lastReader; i++) {
-                            System.out.println(readersArray[i].toString());
+                        for (int i = 0; i < countOfReaders; i++) {
+                            System.out.println(i+1 + ") " + readersArray[i].toString());
                         }
                         System.out.println("----- Список читателей -----");
                     } else {
                         System.out.println("Нет добавленных читателей");
                     }
-                    
                     break;
+
                 case 3:
                     //Добавить книгу
-//                    if (lastBook() < 10) {
-//                        
-//                    } else {
-//                    }
+                   if (lastBook < 10) {
+                       
+                   } else {
+                   }
 //                    
                     break;
                 case 4:
@@ -172,45 +178,48 @@ public class App {
     
     public int lastBook(){
         int lastElement = 0;
-        if (booksArray[0] != null) {
-            for (int i = 0; i < booksArray.length; i++) {
-                if (booksArray[i] == null){
-                    lastElement = i-1;
-                    break;
-                }
+        boolean full = false;
+        for (int i = 0; i < booksArray.length; i++) {
+            if (booksArray[i] == null){
+                lastElement = i;
+                full = true;
+                break;
             }
-        } else {
-            lastElement = -1;
+        }
+        if (!full && booksArray[0] != null) {
+            lastElement = 10;
         }
         return lastElement;
     }
     
     public int lastHistory(){
         int lastElement = 0;
-        if (historysArray[0] != null) {
-            for (int i = 0; i < historysArray.length; i++) {
-                if (historysArray[i] == null){
-                    lastElement = i-1;
-                    break;
-                }
+        boolean full = false;
+        for (int i = 0; i < historysArray.length; i++) {
+            if (historysArray[i] == null){
+                lastElement = i;
+                full = true;
+                break;
             }
-        } else {
-            lastElement = -1;
+        }
+        if (!full && historysArray[0] != null) {
+            lastElement = 10;
         }
         return lastElement;
     }
     
     public int lastReader(){
         int lastElement = 0;
-        if (readersArray[0] != null) {
-            for (int i = 0; i < readersArray.length; i++) {
-                if (readersArray[i] == null){
-                    lastElement = i-1;
-                    break;
-                }
+        boolean full = false;
+        for (int i = 0; i < readersArray.length; i++) {
+            if (readersArray[i] == null){
+                lastElement = i;
+                full = true;
+                break;
             }
-        } else {
-            lastElement = -1;
+        }
+        if (!full && readersArray[0] != null) {
+            lastElement = 10;
         }
         return lastElement;
     }
