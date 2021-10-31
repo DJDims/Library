@@ -24,6 +24,9 @@ public class History {
     public void setBook(Book book) {
         this.book = book;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + '}';
+    }
 }

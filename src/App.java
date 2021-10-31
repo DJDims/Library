@@ -4,6 +4,8 @@ import Classes.Book;
 import Classes.History;
 import Classes.Reader;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -28,8 +30,9 @@ public class App {
             task = scanner.nextInt();
             
             int countOfReaders = lastReader();
-            int lastHistory = lastHistory();
-            int lastBook = lastBook();
+            int countOfHistorys = lastHistory();
+            int countOfBooks = lastBook();
+            int booksSummaryCount = countBooks();
 
             switch (task){
                 case 0:
@@ -48,6 +51,7 @@ public class App {
                     break;
 
                 case 2:
+                    //Вывести список книг
                     if (countOfReaders > 0) {
                         System.out.println("----- Список читателей -----");
                         for (int i = 0; i < countOfReaders; i++) {
@@ -61,26 +65,47 @@ public class App {
 
                 case 3:
                     //Добавить книгу
-                   if (lastBook < 10) {
-                       
+                   if (countOfBooks < 10) {
+                       booksArray[countOfBooks] = addBook();
                    } else {
+                       System.out.println("Максимально количество книг");
                    }
-//                    
                     break;
+
                 case 4:
                     //Вывести список книг
+                    if (countOfBooks > 0) {
+                        System.out.println("----- Список книг -----");
+                        for (int i = 0; i < countOfBooks; i++) {
+                            System.out.println(i+1 + ") " + booksArray[i].toString());
+                        }
+                        System.out.println("----- Список книг -----");
+                    } else {
+                        System.out.println("Нет добавленных книг");
+                    }
                     break;
                 case 5:
                     //Взять книгу
+                    if (countOfHistorys < 10 && countOfBooks > 0 && countOfReaders > 0 && booksSummaryCount > 0) {
+                        historysArray[countOfHistorys] = addHistory();
+                    } else {
+                        System.out.println("Операция невозможна");
+                    }
                     break;
                 case 6:
                     //Вернуть книгу
+
                     break;
                 case 7:
                     //Продлить книгу
+                    showTakedBooks();
                     break;
                 case 8:
                     //Вывести список взятых книг
+                    if (showTakedBooks()) {
+                        
+                    }
+                    
                     break;
                 case 9:
                     //Вывести подсказки
@@ -144,10 +169,10 @@ public class App {
         
         book.setAuthors(authorsArray);
         
-        System.out.println("Год публикации книги");
+        System.out.print("Год публикации книги: ");
         book.setPublishYear(scanner.nextInt());
         
-        System.out.println("Количество книг");
+        System.out.print("Количество книг: ");
         book.setCount(scanner.nextInt());
         System.out.println("");
         
@@ -155,8 +180,42 @@ public class App {
     }
     
     public History addHistory(){
-        History history = new History();        
-        return null;
+        History history = new History();
+        int countOfReaders = lastReader();
+        int countOfBooks = lastBook();
+        
+        System.out.println("");
+        //--------------- Выбор читателя ---------------
+        System.out.println("----- Список читателей -----");
+        for (int i = 0; i < countOfReaders; i++) {
+            System.out.println(i+1 + ") " + readersArray[i].getFirstname());
+        }
+        System.out.println("----- Список читателей -----");
+        System.out.print("Введите номер читателя: ");
+
+        history.setReader(readersArray[scanner.nextInt()-1]);
+        //--------------- Выбор читателя ---------------
+
+        //--------------- Выбор книги ---------------
+        System.out.println("----- Список книг -----");
+        for (int i = 0; i < countOfBooks; i++) {
+            System.out.println(i+1 + ") " + booksArray[i].getTitle());
+        }
+        System.out.println("----- Список книг -----");
+        System.out.print("Введите номер книги: ");
+        history.setBook(booksArray[scanner.nextInt()-1]);
+        //--------------- Выбор книги ---------------
+
+        //--------------- Установка дат ---------------
+        history.issueDate = LocalDate.now();
+        history.returnDate = history.issueDate.plusWeeks(2);
+        //--------------- Установка дат ---------------
+
+        history.book.takeBook();
+
+        System.out.println("");
+        
+        return history;
     }
     
     public Reader addReader(){
@@ -223,4 +282,31 @@ public class App {
         }
         return lastElement;
     }
+
+    public int countBooks(){
+        int count = 0;
+        int countOfBooks = lastBook();
+        for (int i = 0; i < countOfBooks; i++) {
+            count += booksArray[i].getCount();
+        }
+        return count;
+    }
+
+    public boolean showTakedBooks(){
+        boolean flag = false;
+        int countOfHistorys = lastHistory();
+
+        if (countOfHistorys > 0) {
+            System.out.println("----- Список взятых книг -----");
+            for (int i = 0; i < countOfHistorys; i++) {
+                System.out.println(i+1 + ") " + historysArray[i].toString());
+            }
+            System.out.println("----- Список взятых книг -----");
+            flag = true;
+        } else {
+            System.out.println("Нет взятых книг");
+        }
+        return flag;
+    }
+
 }
