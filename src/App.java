@@ -84,6 +84,7 @@ public class App {
                         System.out.println("Нет добавленных книг");
                     }
                     break;
+                    
                 case 5:
                     //Взять книгу
                     if (historysArray.isEmpty() && countOfBooks > 0 && countOfReaders > 0 && booksSummaryCount > 0) {
@@ -92,31 +93,33 @@ public class App {
                         System.out.println("Операция невозможна");
                     }
                     break;
+                    
                 case 6:
                     //Вернуть книгу
-//                    if (showTakedBooks()) {
-//                        int numberOfBookToReturn = scanner.nextInt();
-//                        for (int i = 0; i < booksArray.length; i++) {
-//                            Book booksArray1 = booksArray[i];
-//                            
-//                        }
-//                    }
                     if (showTakedBooks()) {
                         int numberOfBookToReturn = scanner.nextInt();
                         if (numberOfBookToReturn <= historysArray.size()) {
                             historysArray.remove(numberOfBookToReturn-1);
+                            System.out.println("Книга возвращена");
                         }
                     }
                     break;
+                    
                 case 7:
                     //Продлить книгу
-                    showTakedBooks();
+                    if (showTakedBooks()) {
+                        int numberOfBookToExtend = scanner.nextInt();
+                        historysArray.get(numberOfBookToExtend-1).setReturnDate(historysArray.get(numberOfBookToExtend-1).getReturnDate().plusWeeks(2));
+                        
+                    }
+                    
                     break;
+                    
                 case 8:
                     //Вывести список взятых книг
                     showTakedBooks();
-                    
                     break;
+                    
                 case 9:
                     //Вывести подсказки
                     showHints();
@@ -124,7 +127,6 @@ public class App {
                 default:
                     System.out.println("Введена неверная опция");
                     break;
-                    
             }
         }
     }
@@ -218,8 +220,8 @@ public class App {
         //--------------- Выбор книги ---------------
 
         //--------------- Установка дат ---------------
-        history.issueDate = LocalDate.now();
-        history.returnDate = history.issueDate.plusWeeks(2);
+        history.setIssueDate(LocalDate.now());
+        history.setReturnDate(LocalDate.now().plusWeeks(2));
         //--------------- Установка дат ---------------
 
         history.book.takeBook();
