@@ -15,8 +15,11 @@ import java.util.Scanner;
 public class App {
     Scanner scanner = new Scanner(System.in);
     
-    Book[] booksArray = new Book[10];
-    Reader[] readersArray = new Reader[10];
+//    Book[] booksArray = new Book[10];
+//    Reader[] readersArray = new Reader[10];
+    
+    List <Reader> readersArray = new ArrayList<>();
+    List <Book> booksArray = new ArrayList<>();
     List <History> historysArray = new ArrayList<>();
         
     public void run(){
@@ -29,9 +32,6 @@ public class App {
             System.out.print("Опция --> ");
             task = scanner.nextInt();
             
-            int countOfReaders = lastReader();
-//            int countOfHistorys = lastHistory();
-            int countOfBooks = lastBook();
             int booksSummaryCount = countBooks();
 
             switch (task){
@@ -43,19 +43,15 @@ public class App {
 
                 case 1:
                     //Добавить читателя
-                    if (countOfReaders < 10) {
-                        readersArray[countOfReaders] = addReader();
-                    } else {
-                        System.out.println("Максимальное количество читателей");
-                    }
+                    readersArray.add(addReader());
                     break;
 
                 case 2:
-                    //Вывести список книг
-                    if (countOfReaders > 0) {
+                    //Вывести список читателей
+                    if (!readersArray.isEmpty()) {
                         System.out.println("----- Список читателей -----");
-                        for (int i = 0; i < countOfReaders; i++) {
-                            System.out.println(i+1 + ") " + readersArray[i].toString());
+                        for (int i = 0; i < readersArray.size(); i++) {
+                            System.out.println(i+1 + ") " + readersArray.get(i).toString());
                         }
                         System.out.println("----- Список читателей -----");
                     } else {
@@ -65,19 +61,15 @@ public class App {
 
                 case 3:
                     //Добавить книгу
-                   if (countOfBooks < 10) {
-                       booksArray[countOfBooks] = addBook();
-                   } else {
-                       System.out.println("Максимально количество книг");
-                   }
+                       booksArray.add(addBook());
                     break;
 
                 case 4:
                     //Вывести список книг
-                    if (countOfBooks > 0) {
+                    if (!booksArray.isEmpty()) {
                         System.out.println("----- Список книг -----");
-                        for (int i = 0; i < countOfBooks; i++) {
-                            System.out.println(i+1 + ") " + booksArray[i].toString());
+                        for (int i = 0; i < booksArray.size(); i++) {
+                            System.out.println(i+1 + ") " + booksArray.get(i).toString());
                         }
                         System.out.println("----- Список книг -----");
                     } else {
@@ -87,7 +79,7 @@ public class App {
                     
                 case 5:
                     //Взять книгу
-                    if (historysArray.isEmpty() && countOfBooks > 0 && countOfReaders > 0 && booksSummaryCount > 0) {
+                    if (!booksArray.isEmpty() && !readersArray.isEmpty() && booksSummaryCount > 0) {
                         historysArray.add(addHistory());
                     } else {
                         System.out.println("Операция невозможна");
@@ -110,9 +102,7 @@ public class App {
                     if (showTakedBooks()) {
                         int numberOfBookToExtend = scanner.nextInt();
                         historysArray.get(numberOfBookToExtend-1).setReturnDate(historysArray.get(numberOfBookToExtend-1).getReturnDate().plusWeeks(2));
-                        
                     }
-                    
                     break;
                     
                 case 8:
@@ -194,29 +184,27 @@ public class App {
     
     public History addHistory(){
         History history = new History();
-        int countOfReaders = lastReader();
-        int countOfBooks = lastBook();
         
-        System.out.println("");
+        System.out.println("---------- Взять книгу ----------");
         //--------------- Выбор читателя ---------------
         System.out.println("----- Список читателей -----");
-        for (int i = 0; i < countOfReaders; i++) {
-            System.out.println(i+1 + ") " + readersArray[i].getFirstname());
+        for (int i = 0; i < readersArray.size(); i++) {
+            System.out.println(i+1 + ") " + readersArray.get(i).getFirstname());
         }
         System.out.println("----- Список читателей -----");
         System.out.print("Введите номер читателя: ");
 
-        history.setReader(readersArray[scanner.nextInt()-1]);
+        history.setReader(readersArray.get(scanner.nextInt()-1));
         //--------------- Выбор читателя ---------------
 
         //--------------- Выбор книги ---------------
         System.out.println("----- Список книг -----");
-        for (int i = 0; i < countOfBooks; i++) {
-            System.out.println(i+1 + ") " + booksArray[i].getTitle());
+        for (int i = 0; i < booksArray.size(); i++) {
+            System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
         }
         System.out.println("----- Список книг -----");
         System.out.print("Введите номер книги: ");
-        history.setBook(booksArray[scanner.nextInt()-1]);
+        history.setBook(booksArray.get(scanner.nextInt()-1));
         //--------------- Выбор книги ---------------
 
         //--------------- Установка дат ---------------
@@ -226,7 +214,7 @@ public class App {
 
         history.book.takeBook();
 
-        System.out.println("");
+        System.out.println("---------- Взять книгу ----------");
         
         return history;
     }
@@ -247,60 +235,11 @@ public class App {
         
         return reader;
     }
-    
-    public int lastBook(){
-        int lastElement = 0;
-        boolean full = false;
-        for (int i = 0; i < booksArray.length; i++) {
-            if (booksArray[i] == null){
-                lastElement = i;
-                full = true;
-                break;
-            }
-        }
-        if (!full && booksArray[0] != null) {
-            lastElement = 10;
-        }
-        return lastElement;
-    }
-    
-//    public int lastHistory(){
-//        int lastElement = 0;
-//        boolean full = false;
-//        for (int i = 0; i < historysArray.size(); i++) {
-//            if (historysArray.get(i) == null){
-//                lastElement = i;
-//                full = true;
-//                break;
-//            }
-//        }
-//        if (!full && historysArray.get(0) != null) {
-//            lastElement = 10;
-//        }
-//        return lastElement;
-//    }
-    
-    public int lastReader(){
-        int lastElement = 0;
-        boolean full = false;
-        for (int i = 0; i < readersArray.length; i++) {
-            if (readersArray[i] == null){
-                lastElement = i;
-                full = true;
-                break;
-            }
-        }
-        if (!full && readersArray[0] != null) {
-            lastElement = 10;
-        }
-        return lastElement;
-    }
 
     public int countBooks(){
         int count = 0;
-        int countOfBooks = lastBook();
-        for (int i = 0; i < countOfBooks; i++) {
-            count += booksArray[i].getCount();
+        for (int i = 0; i < booksArray.size(); i++) {
+            count += booksArray.get(i).getCount();
         }
         return count;
     }
@@ -320,5 +259,4 @@ public class App {
         }
         return flag;
     }
-
 }
