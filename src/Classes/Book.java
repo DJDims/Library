@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.Arrays;
+
 public class Book{
     public String title;
     public Author[] authors;
@@ -48,6 +50,6 @@ public class Book{
 
     @Override
     public String toString() {
-        return "Book{" + "title=" + title + ", authors=" + authors.toString() + ", publishYear=" + publishYear + ", count=" + count + '}';
+        return "Book{" + "title=" + title + ", authors=" + Arrays.toString(authors) + ", publishYear=" + publishYear + ", count=" + count + '}';
     }
 }

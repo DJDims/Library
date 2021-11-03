@@ -94,7 +94,7 @@ public class App {
                     break;
                 case 6:
                     //Вернуть книгу
-
+                    
                     break;
                 case 7:
                     //Продлить книгу
@@ -102,13 +102,12 @@ public class App {
                     break;
                 case 8:
                     //Вывести список взятых книг
-                    if (showTakedBooks()) {
-                        
-                    }
+                    showTakedBooks();
                     
                     break;
                 case 9:
                     //Вывести подсказки
+                    showHints();
                     break;
                 default:
                     System.out.println("Введена неверная опция");
