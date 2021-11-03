@@ -6,7 +6,9 @@ import Classes.Reader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -14,14 +16,12 @@ public class App {
     Scanner scanner = new Scanner(System.in);
     
     Book[] booksArray = new Book[10];
-    History[] historysArray = new History[10];
     Reader[] readersArray = new Reader[10];
+    List <History> historysArray = new ArrayList<>();
         
     public void run(){
-        Scanner scanner = new Scanner(System.in);
-        
         boolean appRunnign = true; 
-        int task = 0;
+        int task;
         
         showHints();
         
@@ -30,7 +30,7 @@ public class App {
             task = scanner.nextInt();
             
             int countOfReaders = lastReader();
-            int countOfHistorys = lastHistory();
+//            int countOfHistorys = lastHistory();
             int countOfBooks = lastBook();
             int booksSummaryCount = countBooks();
 
@@ -86,15 +86,27 @@ public class App {
                     break;
                 case 5:
                     //Взять книгу
-                    if (countOfHistorys < 10 && countOfBooks > 0 && countOfReaders > 0 && booksSummaryCount > 0) {
-                        historysArray[countOfHistorys] = addHistory();
+                    if (historysArray.isEmpty() && countOfBooks > 0 && countOfReaders > 0 && booksSummaryCount > 0) {
+                        historysArray.add(addHistory());
                     } else {
                         System.out.println("Операция невозможна");
                     }
                     break;
                 case 6:
                     //Вернуть книгу
-                    
+//                    if (showTakedBooks()) {
+//                        int numberOfBookToReturn = scanner.nextInt();
+//                        for (int i = 0; i < booksArray.length; i++) {
+//                            Book booksArray1 = booksArray[i];
+//                            
+//                        }
+//                    }
+                    if (showTakedBooks()) {
+                        int numberOfBookToReturn = scanner.nextInt();
+                        if (numberOfBookToReturn <= historysArray.size()) {
+                            historysArray.remove(numberOfBookToReturn-1);
+                        }
+                    }
                     break;
                 case 7:
                     //Продлить книгу
@@ -250,21 +262,21 @@ public class App {
         return lastElement;
     }
     
-    public int lastHistory(){
-        int lastElement = 0;
-        boolean full = false;
-        for (int i = 0; i < historysArray.length; i++) {
-            if (historysArray[i] == null){
-                lastElement = i;
-                full = true;
-                break;
-            }
-        }
-        if (!full && historysArray[0] != null) {
-            lastElement = 10;
-        }
-        return lastElement;
-    }
+//    public int lastHistory(){
+//        int lastElement = 0;
+//        boolean full = false;
+//        for (int i = 0; i < historysArray.size(); i++) {
+//            if (historysArray.get(i) == null){
+//                lastElement = i;
+//                full = true;
+//                break;
+//            }
+//        }
+//        if (!full && historysArray.get(0) != null) {
+//            lastElement = 10;
+//        }
+//        return lastElement;
+//    }
     
     public int lastReader(){
         int lastElement = 0;
@@ -293,12 +305,11 @@ public class App {
 
     public boolean showTakedBooks(){
         boolean flag = false;
-        int countOfHistorys = lastHistory();
 
-        if (countOfHistorys > 0) {
+        if (!historysArray.isEmpty()) {
             System.out.println("----- Список взятых книг -----");
-            for (int i = 0; i < countOfHistorys; i++) {
-                System.out.println(i+1 + ") " + historysArray[i].toString());
+            for (int i = 0; i < historysArray.size(); i++) {
+                System.out.println(i+1 + ") " + historysArray.get(i).toString());
             }
             System.out.println("----- Список взятых книг -----");
             flag = true;
