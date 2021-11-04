@@ -1,6 +1,8 @@
 package Classes;
 
-public class Author{
+import java.io.Serializable;
+
+public class Author implements Serializable {
     public String name;
     public String surename;
     public int bornYear;
