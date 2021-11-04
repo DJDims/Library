@@ -1,9 +1,10 @@
 
 package Classes;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class History {
+public class History implements Serializable{
     public Reader reader;
     public Book book;
     public LocalDate issueDate;

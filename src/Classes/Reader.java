@@ -1,7 +1,9 @@
 
 package Classes;
 
-public class Reader {
+import java.io.Serializable;
+
+public class Reader implements Serializable{
     private String firstname;
     private String surename;
     private String phoneNumber;

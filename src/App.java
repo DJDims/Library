@@ -3,29 +3,33 @@ import Classes.Author;
 import Classes.Book;
 import Classes.History;
 import Classes.Reader;
+import Tools.SaverToFile;
+import Ui.Keeping;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 
 public class App {
     Scanner scanner = new Scanner(System.in);
-    
-//    Book[] booksArray = new Book[10];
-//    Reader[] readersArray = new Reader[10];
+    Keeping keeping = new SaverToFile();
     
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();
     List <History> historysArray = new ArrayList<>();
+
+    public App() {
+        readersArray = keeping.loadReaders();
+        booksArray = keeping.loadBooks();
+        historysArray = keeping.loadHistorys();
+    }
         
     public void run(){
         boolean appRunnign = true; 
         int task;
-        
+
         showHints();
         
         while (appRunnign) {
@@ -44,6 +48,7 @@ public class App {
                 case 1:
                     //Добавить читателя
                     readersArray.add(addReader());
+                    keeping.saveReaders(readersArray);
                     break;
 
                 case 2:
@@ -62,6 +67,7 @@ public class App {
                 case 3:
                     //Добавить книгу
                        booksArray.add(addBook());
+                       keeping.saveBooks(booksArray);
                     break;
 
                 case 4:
@@ -81,6 +87,7 @@ public class App {
                     //Взять книгу
                     if (!booksArray.isEmpty() && !readersArray.isEmpty() && booksSummaryCount > 0) {
                         historysArray.add(addHistory());
+                        keeping.saveHistorys(historysArray);
                     } else {
                         System.out.println("Операция невозможна");
                     }
