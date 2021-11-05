@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,9 @@ import Classes.Book;
 import Classes.History;
 import Classes.Reader;
 import Ui.Keeping;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SaverToFile implements Keeping {
 
@@ -30,9 +31,9 @@ public class SaverToFile implements Keeping {
             oos.writeObject(readersArray);
             oos.flush();
         } catch (FileNotFoundException ex) {
-            // Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         } catch (IOException ex) {
-            // Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
         }
     }
 
@@ -47,11 +48,11 @@ public class SaverToFile implements Keeping {
             ois = new ObjectInputStream(fis);
             readersArray = (List<Reader>) ois.readObject();
         } catch (FileNotFoundException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         } catch (IOException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.SEVERE, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
         } catch (ClassNotFoundException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         }
         return readersArray;
     }
@@ -67,9 +68,9 @@ public class SaverToFile implements Keeping {
             oos.writeObject(historysArray);
             oos.flush();
         } catch (FileNotFoundException ex) {
-            // Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         } catch (IOException ex) {
-            // Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
         }
     }
 
@@ -84,11 +85,11 @@ public class SaverToFile implements Keeping {
             ois = new ObjectInputStream(fis);
             historysArray = (List<History>) ois.readObject();
         } catch (FileNotFoundException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         } catch (IOException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.SEVERE, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
         } catch (ClassNotFoundException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         }
         return historysArray;
     }
@@ -104,9 +105,9 @@ public class SaverToFile implements Keeping {
             oos.writeObject(booksArray);
             oos.flush();
         } catch (FileNotFoundException ex) {
-            // Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         } catch (IOException ex) {
-            // Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
         }
     }
 
@@ -121,11 +122,11 @@ public class SaverToFile implements Keeping {
             ois = new ObjectInputStream(fis);
             booksArray = (List<Book>) ois.readObject();
         } catch (FileNotFoundException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         } catch (IOException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.SEVERE, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
         } catch (ClassNotFoundException ex) {
-            // Logger.getLogger(Saver_to_file.class.getName()).log(Level.INFO, "", ex);
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
         }
         return booksArray;
     }
