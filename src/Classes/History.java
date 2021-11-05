@@ -9,6 +9,7 @@ public class History implements Serializable{
     public Book book;
     public LocalDate issueDate;
     public LocalDate returnDate;
+    public boolean expired;
 
     public Reader getReader() {
         return reader;
@@ -41,9 +42,21 @@ public class History implements Serializable{
     public void setBook(Book book) {
         this.book = book;
     }
+    
+    public void toogleExpired(){
+        this.expired = !this.expired;
+    }
+    
+    public boolean getExpired(){
+        return expired;
+    }
 
     @Override
     public String toString() {
-        return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + '}';
+        if (!expired) {
+            return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + '}';
+        } else {
+            return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + ", \u001b[31mСрочно вернуть книгу!" +'}';
+        }
     }
 }

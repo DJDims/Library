@@ -24,6 +24,7 @@ public class App {
         readersArray = keeping.loadReaders();
         booksArray = keeping.loadBooks();
         historysArray = keeping.loadHistorys();
+        checkExpiredBooks();
     }
         
     public void run(){
@@ -212,14 +213,13 @@ public class App {
         System.out.println("----- Список книг -----");
         System.out.print("Введите номер книги: ");
         history.setBook(booksArray.get(scanner.nextInt()-1));
+        history.book.takeBook();
         //--------------- Выбор книги ---------------
 
         //--------------- Установка дат ---------------
         history.setIssueDate(LocalDate.now());
         history.setReturnDate(LocalDate.now().plusWeeks(2));
         //--------------- Установка дат ---------------
-
-        history.book.takeBook();
 
         System.out.println("---------- Взять книгу ----------");
         
@@ -265,5 +265,13 @@ public class App {
             System.out.println("Нет взятых книг");
         }
         return flag;
+    }
+    
+    public void checkExpiredBooks(){
+        for (int i = 0; i < historysArray.size(); i++) {
+            if (historysArray.get(i).getReturnDate().isAfter(LocalDate.now())) {
+                historysArray.get(i).toogleExpired();
+            }
+        }
     }
 }
