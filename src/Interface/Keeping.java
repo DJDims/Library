@@ -1,5 +1,5 @@
 
-package Ui;
+package Interface;
 
 import java.util.List;
 

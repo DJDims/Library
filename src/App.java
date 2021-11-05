@@ -4,7 +4,8 @@ import Classes.Book;
 import Classes.History;
 import Classes.Reader;
 import Tools.SaverToFile;
-import Ui.Keeping;
+import Interface.Keeping;
+import Tools.SaverToBase;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class App {
     Scanner scanner = new Scanner(System.in);
     Keeping keeping = new SaverToFile();
+    Keeping keeper = new SaverToBase();
     
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();

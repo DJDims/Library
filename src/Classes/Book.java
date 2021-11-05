@@ -2,12 +2,34 @@ package Classes;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Book implements Serializable {
-    public String title;
-    public Author[] authors;
-    public int publishYear;
-    public int count;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Author[] authors;
+    private int publishYear;
+    private int count;
+
+    public Book() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
