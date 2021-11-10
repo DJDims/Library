@@ -1,6 +1,7 @@
 
 package Tools;
 
+import Classes.Author;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -130,5 +131,15 @@ public class SaverToFile implements Keeping {
         }
         return booksArray;
     }
-    
+
+    @Override
+    public void saveAuthors(List<Author> booksArray) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Author> loadAuthors() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

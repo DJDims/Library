@@ -1,6 +1,7 @@
 
 package Tools;
 
+import Classes.Author;
 import Classes.Book;
 import Classes.History;
 import Classes.Reader;
@@ -62,5 +63,27 @@ public class SaverToBase implements Keeping{
         } 
         return booksArray;
     }
-    
+
+    @Override
+    public void saveAuthors(List<Author> authorsArray) {
+        tx.begin();
+            for (int i = 0; i < authorsArray.size(); i++) {
+                if (authorsArray.get(i).getId() == null) {
+                    em.persist(authorsArray.get(i));
+                }
+            }
+        tx.commit();
+    }
+
+    @Override
+    public List<Author> loadAuthors() {
+        List<Author> authorsArray = null;
+        try {
+            authorsArray = em.createQuery("SELECT author FROM Author author").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        } 
+        return authorsArray;
+    }
+
 }

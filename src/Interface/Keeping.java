@@ -3,6 +3,7 @@ package Interface;
 
 import java.util.List;
 
+import Classes.Author;
 import Classes.Book;
 import Classes.History;
 import Classes.Reader;
@@ -17,4 +18,6 @@ public interface Keeping {
     public void saveBooks(List <Book> booksArray);
     public List<Book> loadBooks();
 
+    public void saveAuthors(List <Author> authorsArray);
+    public List<Author> loadAuthors();
 }

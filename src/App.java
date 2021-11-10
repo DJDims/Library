@@ -21,11 +21,13 @@ public class App {
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();
     List <History> historysArray = new ArrayList<>();
+    List <Author> authorsArray = new ArrayList<>();
 
     public App() {
 //        readersArray = keeping.loadReaders();
         booksArray = keeping.loadBooks();
 //        historysArray = keeping.loadHistorys();
+//        authorsArray = keeping.loadAuthors();
         checkExpiredBooks();
     }
         
@@ -33,9 +35,8 @@ public class App {
         boolean appRunnign = true; 
         int task;
 
-        showHints();
-        
         while (appRunnign) {
+            showHints();
             System.out.print("Опция --> ");
             task = scanner.nextInt();
             
@@ -68,12 +69,27 @@ public class App {
                     break;
 
                 case 3:
+                    //Добавить автора
+                    authorsArray.add(addAuthor());
+                    keeping.saveAuthors(authorsArray);
+                    break;
+                    
+                case 4:
+                    //Вывести список авторов
+                    showAuthors();
+                    break;
+                    
+                case 5:
                     //Добавить книгу
-                       booksArray.add(addBook());
-                       keeping.saveBooks(booksArray);
+                    if (!authorsArray.isEmpty()) {
+                        booksArray.add(addBook());
+                        keeping.saveBooks(booksArray);
+                    } else {
+                        System.out.println("Операция невозможна");
+                    }
                     break;
 
-                case 4:
+                case 6:
                     //Вывести список книг
                     if (!booksArray.isEmpty()) {
                         System.out.println("----- Список книг -----");
@@ -86,7 +102,7 @@ public class App {
                     }
                     break;
                     
-                case 5:
+                case 7:
                     //Взять книгу
                     if (!booksArray.isEmpty() && !readersArray.isEmpty() && booksSummaryCount > 0) {
                         historysArray.add(addHistory());
@@ -96,7 +112,7 @@ public class App {
                     }
                     break;
                     
-                case 6:
+                case 8:
                     //Вернуть книгу
                     if (showTakedBooks()) {
                         int numberOfBookToReturn = scanner.nextInt();
@@ -107,7 +123,7 @@ public class App {
                     }
                     break;
                     
-                case 7:
+                case 9:
                     //Продлить книгу
                     if (showTakedBooks()) {
                         int numberOfBookToExtend = scanner.nextInt();
@@ -115,15 +131,11 @@ public class App {
                     }
                     break;
                     
-                case 8:
+                case 10:
                     //Вывести список взятых книг
                     showTakedBooks();
                     break;
                     
-                case 9:
-                    //Вывести подсказки
-                    showHints();
-                    break;
                 default:
                     System.out.println("Введена неверная опция");
                     break;
@@ -137,13 +149,15 @@ public class App {
         System.out.println("0) Выход");
         System.out.println("1) Добавить читателя");
         System.out.println("2) Вывести список читателей");
-        System.out.println("3) Добавить книгу");
-        System.out.println("4) Вывести список книг");
-        System.out.println("5) Взять книгу");
-        System.out.println("6) Вернуть книгу");
-        System.out.println("7) Продлить книгу");
-        System.out.println("8) Вывести список взятых книг");
-        System.out.println("9) Вывести подсказки");
+        System.out.println("3) Добавить автора");
+        System.out.println("4) Вывести список авторов");
+        System.out.println("5) Добавить книгу");
+        System.out.println("6) Вывести список книг");
+        System.out.println("7) Взять книгу");
+        System.out.println("8) Вернуть книгу");
+        System.out.println("9) Продлить книгу");
+        System.out.println("10) Вывести список взятых книг");
+        
         System.out.println("");
     }
     
@@ -167,6 +181,8 @@ public class App {
     public Book addBook(){
         Book book = new Book();
         int countOfAuthors;
+        int authorNumber;
+        List<Author> thisBookAuthors = new ArrayList<>();
         
         System.out.println("");
         System.out.print("Название книги: ");
@@ -174,13 +190,20 @@ public class App {
         
         System.out.print("Количество авторов: ");
         countOfAuthors = scanner.nextInt();
-
-        List<Author> authorsArray = new ArrayList<>();
+        
         for (int i = 0; i < countOfAuthors; i++) {
-            authorsArray.add(addAuthor());
+            showAuthors();
+            System.out.println("Введите номер автора. Если автора нет в списке введите 0");
+            authorNumber = scanner.nextInt();
+            if (authorNumber == 0) {
+                authorsArray.add(addAuthor());
+                keeping.saveAuthors(authorsArray);
+            } else {
+                thisBookAuthors.add(authorsArray.get(authorNumber-1));
+            }
         }
         
-        book.setAuthors(authorsArray);
+        book.setAuthors(thisBookAuthors);
         
         System.out.print("Год публикации книги: ");
         book.setPublishYear(scanner.nextInt());
@@ -274,6 +297,18 @@ public class App {
             if (historysArray.get(i).getReturnDate().isAfter(LocalDate.now())) {
                 historysArray.get(i).toogleExpired();
             }
+        }
+    }
+    
+    public void showAuthors(){
+        if (!authorsArray.isEmpty()) {
+            System.out.println("----- Список авторов -----");
+            for (int i = 0; i < authorsArray.size(); i++) {
+                System.out.println(i+1 + ") " + authorsArray.get(i).toString());
+            }
+            System.out.println("----- Список авторов -----");
+        } else {
+            System.out.println("Нет добавленных авторов");
         }
     }
 }
