@@ -5,6 +5,7 @@ import Classes.Book;
 import Classes.History;
 import Classes.Reader;
 import Interface.Keeping;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,6 +13,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 public class SaverToBase implements Keeping{
+    
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
+    private EntityManager em = emf.createEntityManager();
+    private EntityTransaction tx = em.getTransaction();
 
     @Override
     public void saveReaders(List<Reader> readersArray) {
@@ -35,12 +40,12 @@ public class SaverToBase implements Keeping{
 
     @Override
     public void saveBooks(List<Book> booksArray) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
         tx.begin();
             for (int i = 0; i < booksArray.size(); i++) {
                 if (booksArray.get(i).getId() == null) {
+                    for (int j = 0; j < booksArray.get(i).getAuthors().size(); j++) {
+                        em.persist(booksArray.get(i).getAuthors().get(j));
+                    }
                     em.persist(booksArray.get(i));
                 }
             }
@@ -49,7 +54,13 @@ public class SaverToBase implements Keeping{
 
     @Override
     public List<Book> loadBooks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Book> booksArray = null;
+        try {
+            booksArray = em.createQuery("SELECT book FROM Book book").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        } 
+        return booksArray;
     }
     
 }

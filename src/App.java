@@ -15,17 +15,17 @@ import java.util.Scanner;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
-    Keeping keeping = new SaverToFile();
-    Keeping keeper = new SaverToBase();
+//    Keeping keeping = new SaverToFile();
+    Keeping keeping = new SaverToBase();
     
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();
     List <History> historysArray = new ArrayList<>();
 
     public App() {
-        readersArray = keeping.loadReaders();
+//        readersArray = keeping.loadReaders();
         booksArray = keeping.loadBooks();
-        historysArray = keeping.loadHistorys();
+//        historysArray = keeping.loadHistorys();
         checkExpiredBooks();
     }
         
@@ -175,9 +175,9 @@ public class App {
         System.out.print("Количество авторов: ");
         countOfAuthors = scanner.nextInt();
 
-        Author[] authorsArray = new Author[countOfAuthors];
-        for (int i = 0; i < authorsArray.length; i++) {
-            authorsArray[i] = addAuthor();
+        List<Author> authorsArray = new ArrayList<>();
+        for (int i = 0; i < countOfAuthors; i++) {
+            authorsArray.add(addAuthor());
         }
         
         book.setAuthors(authorsArray);
