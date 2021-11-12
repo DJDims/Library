@@ -8,7 +8,9 @@ import Interface.Keeping;
 import Tools.SaverToBase;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,10 +26,10 @@ public class App {
     List <Author> authorsArray = new ArrayList<>();
 
     public App() {
-//        readersArray = keeping.loadReaders();
+        readersArray = keeping.loadReaders();
         booksArray = keeping.loadBooks();
-//        historysArray = keeping.loadHistorys();
-//        authorsArray = keeping.loadAuthors();
+        historysArray = keeping.loadHistorys();
+        authorsArray = keeping.loadAuthors();
         checkExpiredBooks();
     }
         
@@ -125,9 +127,12 @@ public class App {
                     
                 case 9:
                     //Продлить книгу
+//                    System.out.println("Еще не сделано");
                     if (showTakedBooks()) {
                         int numberOfBookToExtend = scanner.nextInt();
-                        historysArray.get(numberOfBookToExtend-1).setReturnDate(historysArray.get(numberOfBookToExtend-1).getReturnDate().plusWeeks(2));
+                        LocalDate newDate = historysArray.get(numberOfBookToExtend-1).getReturnDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        newDate = newDate.plusWeeks(2);
+                        historysArray.get(numberOfBookToExtend-1).setReturnDate(Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
                     }
                     break;
                     
@@ -196,7 +201,9 @@ public class App {
             System.out.println("Введите номер автора. Если автора нет в списке введите 0");
             authorNumber = scanner.nextInt();
             if (authorNumber == 0) {
-                authorsArray.add(addAuthor());
+                Author newAuthor = addAuthor();
+                authorsArray.add(newAuthor);
+                thisBookAuthors.add(newAuthor);
                 keeping.saveAuthors(authorsArray);
             } else {
                 thisBookAuthors.add(authorsArray.get(authorNumber-1));
@@ -242,8 +249,8 @@ public class App {
         //--------------- Выбор книги ---------------
 
         //--------------- Установка дат ---------------
-        history.setIssueDate(LocalDate.now());
-        history.setReturnDate(LocalDate.now().plusWeeks(2));
+        history.setIssueDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        history.setReturnDate(Date.from(LocalDate.now().plusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         //--------------- Установка дат ---------------
 
         System.out.println("---------- Взять книгу ----------");
@@ -294,12 +301,12 @@ public class App {
     
     public void checkExpiredBooks(){
         for (int i = 0; i < historysArray.size(); i++) {
-            if (historysArray.get(i).getReturnDate().isAfter(LocalDate.now())) {
+            if (historysArray.get(i).getReturnDate().after(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))) {
                 historysArray.get(i).toogleExpired();
             }
         }
     }
-    
+    //
     public void showAuthors(){
         if (!authorsArray.isEmpty()) {
             System.out.println("----- Список авторов -----");

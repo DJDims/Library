@@ -3,31 +3,61 @@ package Classes;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+@Entity
 public class History implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
     public Reader reader;
+    
+    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
     public Book book;
-    public LocalDate issueDate;
-    public LocalDate returnDate;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date issueDate;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date returnDate;
+    
     public boolean expired;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Reader getReader() {
         return reader;
     }
 
-    public LocalDate getIssueDate() {
+    public Date getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(LocalDate issueDate) {
+    public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
     }
 
-    public LocalDate getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 

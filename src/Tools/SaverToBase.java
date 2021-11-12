@@ -21,22 +21,46 @@ public class SaverToBase implements Keeping{
 
     @Override
     public void saveReaders(List<Reader> readersArray) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tx.begin();
+            for (int i = 0; i < readersArray.size(); i++) {
+                if (readersArray.get(i).getId() == null) {
+                    em.persist(readersArray.get(i));
+                }
+            }
+        tx.commit();
     }
 
     @Override
     public List<Reader> loadReaders() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Reader> readersArray = null;
+        try {
+            readersArray = em.createQuery("SELECT reader FROM Reader reader").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        return readersArray;
     }
 
     @Override
     public void saveHistorys(List<History> historysArray) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        tx.begin();
+            for (int i = 0; i < historysArray.size(); i++) {
+                if (historysArray.get(i).getId() == null) {
+                    em.persist(historysArray.get(i));
+                }
+            }
+        tx.commit();
     }
 
     @Override
     public List<History> loadHistorys() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<History> historysArray = null;
+        try {
+            historysArray = em.createQuery("SELECT history FROM History history").getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        return historysArray;
     }
 
     @Override
@@ -60,7 +84,7 @@ public class SaverToBase implements Keeping{
             booksArray = em.createQuery("SELECT book FROM Book book").getResultList();
         } catch (Exception e) {
             return new ArrayList<>();
-        } 
+        }
         return booksArray;
     }
 
