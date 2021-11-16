@@ -1,3 +1,5 @@
+package Library;
+
 
 import Classes.Author;
 import Classes.Book;
@@ -17,8 +19,8 @@ import java.util.Scanner;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
-//    Keeping keeping = new SaverToFile();
-    Keeping keeping = new SaverToBase();
+    Keeping keeping = new SaverToFile();
+//    Keeping keeping = new SaverToBase();
     
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();
@@ -40,7 +42,7 @@ public class App {
         while (appRunnign) {
             showHints();
             System.out.print("Опция --> ");
-            task = scanner.nextInt();
+            task = inputInt();
             
             int booksSummaryCount = countBooks();
 
@@ -117,7 +119,7 @@ public class App {
                 case 8:
                     //Вернуть книгу
                     if (showTakedBooks()) {
-                        int numberOfBookToReturn = scanner.nextInt();
+                        int numberOfBookToReturn = inputInt();
                         if (numberOfBookToReturn <= historysArray.size()) {
                             historysArray.remove(numberOfBookToReturn-1);
                             System.out.println("Книга возвращена");
@@ -129,7 +131,7 @@ public class App {
                     //Продлить книгу
 //                    System.out.println("Еще не сделано");
                     if (showTakedBooks()) {
-                        int numberOfBookToExtend = scanner.nextInt();
+                        int numberOfBookToExtend = inputInt();
                         LocalDate newDate = historysArray.get(numberOfBookToExtend-1).getReturnDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         newDate = newDate.plusWeeks(2);
                         historysArray.get(numberOfBookToExtend-1).setReturnDate(Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -145,10 +147,10 @@ public class App {
                     System.out.println("Введена неверная опция");
                     break;
             }
-        }
+        } 
     }
     
-    public void showHints(){
+    private void showHints(){
         System.out.println("");
         System.out.println("Выберите опцию");
         System.out.println("0) Выход");
@@ -162,44 +164,36 @@ public class App {
         System.out.println("8) Вернуть книгу");
         System.out.println("9) Продлить книгу");
         System.out.println("10) Вывести список взятых книг");
-        
-        System.out.println("");
     }
     
-    public Author addAuthor(){
+    private Author addAuthor(){
         Author author = new Author();
         
-        System.out.println("");
         System.out.print("Имя автора: ");
         author.setName(scanner.next());
-        
         System.out.print("Фамилия автора: ");
         author.setSurename(scanner.next());
-        
         System.out.print("Год рождения:");
-        author.setBornYear(scanner.nextInt());
-        System.out.println("");
+        author.setBornYear(inputInt());
         
         return author;
     }
     
-    public Book addBook(){
+    private Book addBook(){
         Book book = new Book();
         int countOfAuthors;
         int authorNumber;
         List<Author> thisBookAuthors = new ArrayList<>();
         
-        System.out.println("");
         System.out.print("Название книги: ");
         book.setTitle(scanner.next());
-        
         System.out.print("Количество авторов: ");
-        countOfAuthors = scanner.nextInt();
+        countOfAuthors = inputInt();
         
         for (int i = 0; i < countOfAuthors; i++) {
             showAuthors();
             System.out.println("Введите номер автора. Если автора нет в списке введите 0");
-            authorNumber = scanner.nextInt();
+            authorNumber = inputInt();
             if (authorNumber == 0) {
                 Author newAuthor = addAuthor();
                 authorsArray.add(newAuthor);
@@ -213,55 +207,48 @@ public class App {
         book.setAuthors(thisBookAuthors);
         
         System.out.print("Год публикации книги: ");
-        book.setPublishYear(scanner.nextInt());
-        
+        book.setPublishYear(inputInt());
         System.out.print("Количество книг: ");
-        book.setCount(scanner.nextInt());
-        System.out.println("");
+        book.setCount(inputInt());
         
         return book;
     }
     
-    public History addHistory(){
+    private History addHistory(){
         History history = new History();
         
         System.out.println("---------- Взять книгу ----------");
-        //--------------- Выбор читателя ---------------
+        
+
         System.out.println("----- Список читателей -----");
         for (int i = 0; i < readersArray.size(); i++) {
             System.out.println(i+1 + ") " + readersArray.get(i).getFirstname());
         }
         System.out.println("----- Список читателей -----");
         System.out.print("Введите номер читателя: ");
+        history.setReader(readersArray.get(inputInt()-1));
 
-        history.setReader(readersArray.get(scanner.nextInt()-1));
-        //--------------- Выбор читателя ---------------
-
-        //--------------- Выбор книги ---------------
         System.out.println("----- Список книг -----");
         for (int i = 0; i < booksArray.size(); i++) {
             System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
         }
         System.out.println("----- Список книг -----");
         System.out.print("Введите номер книги: ");
-        history.setBook(booksArray.get(scanner.nextInt()-1));
+        history.setBook(booksArray.get(inputInt()-1));
+        
         history.book.takeBook();
-        //--------------- Выбор книги ---------------
 
-        //--------------- Установка дат ---------------
         history.setIssueDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
         history.setReturnDate(Date.from(LocalDate.now().plusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        //--------------- Установка дат ---------------
 
         System.out.println("---------- Взять книгу ----------");
         
         return history;
     }
     
-    public Reader addReader(){
+    private Reader addReader(){
         Reader reader = new Reader();
         
-        System.out.println("");
         System.out.print("Имя читателя: ");
         reader.setFirstname(scanner.next());
                 
@@ -270,12 +257,11 @@ public class App {
                 
         System.out.print("Телефон читателя: ");
         reader.setPhoneNumber(scanner.next());
-        System.out.println("");
         
         return reader;
     }
 
-    public int countBooks(){
+    private int countBooks(){
         int count = 0;
         for (int i = 0; i < booksArray.size(); i++) {
             count += booksArray.get(i).getCount();
@@ -283,7 +269,7 @@ public class App {
         return count;
     }
 
-    public boolean showTakedBooks(){
+    private boolean showTakedBooks(){
         boolean flag = false;
 
         if (!historysArray.isEmpty()) {
@@ -299,15 +285,15 @@ public class App {
         return flag;
     }
     
-    public void checkExpiredBooks(){
+    private void checkExpiredBooks(){
         for (int i = 0; i < historysArray.size(); i++) {
             if (historysArray.get(i).getReturnDate().after(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))) {
                 historysArray.get(i).toogleExpired();
             }
         }
     }
-    //
-    public void showAuthors(){
+    
+    private void showAuthors(){
         if (!authorsArray.isEmpty()) {
             System.out.println("----- Список авторов -----");
             for (int i = 0; i < authorsArray.size(); i++) {
@@ -317,5 +303,17 @@ public class App {
         } else {
             System.out.println("Нет добавленных авторов");
         }
+    }
+    
+    private int inputInt() {
+	do {
+            try {
+                String inputedNumber = scanner.next();
+                return Integer.parseInt(inputedNumber);
+            } catch(Exception e) {
+                System.out.println("Введены неверные данные.");
+                System.out.print("Попробуйте еще раз -->");
+            }
+	} while(true);
     }
 }

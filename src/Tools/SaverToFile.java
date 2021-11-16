@@ -133,13 +133,40 @@ public class SaverToFile implements Keeping {
     }
 
     @Override
-    public void saveAuthors(List<Author> booksArray) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void saveAuthors(List<Author> authorsArray) {
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+
+        try {
+            fos = new FileOutputStream("data/Authors");
+            oos = new ObjectOutputStream(fos);
+            oos.writeObject(authorsArray);
+            oos.flush();
+        } catch (FileNotFoundException ex) {
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
+        } catch (IOException ex) {
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
+        }
     }
 
     @Override
     public List<Author> loadAuthors() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Author> authorsArray = new ArrayList<>();
+        FileInputStream fis = null;
+        ObjectInputStream ois = null;
+
+        try {
+            fis = new FileInputStream("data/Authors");
+            ois = new ObjectInputStream(fis);
+            authorsArray = (List<Author>) ois.readObject();
+        } catch (FileNotFoundException ex) {
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
+        } catch (IOException ex) {
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.SEVERE, "", ex);
+        } catch (ClassNotFoundException ex) {
+             Logger.getLogger(SaverToFile.class.getName()).log(Level.INFO, "", ex);
+        }
+        return authorsArray;
     }
 
 }
