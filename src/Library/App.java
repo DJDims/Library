@@ -364,6 +364,9 @@ public class App {
                 int newCount = inputInt();
                 booksArray.get(numberOfBookToChange-1).setCount(newCount);
                 break;
+            default:
+                System.out.println("Введена неверная опция");
+                break;
         }
         keeping.saveBooks(booksArray);
     }
@@ -403,6 +406,9 @@ public class App {
                 System.out.print("Новый номер: ");
                 String newPhone = scanner.next();
                 readersArray.get(numberOfReaderToChange-1).setPhoneNumber(newPhone);
+                break;
+            default:
+                System.out.println("Введена неверная опция");
                 break;
         }
 //        readersArray.get(numberOfReaderToChange);
