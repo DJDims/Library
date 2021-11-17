@@ -25,6 +25,8 @@ public class SaverToBase implements Keeping{
             for (int i = 0; i < readersArray.size(); i++) {
                 if (readersArray.get(i).getId() == null) {
                     em.persist(readersArray.get(i));
+                } else {
+                    em.merge(readersArray.get(i));
                 }
             }
         tx.commit();
@@ -68,10 +70,9 @@ public class SaverToBase implements Keeping{
         tx.begin();
             for (int i = 0; i < booksArray.size(); i++) {
                 if (booksArray.get(i).getId() == null) {
-                    for (int j = 0; j < booksArray.get(i).getAuthors().size(); j++) {
-                        em.persist(booksArray.get(i).getAuthors().get(j));
-                    }
                     em.persist(booksArray.get(i));
+                } else {
+                    em.merge(booksArray.get(i));
                 }
             }
         tx.commit();
@@ -94,6 +95,8 @@ public class SaverToBase implements Keeping{
             for (int i = 0; i < authorsArray.size(); i++) {
                 if (authorsArray.get(i).getId() == null) {
                     em.persist(authorsArray.get(i));
+                } else {
+                    em.merge(authorsArray.get(i));
                 }
             }
         tx.commit();

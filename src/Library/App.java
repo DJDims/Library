@@ -19,8 +19,8 @@ import java.util.Scanner;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
-    Keeping keeping = new SaverToFile();
-//    Keeping keeping = new SaverToBase();
+//    Keeping keeping = new SaverToFile();
+    Keeping keeping = new SaverToBase();
     
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();
@@ -143,6 +143,16 @@ public class App {
                     showTakedBooks();
                     break;
                     
+                case 11:
+                    //Изменить товар
+                    changeBook();
+                    break;
+                    
+                case 12:
+                    //Изменить пользователя
+                    changeReader();
+                    break;
+                    
                 default:
                     System.out.println("Введена неверная опция");
                     break;
@@ -164,6 +174,8 @@ public class App {
         System.out.println("8) Вернуть книгу");
         System.out.println("9) Продлить книгу");
         System.out.println("10) Вывести список взятых книг");
+        System.out.println("11) Изменить товар");
+        System.out.println("12) Изменить пользователя");
     }
     
     private Author addAuthor(){
@@ -315,5 +327,56 @@ public class App {
                 System.out.print("Попробуйте еще раз -->");
             }
 	} while(true);
+    }
+
+    private void changeBook() {
+        System.out.println("----- Список книг -----");
+        for (int i = 0; i < booksArray.size(); i++) {
+            System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
+        }
+        System.out.println("----- Список книг -----");
+        System.out.print("Введите номер книги: ");
+        int numberOfBookToChange = inputInt();
+        
+        System.out.println("Выберите что хотите изменить\n");
+        System.out.println("1) Название\n"
+                        + "2) Год публикации\n"
+                        + "3) Количество");
+        System.out.print("-->");
+        int paramToChange = inputInt();
+        
+        switch(paramToChange){
+            case 1:
+                //изменить название
+                System.out.print("Новое имя: ");
+                String newName = scanner.next();
+                booksArray.get(numberOfBookToChange-1).setTitle(newName);
+                break;
+            case 2:
+                //изменить год публикации
+                System.out.print("Новый год публикации: ");
+                int newYear = inputInt();
+                booksArray.get(numberOfBookToChange-1).setPublishYear(newYear);
+                break;
+            case 3:
+                //изменить количество
+                System.out.print("Новое количество: ");
+                int newCount = inputInt();
+                booksArray.get(numberOfBookToChange-1).setCount(newCount);
+                break;
+        }
+        keeping.saveBooks(booksArray);
+    }
+
+    private void changeReader() {
+        System.out.println("----- Список книг -----");
+        for (int i = 0; i < booksArray.size(); i++) {
+            System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
+        }
+        System.out.println("----- Список книг -----");
+        System.out.print("Введите номер книги: ");
+        int numberOfReaderToChange = inputInt();
+        
+//        readersArray.get(numberOfReaderToChange);
     }
 }
