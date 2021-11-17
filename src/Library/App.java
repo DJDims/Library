@@ -113,6 +113,11 @@ public class App {
                     break;
                     
                 case 8:
+                    //Продлить книгу
+                    extendReturnDate();
+                    break;
+                    
+                case 9:
                     //Вернуть книгу
                     if (showTakedBooks()) {
                         int numberOfBookToReturn = inputInt();
@@ -120,17 +125,6 @@ public class App {
                             historysArray.remove(numberOfBookToReturn-1);
                             System.out.println("Книга возвращена");
                         }
-                    }
-                    break;
-                    
-                case 9:
-                    //Продлить книгу
-//                    System.out.println("Еще не сделано");
-                    if (showTakedBooks()) {
-                        int numberOfBookToExtend = inputInt();
-                        LocalDate newDate = historysArray.get(numberOfBookToExtend-1).getReturnDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                        newDate = newDate.plusWeeks(2);
-                        historysArray.get(numberOfBookToExtend-1).setReturnDate(Date.from(newDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
                     }
                     break;
                     
@@ -167,11 +161,27 @@ public class App {
         System.out.println("5) Добавить книгу");
         System.out.println("6) Вывести список книг");
         System.out.println("7) Взять книгу");
-        System.out.println("8) Вернуть книгу");
-        System.out.println("9) Продлить книгу");
+        System.out.println("8) Продлить книгу");
+        System.out.println("9) Вернуть книгу");
         System.out.println("10) Вывести список взятых книг");
         System.out.println("11) Изменить книгу");
         System.out.println("12) Изменить пользователя");
+    }
+    
+    private void addReader(){
+        Reader reader = new Reader();
+        
+        System.out.print("Имя читателя: ");
+        reader.setFirstname(scanner.next());
+                
+        System.out.print("Фамилия читателя: ");
+        reader.setSurename(scanner.next());
+                
+        System.out.print("Телефон читателя: ");
+        reader.setPhoneNumber(scanner.next());
+        
+        readersArray.add(reader);
+        keeping.saveReaders(readersArray);
     }
     
     private void addAuthor(){
@@ -186,6 +196,18 @@ public class App {
         
         authorsArray.add(author);
         keeping.saveAuthors(authorsArray);
+    }
+    
+    private void showAuthors(){
+        if (!authorsArray.isEmpty()) {
+            System.out.println("----- Список авторов -----");
+            for (int i = 0; i < authorsArray.size(); i++) {
+                System.out.println(i+1 + ") " + authorsArray.get(i).toString());
+            }
+            System.out.println("----- Список авторов -----");
+        } else {
+            System.out.println("Нет добавленных авторов");
+        }
     }
     
     private void addBook(){
@@ -245,8 +267,8 @@ public class App {
         
         history.book.takeBook();
 
-        history.setIssueDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        history.setReturnDate(Date.from(LocalDate.now().plusWeeks(2).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+        history.setIssueDate(localdateToDate(LocalDate.now()));
+        history.setReturnDate(localdateToDate(LocalDate.now().plusWeeks(2)));
 
         System.out.println("---------- Взять книгу ----------");
         
@@ -254,30 +276,6 @@ public class App {
         keeping.saveHistorys(historysArray);
     }
     
-    private void addReader(){
-        Reader reader = new Reader();
-        
-        System.out.print("Имя читателя: ");
-        reader.setFirstname(scanner.next());
-                
-        System.out.print("Фамилия читателя: ");
-        reader.setSurename(scanner.next());
-                
-        System.out.print("Телефон читателя: ");
-        reader.setPhoneNumber(scanner.next());
-        
-        readersArray.add(reader);
-        keeping.saveReaders(readersArray);
-    }
-
-    private int countBooks(){
-        int count = 0;
-        for (int i = 0; i < booksArray.size(); i++) {
-            count += booksArray.get(i).getCount();
-        }
-        return count;
-    }
-
     private boolean showTakedBooks(){
         boolean flag = false;
 
@@ -294,38 +292,6 @@ public class App {
         return flag;
     }
     
-    private void checkExpiredBooks(){
-        for (int i = 0; i < historysArray.size(); i++) {
-            if (historysArray.get(i).getReturnDate().after(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))) {
-                historysArray.get(i).setExpired();
-            }
-        }
-    }
-    
-    private void showAuthors(){
-        if (!authorsArray.isEmpty()) {
-            System.out.println("----- Список авторов -----");
-            for (int i = 0; i < authorsArray.size(); i++) {
-                System.out.println(i+1 + ") " + authorsArray.get(i).toString());
-            }
-            System.out.println("----- Список авторов -----");
-        } else {
-            System.out.println("Нет добавленных авторов");
-        }
-    }
-    
-    private int inputInt() {
-	do {
-            try {
-                String inputedNumber = scanner.next();
-                return Integer.parseInt(inputedNumber);
-            } catch(Exception e) {
-                System.out.println("Введены неверные данные.");
-                System.out.print("Попробуйте еще раз -->");
-            }
-	} while(true);
-    }
-
     private void changeBook() {
         System.out.println("----- Список книг -----");
         for (int i = 0; i < booksArray.size(); i++) {
@@ -367,7 +333,7 @@ public class App {
         }
         keeping.saveBooks(booksArray);
     }
-
+    
     private void changeReader() {
         System.out.println("----- Список читателей -----");
         for (int i = 0; i < readersArray.size(); i++) {
@@ -407,6 +373,51 @@ public class App {
             default:
                 System.out.println("Введена неверная опция");
                 break;
+        }
+    }
+    
+    private int countBooks(){
+        int count = 0;
+        for (int i = 0; i < booksArray.size(); i++) {
+            count += booksArray.get(i).getCount();
+        }
+        return count;
+    }
+    
+    private void checkExpiredBooks(){
+        for (int i = 0; i < historysArray.size(); i++) {
+            if (historysArray.get(i).getReturnDate().before(localdateToDate(LocalDate.now()))) {
+                historysArray.get(i).setExpired();
+            }
+        }
+    }
+    
+    private int inputInt() {
+	do {
+            try {
+                String inputedNumber = scanner.next();
+                return Integer.parseInt(inputedNumber);
+            } catch(Exception e) {
+                System.out.println("Введены неверные данные.");
+                System.out.print("Попробуйте еще раз -->");
+            }
+	} while(true);
+    }
+    
+    private LocalDate dateToLocaldate(Date dateToConvert){
+	return dateToConvert.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private Date localdateToDate(LocalDate dateToConvert){
+        return Date.from(dateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+    
+    private void extendReturnDate(){
+        if (showTakedBooks()) {
+            int numberOfBookToExtend = inputInt();
+            LocalDate newDate = dateToLocaldate(historysArray.get(numberOfBookToExtend-1).getReturnDate());
+            newDate = newDate.plusWeeks(2);
+            historysArray.get(numberOfBookToExtend-1).setReturnDate(localdateToDate(newDate));
         }
     }
 }

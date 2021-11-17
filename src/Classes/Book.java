@@ -47,10 +47,6 @@ public class Book implements Serializable {
         this.authors = authors;
     }
     
-    public void addAuthor(Author author){
-        this.authors.add(author);
-    }
-
     public int getPublishYear() {
         return publishYear;
     }
