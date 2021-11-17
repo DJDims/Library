@@ -174,7 +174,7 @@ public class App {
         System.out.println("8) Вернуть книгу");
         System.out.println("9) Продлить книгу");
         System.out.println("10) Вывести список взятых книг");
-        System.out.println("11) Изменить товар");
+        System.out.println("11) Изменить книгу");
         System.out.println("12) Изменить пользователя");
     }
     
@@ -185,7 +185,7 @@ public class App {
         author.setName(scanner.next());
         System.out.print("Фамилия автора: ");
         author.setSurename(scanner.next());
-        System.out.print("Год рождения:");
+        System.out.print("Год рождения: ");
         author.setBornYear(inputInt());
         
         return author;
@@ -369,14 +369,42 @@ public class App {
     }
 
     private void changeReader() {
-        System.out.println("----- Список книг -----");
-        for (int i = 0; i < booksArray.size(); i++) {
-            System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
+        System.out.println("----- Список читателей -----");
+        for (int i = 0; i < readersArray.size(); i++) {
+            System.out.println(i+1 + ") " + readersArray.get(i).getFirstname());
         }
-        System.out.println("----- Список книг -----");
-        System.out.print("Введите номер книги: ");
+        System.out.println("----- Список читателей -----");
+        
+        System.out.print("Введите номер читателя: ");
         int numberOfReaderToChange = inputInt();
         
+        System.out.println("Выберите что хотите изменить\n");
+        System.out.println("1) Имя\n"
+                        + "2) Фамилию\n"
+                        + "3) Номер");
+        System.out.print("-->");
+        int paramToChange = inputInt();
+        
+        switch(paramToChange){
+            case 1:
+                //изменить название
+                System.out.print("Новое имя: ");
+                String newFristname = scanner.next();
+                readersArray.get(numberOfReaderToChange-1).setFirstname(newFristname);
+                break;
+            case 2:
+                //изменить год публикации
+                System.out.print("Новая фамилия: ");
+                String newSurename = scanner.next();
+                readersArray.get(numberOfReaderToChange-1).setSurename(newSurename);
+                break;
+            case 3:
+                //изменить количество
+                System.out.print("Новый номер: ");
+                String newPhone = scanner.next();
+                readersArray.get(numberOfReaderToChange-1).setPhoneNumber(newPhone);
+                break;
+        }
 //        readersArray.get(numberOfReaderToChange);
     }
 }
