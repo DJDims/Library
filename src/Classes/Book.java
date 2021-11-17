@@ -3,9 +3,7 @@ package Classes;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,6 +45,10 @@ public class Book implements Serializable {
 
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
+    }
+    
+    public void addAuthor(Author author){
+        this.authors.add(author);
     }
 
     public int getPublishYear() {

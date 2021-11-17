@@ -2,7 +2,6 @@
 package Classes;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -44,7 +43,19 @@ public class History implements Serializable{
     public Reader getReader() {
         return reader;
     }
+    
+    public void setReader(Reader reader) {
+        this.reader = reader;
+    }
+    
+    public Book getBook() {
+        return book;
+    }
 
+    public void setBook(Book book) {
+        this.book = book;
+    }
+    
     public Date getIssueDate() {
         return issueDate;
     }
@@ -61,20 +72,8 @@ public class History implements Serializable{
         this.returnDate = returnDate;
     }
 
-    public void setReader(Reader reader) {
-        this.reader = reader;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-    
-    public void toogleExpired(){
-        this.expired = !this.expired;
+    public void setExpired(){
+        this.expired = true;
     }
     
     public boolean getExpired(){
@@ -86,7 +85,7 @@ public class History implements Serializable{
         if (!expired) {
             return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + '}';
         } else {
-            return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + ", \u001b[31mСрочно вернуть книгу!" +'}';
+            return "History{" + "reader=" + reader + ", book=" + book + ", issueDate=" + issueDate + ", returnDate=" + returnDate + ", \u001b[31mСрочно вернуть книгу!\u001B[0m" +'}';
         }
     }
 }

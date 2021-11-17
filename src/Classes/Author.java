@@ -15,10 +15,6 @@ public class Author implements Serializable {
     public String surename;
     public int bornYear;
 
-    public String getName() {
-        return name;
-    }
-
     public Long getId() {
         return id;
     }
@@ -26,7 +22,11 @@ public class Author implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
+    public String getName() {
+        return name;
+    }
+    
     public void setName(String name) {
         this.name = name;
     }

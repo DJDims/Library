@@ -19,8 +19,8 @@ import java.util.Scanner;
 
 public class App {
     Scanner scanner = new Scanner(System.in);
-//    Keeping keeping = new SaverToFile();
-    Keeping keeping = new SaverToBase();
+    Keeping keeping = new SaverToFile();
+//    Keeping keeping = new SaverToBase();
     
     List <Reader> readersArray = new ArrayList<>();
     List <Book> booksArray = new ArrayList<>();
@@ -55,8 +55,7 @@ public class App {
 
                 case 1:
                     //Добавить читателя
-                    readersArray.add(addReader());
-                    keeping.saveReaders(readersArray);
+                    addReader();
                     break;
 
                 case 2:
@@ -74,8 +73,7 @@ public class App {
 
                 case 3:
                     //Добавить автора
-                    authorsArray.add(addAuthor());
-                    keeping.saveAuthors(authorsArray);
+                    addAuthor();
                     break;
                     
                 case 4:
@@ -86,8 +84,7 @@ public class App {
                 case 5:
                     //Добавить книгу
                     if (!authorsArray.isEmpty()) {
-                        booksArray.add(addBook());
-                        keeping.saveBooks(booksArray);
+                        addBook();
                     } else {
                         System.out.println("Операция невозможна");
                     }
@@ -109,8 +106,7 @@ public class App {
                 case 7:
                     //Взять книгу
                     if (!booksArray.isEmpty() && !readersArray.isEmpty() && booksSummaryCount > 0) {
-                        historysArray.add(addHistory());
-                        keeping.saveHistorys(historysArray);
+                        addHistory();
                     } else {
                         System.out.println("Операция невозможна");
                     }
@@ -178,7 +174,7 @@ public class App {
         System.out.println("12) Изменить пользователя");
     }
     
-    private Author addAuthor(){
+    private void addAuthor(){
         Author author = new Author();
         
         System.out.print("Имя автора: ");
@@ -188,14 +184,15 @@ public class App {
         System.out.print("Год рождения: ");
         author.setBornYear(inputInt());
         
-        return author;
+        authorsArray.add(author);
+        keeping.saveAuthors(authorsArray);
     }
     
-    private Book addBook(){
+    private void addBook(){
         Book book = new Book();
+        List<Author> bookAuthors = new ArrayList<>();
         int countOfAuthors;
         int authorNumber;
-        List<Author> thisBookAuthors = new ArrayList<>();
         
         System.out.print("Название книги: ");
         book.setTitle(scanner.next());
@@ -207,26 +204,24 @@ public class App {
             System.out.println("Введите номер автора. Если автора нет в списке введите 0");
             authorNumber = inputInt();
             if (authorNumber == 0) {
-                Author newAuthor = addAuthor();
-                authorsArray.add(newAuthor);
-                thisBookAuthors.add(newAuthor);
-                keeping.saveAuthors(authorsArray);
+                System.out.println("Для начала добавле автора!");
+                return;
             } else {
-                thisBookAuthors.add(authorsArray.get(authorNumber-1));
+                bookAuthors.add(authorsArray.get(authorNumber-1));
+                book.setAuthors(bookAuthors);
             }
         }
-        
-        book.setAuthors(thisBookAuthors);
-        
+                
         System.out.print("Год публикации книги: ");
         book.setPublishYear(inputInt());
         System.out.print("Количество книг: ");
         book.setCount(inputInt());
         
-        return book;
+        booksArray.add(book);
+        keeping.saveBooks(booksArray);
     }
     
-    private History addHistory(){
+    private void addHistory(){
         History history = new History();
         
         System.out.println("---------- Взять книгу ----------");
@@ -255,10 +250,11 @@ public class App {
 
         System.out.println("---------- Взять книгу ----------");
         
-        return history;
+        historysArray.add(history);
+        keeping.saveHistorys(historysArray);
     }
     
-    private Reader addReader(){
+    private void addReader(){
         Reader reader = new Reader();
         
         System.out.print("Имя читателя: ");
@@ -270,7 +266,8 @@ public class App {
         System.out.print("Телефон читателя: ");
         reader.setPhoneNumber(scanner.next());
         
-        return reader;
+        readersArray.add(reader);
+        keeping.saveReaders(readersArray);
     }
 
     private int countBooks(){
@@ -300,7 +297,7 @@ public class App {
     private void checkExpiredBooks(){
         for (int i = 0; i < historysArray.size(); i++) {
             if (historysArray.get(i).getReturnDate().after(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()))) {
-                historysArray.get(i).toogleExpired();
+                historysArray.get(i).setExpired();
             }
         }
     }
@@ -411,6 +408,5 @@ public class App {
                 System.out.println("Введена неверная опция");
                 break;
         }
-//        readersArray.get(numberOfReaderToChange);
     }
 }
