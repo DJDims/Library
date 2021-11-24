@@ -1,10 +1,13 @@
 package Library;
 
-
 import Classes.Author;
 import Classes.Book;
 import Classes.History;
 import Classes.Reader;
+import Facade.AuthorFacade;
+import Facade.BookFacade;
+import Facade.HistoryFacade;
+import Facade.ReaderFacade;
 import Tools.SaverToFile;
 import Interface.Keeping;
 import Tools.SaverToBase;
@@ -18,22 +21,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-
 public class App {
-    Scanner scanner = new Scanner(System.in);
-    Keeping keeping = new SaverToFile();
-//    Keeping keeping = new SaverToBase();
-    
-    List <Reader> readersArray = new ArrayList<>();
-    List <Book> booksArray = new ArrayList<>();
-    List <History> historysArray = new ArrayList<>();
-    List <Author> authorsArray = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+    private AuthorFacade authorsFacade = new AuthorFacade();
+    private BookFacade booksFacade = new BookFacade();
+    private HistoryFacade historysFacade = new HistoryFacade();
+    private ReaderFacade readersFacade = new ReaderFacade();
 
     public App() {
-        readersArray = keeping.loadReaders();
-        booksArray = keeping.loadBooks();
-        historysArray = keeping.loadHistorys();
-        authorsArray = keeping.loadAuthors();
         checkExpiredBooks();
     }
         
@@ -155,12 +150,12 @@ public class App {
         System.out.print("Телефон читателя: ");
         reader.setPhoneNumber(scanner.next());
         
-        readersArray.add(reader);
-        keeping.saveReaders(readersArray);
+        readersFacade.create(reader);
     }
     
     private Set<Integer> showReaders(){
         Set<Integer> numbersOfReaders = new HashSet<>();
+        List<Reader> readersArray = readersFacade.findAll();
         if (!readersArray.isEmpty()) {
             System.out.println("----- Список читателей -----");
             for (int i = 0; i < readersArray.size(); i++) {
@@ -184,12 +179,12 @@ public class App {
         System.out.print("Год рождения: ");
         author.setBornYear(inputInt());
         
-        authorsArray.add(author);
-        keeping.saveAuthors(authorsArray);
+        authorsFacade.create(author);
     }
         
     private Set<Integer> showAuthors(){
         Set<Integer> numbersOfAuthors = new HashSet<>();
+        List<Author> authorsArray = authorsFacade.findAll();
         if (!authorsArray.isEmpty()) {
             System.out.println("----- Список авторов -----");
             for (int i = 0; i < authorsArray.size(); i++) {
@@ -204,6 +199,7 @@ public class App {
     }
     
     private void addBook(){
+        List<Author> authorsArray = authorsFacade.findAll();
         if (!authorsArray.isEmpty()) {
             Book book = new Book();
             List<Author> bookAuthors = new ArrayList<>();
@@ -232,9 +228,8 @@ public class App {
             book.setPublishYear(inputInt());
             System.out.print("Количество книг: ");
             book.setCount(inputInt());
-
-            booksArray.add(book);
-            keeping.saveBooks(booksArray);
+            
+            booksFacade.create(book);
         } else {
             System.out.println("Операция невозможна");
 	}
@@ -242,12 +237,12 @@ public class App {
     
     private Set<Integer> showBooks(){
         Set<Integer> numbersOfBooks = new HashSet<>();
+        List<Book> booksArray = booksFacade.findAll();
         if (!booksArray.isEmpty()) {
             System.out.println("----- Список книг -----");
             for (int i = 0; i < booksArray.size(); i++) {
                 if (booksArray.get(i).getCount() > 0) {
                     System.out.println(i+1 + ") " + booksArray.get(i).toString());
-                    
                 }
             }
             System.out.println("----- Список книг -----");
@@ -258,6 +253,9 @@ public class App {
     }
     
     private void addHistory(){
+        List<Book> booksArray = booksFacade.findAll();
+        List<Reader> readersArray = readersFacade.findAll();
+        
         if (!booksArray.isEmpty() && !readersArray.isEmpty() && countBooks() > 0) {
             History history = new History();
 
@@ -286,14 +284,14 @@ public class App {
 
             System.out.println("---------- Взять книгу ----------");
 
-            historysArray.add(history);
-            keeping.saveHistorys(historysArray);
+            historysFacade.create(history);
         } else {
 		System.out.println("Операция невозможна");
 	}
     }
     
     private void extendReturnDate(){
+        List<History> historysArray = historysFacade.findAll();
         if (showTakedBooks()) {
             System.out.print("Выберите книгу, которую хотите продлить: ");
             int numberOfBookToExtend = inputInt();
@@ -304,19 +302,22 @@ public class App {
     }
     
     private void returnBook(){
-        if (showTakedBooks()) {
-            System.out.print("Введите номер возвращаемой книги: ");
-            int numberOfBookToReturn = inputInt();
-            if (numberOfBookToReturn <= historysArray.size()) {
-                    historysArray.remove(numberOfBookToReturn-1);
-                    keeping.saveHistorys(historysArray);
-                    System.out.println("Книга возвращена");
-            }
-	}
+//        List<History> historysArray = historysFacade.findAll();
+//        if (showTakedBooks()) {
+//            System.out.print("Введите номер возвращаемой книги: ");
+//            int numberOfBookToReturn = inputInt();
+//            if (numberOfBookToReturn <= historysArray.size()) {
+//                    historysArray.remove(numberOfBookToReturn-1);
+//                    historysFacade.edit(historysArray.get(numberOfBookToReturn-1));
+//                    System.out.println("Книга возвращена");
+//            }
+//	}
+        System.out.println("Не поддерживается еще");
     }
     
     private boolean showTakedBooks(){
         boolean flag = false;
+        List<History> historysArray = historysFacade.findAll();
 
         if (!historysArray.isEmpty()) {
             System.out.println("----- Список взятых книг -----");
@@ -332,136 +333,140 @@ public class App {
     }
     
     private void changeBook() {
-        System.out.println("----- Список книг -----");
-        for (int i = 0; i < booksArray.size(); i++) {
-            System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
-        }
-        System.out.println("----- Список книг -----");
-        System.out.print("Введите номер книги: ");
-        int numberOfBookToChange = inputInt();
-        
-        System.out.println("Выберите что хотите изменить\n");
-        System.out.println("1) Название\n"
-                        + "2) Год публикации\n"
-                        + "3) Количество");
-        System.out.print("-->");
-        int paramToChange = inputInt();
-        
-        switch(paramToChange){
-            case 1:
-                //изменить название
-                System.out.print("Новое имя: ");
-                String newName = scanner.next("Новое имя");
-                booksArray.get(numberOfBookToChange-1).setTitle(newName);
-                break;
-            case 2:
-                //изменить год публикации
-                System.out.print("Новый год публикации: ");
-                int newYear = inputInt();
-                booksArray.get(numberOfBookToChange-1).setPublishYear(newYear);
-                break;
-            case 3:
-                //изменить количество
-                System.out.print("Новое количество: ");
-                int newCount = inputInt();
-                booksArray.get(numberOfBookToChange-1).setCount(newCount);
-                break;
-            default:
-                System.out.println("Введена неверная опция");
-                break;
-        }
-        keeping.saveBooks(booksArray);
+//        List<Book> booksArray = booksFacade.findAll();
+//        System.out.println("----- Список книг -----");
+//        for (int i = 0; i < booksArray.size(); i++) {
+//            System.out.println(i+1 + ") " + booksArray.get(i).getTitle());
+//        }
+//        System.out.println("----- Список книг -----");
+//        System.out.print("Введите номер книги: ");
+//        int numberOfBookToChange = inputInt();
+//        
+//        System.out.println("Выберите что хотите изменить\n");
+//        System.out.println("1) Название\n"
+//                        + "2) Год публикации\n"
+//                        + "3) Количество");
+//        System.out.print("-->");
+//        int paramToChange = inputInt();
+//        
+//        switch(paramToChange){
+//            case 1:
+//                //изменить название
+//                System.out.print("Новое имя: ");
+//                String newName = scanner.next("Новое имя");
+//                booksArray.get(numberOfBookToChange-1).setTitle(newName);
+//                break;
+//            case 2:
+//                //изменить год публикации
+//                System.out.print("Новый год публикации: ");
+//                int newYear = inputInt();
+//                booksArray.get(numberOfBookToChange-1).setPublishYear(newYear);
+//                break;
+//            case 3:
+//                //изменить количество
+//                System.out.print("Новое количество: ");
+//                int newCount = inputInt();
+//                booksArray.get(numberOfBookToChange-1).setCount(newCount);
+//                break;
+//            default:
+//                System.out.println("Введена неверная опция");
+//                break;
+//        }
+        System.out.println("Не поддерживается еще");
     }
     
     private void changeReader() {
-        System.out.println("----- Список читателей -----");
-        for (int i = 0; i < readersArray.size(); i++) {
-            System.out.println(i+1 + ") " + readersArray.get(i).getFirstname());
-        }
-        System.out.println("----- Список читателей -----");
-        
-        System.out.print("Введите номер читателя: ");
-        int numberOfReaderToChange = inputInt();
-        
-        System.out.println("Выберите что хотите изменить\n");
-        System.out.println("1) Имя\n"
-                        + "2) Фамилию\n"
-                        + "3) Номер");
-        System.out.print("-->");
-        int paramToChange = inputInt();
-        
-        switch(paramToChange){
-            case 1:
-                //изменить название
-                System.out.print("Новое имя: ");
-                String newFristname = scanner.next();
-                readersArray.get(numberOfReaderToChange-1).setFirstname(newFristname);
-                break;
-            case 2:
-                //изменить год публикации
-                System.out.print("Новая фамилия: ");
-                String newSurename = scanner.next();
-                readersArray.get(numberOfReaderToChange-1).setSurename(newSurename);
-                break;
-            case 3:
-                //изменить количество
-                System.out.print("Новый номер: ");
-                String newPhone = scanner.next();
-                readersArray.get(numberOfReaderToChange-1).setPhoneNumber(newPhone);
-                break;
-            default:
-                System.out.println("Введена неверная опция");
-                break;
-        }
-        keeping.saveReaders(readersArray);
+//        List<Reader> readersArray = readersFacade.findAll();
+//        System.out.println("----- Список читателей -----");
+//        for (int i = 0; i < readersArray.size(); i++) {
+//            System.out.println(i+1 + ") " + readersArray.get(i).getFirstname());
+//        }
+//        System.out.println("----- Список читателей -----");
+//        
+//        System.out.print("Введите номер читателя: ");
+//        int numberOfReaderToChange = inputInt();
+//        
+//        System.out.println("Выберите что хотите изменить\n");
+//        System.out.println("1) Имя\n"
+//                        + "2) Фамилию\n"
+//                        + "3) Номер");
+//        System.out.print("-->");
+//        int paramToChange = inputInt();
+//        
+//        switch(paramToChange){
+//            case 1:
+//                //изменить название
+//                System.out.print("Новое имя: ");
+//                String newFristname = scanner.next();
+//                readersArray.get(numberOfReaderToChange-1).setFirstname(newFristname);
+//                break;
+//            case 2:
+//                //изменить год публикации
+//                System.out.print("Новая фамилия: ");
+//                String newSurename = scanner.next();
+//                readersArray.get(numberOfReaderToChange-1).setSurename(newSurename);
+//                break;
+//            case 3:
+//                //изменить количество
+//                System.out.print("Новый номер: ");
+//                String newPhone = scanner.next();
+//                readersArray.get(numberOfReaderToChange-1).setPhoneNumber(newPhone);
+//                break;
+//            default:
+//                System.out.println("Введена неверная опция");
+//                break;
+//        }
+        System.out.println("Не поддерживается еще");
     }
     
     private void changeAuthor() {
-        System.out.println("----- Список авторов -----");
-        for (int i = 0; i < authorsArray.size(); i++) {
-            System.out.println(i+1 + ") " + authorsArray.get(i).toString());
-        }
-        System.out.println("----- Список авторов -----");
-        
-        System.out.print("Введите номер автора");
-        int numberOfAuthorToChange = inputInt();
-        
-        System.out.println("Выберите что хотите изменить\n");
-        System.out.println("1) Имя\n"
-                        + "2) Фамилию\n"
-                        + "3) Год рождения");
-        System.out.print("-->");
-        int paramToChange = inputInt();
-        
-        switch(paramToChange){
-            case 1:
-                //изменить имя
-                System.out.print("Введите новое имя: ");
-                String newFristname = scanner.next();
-                
-                break;
-            case 2:
-                //изменить фамилию
-                System.out.print("Введите новую фамилию: ");
-                String newSurename = scanner.next();
-                
-                break;
-            case 3:
-                //изменить год рождения
-                System.out.print("Введите новый год рождения");
-                int newYear = inputInt();
-                
-                break;
-            default:
-                System.out.println("Введена неверная опция");
-                break;
-        }
-        keeping.saveAuthors(authorsArray);
+//        List<Author> authorsArray = authorsFacade.findAll();
+//        System.out.println("----- Список авторов -----");
+//        for (int i = 0; i < authorsArray.size(); i++) {
+//            System.out.println(i+1 + ") " + authorsArray.get(i).toString());
+//        }
+//        System.out.println("----- Список авторов -----");
+//        
+//        System.out.print("Введите номер автора");
+//        int numberOfAuthorToChange = inputInt();
+//        
+//        System.out.println("Выберите что хотите изменить\n");
+//        System.out.println("1) Имя\n"
+//                        + "2) Фамилию\n"
+//                        + "3) Год рождения");
+//        System.out.print("-->");
+//        int paramToChange = inputInt();
+//        
+//        switch(paramToChange){
+//            case 1:
+//                //изменить имя
+//                System.out.print("Введите новое имя: ");
+//                String newFristname = scanner.next();
+//                
+//                break;
+//            case 2:
+//                //изменить фамилию
+//                System.out.print("Введите новую фамилию: ");
+//                String newSurename = scanner.next();
+//                
+//                break;
+//            case 3:
+//                //изменить год рождения
+//                System.out.print("Введите новый год рождения");
+//                int newYear = inputInt();
+//                
+//                break;
+//            default:
+//                System.out.println("Введена неверная опция");
+//                break;
+//        }
+        System.out.println("Не поддерживается еще");
     }
     
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
     
     private int countBooks(){
+        List<Book> booksArray = booksFacade.findAll();
         int count = 0;
         for (int i = 0; i < booksArray.size(); i++) {
             count += booksArray.get(i).getCount();
@@ -470,6 +475,7 @@ public class App {
     }
     
     private void checkExpiredBooks(){
+        List<History> historysArray = historysFacade.findAll();
         for (int i = 0; i < historysArray.size(); i++) {
             if (historysArray.get(i).getReturnDate().before(localdateToDate(LocalDate.now()))) {
                 historysArray.get(i).setExpired();
