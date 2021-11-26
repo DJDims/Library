@@ -3,14 +3,8 @@ package Facade;
 
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
 public abstract class AbstractFacade<T> {
-//    private EntityManagerFactory emf = Persistence.createEntityManagerFactory("LibraryPU");
-//    private EntityManager em = emf.createEntityManager();
-//    private EntityTransaction tx = em.getTransaction();
     
     private Class<T> entityClass;
 
@@ -26,7 +20,7 @@ public abstract class AbstractFacade<T> {
         getEntityManager().getTransaction().commit();
     }
     
-    public T find(Long id){
+    public T findById(Long id){
         return getEntityManager().find(entityClass, id);
     }
     
