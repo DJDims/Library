@@ -23,17 +23,25 @@ import java.util.Set;
 
 public class App {
     private Scanner scanner = new Scanner(System.in);
-    private AuthorFacade authorsFacade = new AuthorFacade(Author.class);
-    private BookFacade booksFacade = new BookFacade(Book.class);
-    private HistoryFacade historysFacade = new HistoryFacade(History.class);
-    private ReaderFacade readersFacade = new ReaderFacade(Reader.class);
+    private AuthorFacade authorsFacade;
+    private BookFacade booksFacade;
+    private HistoryFacade historysFacade;
+    private ReaderFacade readersFacade;
 
     public App() {
-        checkExpiredBooks();
+        init();
+    }
+    
+    private void init(){
+        authorsFacade = new AuthorFacade(Author.class);
+        booksFacade = new BookFacade(Book.class);
+        historysFacade = new HistoryFacade(History.class);
+        readersFacade = new ReaderFacade(Reader.class);
     }
         
     public void run(){
         boolean appRunnign = true; 
+        checkExpiredBooks();
         int task;
 
         while (appRunnign) {
@@ -496,6 +504,9 @@ public class App {
     
     private void checkExpiredBooks(){
         List<History> historysArray = historysFacade.findAll();
+        if (historysArray.isEmpty()) {
+            return;
+        }
         for (int i = 0; i < historysArray.size(); i++) {
             if (historysArray.get(i).getReturnDate().before(localdateToDate(LocalDate.now()))) {
                 historysArray.get(i).setExpired();
