@@ -40,7 +40,7 @@ public class App {
             showHints();
             System.out.print("Опция --> ");
             task = inputInt();
-
+            
             switch (task){
                 case 0:
                     //выход
@@ -142,13 +142,13 @@ public class App {
         Reader reader = new Reader();
         
         System.out.print("Имя читателя: ");
-        reader.setFirstname(scanner.next());
+        reader.setFirstname(scanner.nextLine());
                 
         System.out.print("Фамилия читателя: ");
-        reader.setSurename(scanner.next());
+        reader.setSurename(scanner.nextLine());
                 
         System.out.print("Телефон читателя: ");
-        reader.setPhoneNumber(scanner.next());
+        reader.setPhoneNumber(scanner.nextLine());
         
         readersFacade.create(reader);
     }
@@ -173,9 +173,9 @@ public class App {
         Author author = new Author();
         
         System.out.print("Имя автора: ");
-        author.setName(scanner.next());
+        author.setName(scanner.nextLine());
         System.out.print("Фамилия автора: ");
-        author.setSurename(scanner.next());
+        author.setSurename(scanner.nextLine());
         System.out.print("Год рождения: ");
         author.setBornYear(inputInt());
         
@@ -207,7 +207,7 @@ public class App {
             int authorNumber;
 
             System.out.print("Название книги: ");
-            book.setTitle(scanner.next());
+            book.setTitle(scanner.nextLine());
             System.out.print("Количество авторов: ");
             countOfAuthors = inputInt();
 
@@ -284,7 +284,8 @@ public class App {
 
             System.out.println("---------- Взять книгу ----------");
 
-            historysFacade.create(history);
+            historysFacade.edit(history);
+//            booksFacade.edit(book);
         } else {
 		System.out.println("Операция невозможна");
 	}
@@ -399,19 +400,19 @@ public class App {
             case 1:
                 //изменить название
                 System.out.print("Новое имя: ");
-                String newFristname = scanner.next();
+                String newFristname = scanner.nextLine();
                 readerToChange.setFirstname(newFristname);
                 break;
             case 2:
                 //изменить год публикации
                 System.out.print("Новая фамилия: ");
-                String newSurename = scanner.next();
+                String newSurename = scanner.nextLine();
                 readerToChange.setSurename(newSurename);
                 break;
             case 3:
                 //изменить количество
                 System.out.print("Новый номер: ");
-                String newPhone = scanner.next();
+                String newPhone = scanner.nextLine();
                 readerToChange.setPhoneNumber(newPhone);
                 break;
             default:
@@ -446,13 +447,13 @@ public class App {
             case 1:
                 //изменить имя
                 System.out.print("Введите новое имя: ");
-                String newFristname = scanner.next();
+                String newFristname = scanner.nextLine();
                 authorToChange.setName(newFristname);
                 break;
             case 2:
                 //изменить фамилию
                 System.out.print("Введите новую фамилию: ");
-                String newSurename = scanner.next();
+                String newSurename = scanner.nextLine();
                 authorToChange.setSurename(newSurename);
                 break;
             case 3:
@@ -489,10 +490,10 @@ public class App {
         }
     }
     
-    private int inputInt() {
+    private int inputInt(){
 	do {
             try {
-                String inputedNumber = scanner.next();
+                String inputedNumber = scanner.nextLine();
                 return Integer.parseInt(inputedNumber);
             } catch(Exception e) {
                 System.out.println("Введены неверные данные.");
