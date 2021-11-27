@@ -4,9 +4,6 @@ package Facade;
 import Classes.Author;
 import Tools.Singleton;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
 public class AuthorFacade extends AbstractFacade<Author>{
     
@@ -14,6 +11,7 @@ public class AuthorFacade extends AbstractFacade<Author>{
 
     public AuthorFacade(Class<Author> entityClass) {
         super(entityClass);
+        init();
     }
     
     private void init(){

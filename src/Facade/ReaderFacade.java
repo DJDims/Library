@@ -4,9 +4,6 @@ package Facade;
 import Classes.Reader;
 import Tools.Singleton;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
 public class ReaderFacade extends AbstractFacade<Reader>{
     
@@ -14,6 +11,7 @@ public class ReaderFacade extends AbstractFacade<Reader>{
 
     public ReaderFacade(Class<Reader> entityClass) {
         super(entityClass);
+        init();
     }
     
     private void init(){

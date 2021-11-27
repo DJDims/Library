@@ -4,9 +4,6 @@ package Facade;
 import Classes.History;
 import Tools.Singleton;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 
 public class HistoryFacade extends AbstractFacade<History>{
     
@@ -14,6 +11,7 @@ public class HistoryFacade extends AbstractFacade<History>{
 
     public HistoryFacade(Class<History> entityClass) {
         super(entityClass);
+        init();
     }
     
     private void init(){
