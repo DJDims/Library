@@ -13,11 +13,11 @@ public class EditComponent extends JPanel{
     private JLabel title;
     private JTextField editor;
     
-    public EditComponent(int widthWindow, int heightPanel, int widthEditor, String text) {
-        initComponents(widthWindow, heightPanel, widthEditor, text);
+    public EditComponent(int widthEditor, String text, int widthWindow, int heightPanel) {
+        initComponents(widthEditor, text, widthWindow, heightPanel);
     }
 
-    private void initComponents(int widthWindow, int heightPanel, int widthEditor, String text) {
+    private void initComponents(int widthEditor, String text, int widthWindow, int heightPanel) {
         this.setPreferredSize(new Dimension(widthWindow, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());

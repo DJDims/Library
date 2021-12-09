@@ -20,11 +20,11 @@ public class ListAuthorsComponent extends JPanel{
     private JLabel title;
     private JList<Author> list;
     
-    public ListAuthorsComponent(int widthWindow, int heightPanel, int widthEditor, String text) {
-        initComponents(widthWindow, heightPanel, widthEditor, text);
+    public ListAuthorsComponent(int widthList, String text, int widthWindow, int heightPanel) {
+        initComponents(widthList, text, widthWindow, heightPanel);
     }
 
-    private void initComponents(int widthWindow, int heightPanel, int widthEditor, String text) {
+    private void initComponents(int widthList, String text, int widthWindow, int heightPanel) {
         this.setPreferredSize(new Dimension(widthWindow, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
@@ -47,7 +47,7 @@ public class ListAuthorsComponent extends JPanel{
         list.setLayoutOrientation(JList.HEIGHT);
         
         JScrollPane scrollPane = new JScrollPane(list);
-        scrollPane.setPreferredSize(new Dimension(widthEditor, heightPanel));
+        scrollPane.setPreferredSize(new Dimension(widthList, heightPanel));
         scrollPane.setMinimumSize(scrollPane.getPreferredSize());
         scrollPane.setMaximumSize(scrollPane.getPreferredSize());
         scrollPane.setAlignmentX(LEFT_ALIGNMENT);

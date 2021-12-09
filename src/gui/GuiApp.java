@@ -13,7 +13,9 @@ import javax.swing.JFrame;
 public class GuiApp extends JFrame{
     private CaptionComponent captionComponent;
     private InfoComponent infoComponent;
-    private EditComponent editComponent;
+    private EditComponent Title;
+    private EditComponent Count;
+    private EditComponent pubslishingYear;
     private ListAuthorsComponent listAuthorsComponent;
     
     public GuiApp() {
@@ -35,13 +37,18 @@ public class GuiApp extends JFrame{
         infoComponent = new InfoComponent(this.getWidth(), 30, "Информация о добавлении книги");
         this.add(infoComponent);
         
-        this.add(Box.createRigidArea(new Dimension(0, 30)));
+        Title = new EditComponent(250, "Название книги", this.getWidth(), 30);
+        this.add(Title);
         
-        editComponent = new EditComponent(this.getWidth(), 30, 250, "Название книги");
-        this.add(editComponent);
-        
-        listAuthorsComponent = new ListAuthorsComponent(this.getWidth(), 120, 250, "Список авторов:");
+        listAuthorsComponent = new ListAuthorsComponent(250, "Список авторов", this.getWidth(), 120);
         this.add(listAuthorsComponent);
+        
+        pubslishingYear = new EditComponent(250, "Год публикации", this.getWidth(), 30);
+        this.add(pubslishingYear);
+        
+        Count = new EditComponent(250, "Количество книг", this.getWidth(), 30);
+        this.add(Count);
+        
     }
     
     public static void main(String[] args) {
