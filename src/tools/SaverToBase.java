@@ -1,11 +1,11 @@
 
-package Tools;
+package tools;
 
-import Classes.Author;
-import Classes.Book;
-import Classes.History;
-import Classes.Reader;
-import Interface.Keeping;
+import classes.Author;
+import classes.Book;
+import classes.History;
+import classes.Reader;
+import ui.Keeping;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;

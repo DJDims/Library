@@ -1,4 +1,4 @@
-package Classes;
+package classes;
 
 import java.io.Serializable;
 import java.util.Objects;

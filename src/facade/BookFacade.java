@@ -1,15 +1,16 @@
 
-package Facade;
+package facade;
 
-import Classes.Reader;
-import Tools.Singleton;
+import classes.Book;
+import tools.Singleton;
 import javax.persistence.EntityManager;
 
-public class ReaderFacade extends AbstractFacade<Reader>{
+public class BookFacade extends AbstractFacade<Book>{
     
     private EntityManager em;
+    
 
-    public ReaderFacade(Class<Reader> entityClass) {
+    public BookFacade(Class<Book> entityClass) {
         super(entityClass);
         init();
     }
@@ -18,7 +19,7 @@ public class ReaderFacade extends AbstractFacade<Reader>{
         Singleton singleton = Singleton.getInstance();
         em = singleton.getEntityManager();
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

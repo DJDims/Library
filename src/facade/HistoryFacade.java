@@ -1,15 +1,15 @@
 
-package Facade;
+package facade;
 
-import Classes.Author;
-import Tools.Singleton;
+import classes.History;
+import tools.Singleton;
 import javax.persistence.EntityManager;
 
-public class AuthorFacade extends AbstractFacade<Author>{
+public class HistoryFacade extends AbstractFacade<History>{
     
     private EntityManager em;
 
-    public AuthorFacade(Class<Author> entityClass) {
+    public HistoryFacade(Class<History> entityClass) {
         super(entityClass);
         init();
     }
@@ -18,7 +18,7 @@ public class AuthorFacade extends AbstractFacade<Author>{
         Singleton singleton = Singleton.getInstance();
         em = singleton.getEntityManager();
     }
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

@@ -1,12 +1,12 @@
 
-package Interface;
+package ui;
 
 import java.util.List;
 
-import Classes.Author;
-import Classes.Book;
-import Classes.History;
-import Classes.Reader;
+import classes.Author;
+import classes.Book;
+import classes.History;
+import classes.Reader;
 
 public interface Keeping {
     public void saveReaders(List <Reader> readersArray);

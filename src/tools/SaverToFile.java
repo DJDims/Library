@@ -1,7 +1,7 @@
 
-package Tools;
+package tools;
 
-import Classes.Author;
+import classes.Author;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,10 +11,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import Classes.Book;
-import Classes.History;
-import Classes.Reader;
-import Interface.Keeping;
+import classes.Book;
+import classes.History;
+import classes.Reader;
+import ui.Keeping;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
