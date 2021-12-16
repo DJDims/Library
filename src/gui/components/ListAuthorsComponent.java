@@ -3,6 +3,7 @@ package gui.components;
 
 import classes.Author;
 import facade.AuthorFacade;
+import gui.components.renderers.ListAuthorsCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -43,6 +44,7 @@ public class ListAuthorsComponent extends JPanel{
         
         list = new JList<>();
         list.setModel(getListModel());
+        list.setCellRenderer(new ListAuthorsCellRenderer());
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.HEIGHT);
         

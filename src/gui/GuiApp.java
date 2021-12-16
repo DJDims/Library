@@ -6,7 +6,6 @@ import gui.components.EditComponent;
 import gui.components.InfoComponent;
 import gui.components.ListAuthorsComponent;
 import java.awt.Dimension;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
