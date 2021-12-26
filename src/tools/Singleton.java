@@ -7,17 +7,18 @@ import javax.persistence.Persistence;
 
 public class Singleton {
     private static Singleton instance;
+
     private EntityManager em;
     
-    private Singleton(){
-        init();
-    }
-    
-    public static Singleton getInstance(){
+    public static Singleton getInstance() {
         if (instance == null) {
             instance = new Singleton();
         }
         return instance;
+    }
+    
+    private Singleton(){
+        init();
     }
     
     private void init(){

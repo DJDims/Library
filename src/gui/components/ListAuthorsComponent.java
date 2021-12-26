@@ -67,4 +67,7 @@ public class ListAuthorsComponent extends JPanel{
         return defaultListModel;
     }
     
+    public JList<Author> getList() {
+        return list;
+    }
 }
