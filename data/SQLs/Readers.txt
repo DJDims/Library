@@ -1,0 +1,11 @@
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('1','Dmitrii','Kreivald','+37224645044
+');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('2','Evgenii','Kreivald','+37289352629
+');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('3','Aleksandr','Krjukov','+37240414711
+');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('4','Timofei','Obmetko','+37261735060
+');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('5','Arseni','Chistyakov','+37234316633
+');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('6','Valeria','Tarlikova','+37261789371');
