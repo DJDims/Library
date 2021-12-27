@@ -14,21 +14,21 @@ public class ListAuthorsCellRenderer extends DefaultListCellRenderer{
     private final Color defaultBackground = (Color) UIManager.get("List.background");
     
     @Override
-    public Component getListCellRendererComponent(JList<?> list, Object value,int index, boolean isSelected, boolean cellHasFocus){
+    public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus){
         Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if(component instanceof JLabel){
-                JLabel label = (JLabel) component;
-                Author author = (Author) value;
-                label.setText(String.format("%d. %s %s. %d",
-                        author.getId(),
-                        author.getName(),
-                        author.getSurename(),
-                        author.getBornYear()
-                ));
-                if(!isSelected){
-                    label.setBackground(index % 2 == 0 ? background : defaultBackground);
-                }
+        if(component instanceof JLabel){
+            JLabel label = (JLabel) component;
+            Author author = (Author) value;
+            label.setText(String.format("%d. %s %s. %d",
+                    author.getId(),
+                    author.getName(),
+                    author.getSurename(),
+                    author.getBornYear()
+            ));
+            if(!isSelected){
+                label.setBackground(index % 2 == 0 ? background : defaultBackground);
             }
+        }
         return component;
     }
 }

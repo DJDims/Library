@@ -1,0 +1,8 @@
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('1','1968','Sergey','Lukjanenko');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('2','1979','Dmitri','Gluhovsky');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('3','1928','Philip','Dick');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('4','1962','Chuck','Palahniuk');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('5','1905','Ayn','Rand');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('6','1934','Harlan','Ellison');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('7','1978','Alan','Wake');
+INSERT INTO `author`(`ID`, `BIRTHYEAR`, `FIRSTNAME`, `LASTNAME`) VALUES ('8','','','')
