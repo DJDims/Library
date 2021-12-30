@@ -4,4 +4,10 @@ INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('3','1928','P
 INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('4','1962','Chuck','Palahniuk');
 INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('5','1905','Ayn','Rand');
 INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('6','1934','Harlan','Ellison');
-INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('','','','')
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('7','1925','Arkadiy','Strugatsky');
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('8','1933','Boris','Strugatsky');
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('9','1928','Robert','Sheckley');
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('10','1925','Harry','Harrison');
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('11','1963','Nik','Perumov');
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('','','','');
+INSERT INTO `author`(`ID`, `BORNYEAR`, `NAME`, `SURENAME`) VALUES ('','','','');

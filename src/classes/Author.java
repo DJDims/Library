@@ -12,9 +12,9 @@ public class Author implements Serializable {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    public String name;
-    public String surename;
-    public int bornYear;
+    private String name;
+    private String surename;
+    private int bornYear;
 
     public Long getId() {
         return id;

@@ -19,18 +19,18 @@ public class History implements Serializable{
     private Long id;
     
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Reader reader;
+    private Reader reader;
     
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    public Book book;
+    private Book book;
     
     @Temporal(TemporalType.TIMESTAMP)
-    public Date issueDate;
+    private Date issueDate;
     
     @Temporal(TemporalType.TIMESTAMP)
-    public Date returnDate;
+    private Date returnDate;
     
-    public boolean expired;
+    private boolean expired;
 
     public Long getId() {
         return id;

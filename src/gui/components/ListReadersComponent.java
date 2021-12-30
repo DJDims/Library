@@ -1,9 +1,9 @@
 
 package gui.components;
 
-import classes.Author;
-import facade.AuthorFacade;
-import gui.components.renderers.ListAuthorsCellRenderer;
+import classes.Reader;
+import facade.ReaderFacade;
+import gui.components.renderers.ListReadersCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -17,11 +17,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-public class ListAuthorsComponent extends JPanel{
+public class ListReadersComponent extends JPanel{
     private JLabel title;
-    private JList<Author> list;
+    private JList<Reader> list;
     
-    public ListAuthorsComponent(int widthList, String text, int widthWindow, int heightPanel) {
+    public ListReadersComponent(int widthList, String text, int widthWindow, int heightPanel) {
         initComponents(widthList, text, widthWindow, heightPanel);
     }
 
@@ -44,8 +44,8 @@ public class ListAuthorsComponent extends JPanel{
         
         list = new JList<>();
         list.setModel(getListModel());
-        list.setCellRenderer(new ListAuthorsCellRenderer());
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        list.setCellRenderer(new ListReadersCellRenderer());
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         
         JScrollPane scrollPane = new JScrollPane(list);
@@ -57,17 +57,17 @@ public class ListAuthorsComponent extends JPanel{
         this.add(scrollPane);
     }
 
-    private ListModel<Author> getListModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
-        List<Author> authorsArray = authorFacade.findAll();
-        DefaultListModel<Author> defaultListModel = new DefaultListModel<>();
-        for (Author authorsArray1 : authorsArray) {
-            defaultListModel.addElement(authorsArray1);
+    private ListModel<Reader> getListModel() {
+        ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+        List<Reader> readersArray = readerFacade.findAll();
+        DefaultListModel<Reader> defaultListModel = new DefaultListModel<>();
+        for (Reader readersArray1 : readersArray) {
+            defaultListModel.addElement(readersArray1);
         }
         return defaultListModel;
     }
     
-    public JList<Author> getList() {
+    public JList<Reader> getList() {
         return list;
     }
 }

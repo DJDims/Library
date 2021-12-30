@@ -287,7 +287,7 @@ public class App {
         System.out.print("Введите номер книги: ");
         history.setBook(booksArray.get(inputInt()-1));
 
-        history.book.takeBook();
+        history.getBook().takeBook();
 
         history.setIssueDate(localdateToDate(LocalDate.now()));
         history.setReturnDate(localdateToDate(LocalDate.now().plusWeeks(2)));

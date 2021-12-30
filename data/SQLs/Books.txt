@@ -8,3 +8,13 @@ INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('7','6','1968'
 INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('8','5','1996','Fight club');
 INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('9','4','1957','Atlas Shrugged');
 INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('10','3','1967','I Have No Mouth, and I Must Scream');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('11','5','1972','Piknin na obochine');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('12','9','1964','Trudno bit bogom');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('13','6','1953','The Last Weapon');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('14','4','1985','The Stainless Steel Rat is born');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('15','7','1960','Deathworld');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('16','3','1965','Bill the galactic hero');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('17','6','1997','Elfiyskiy klinok');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('18','4','1997','Ne vrema dla drakonov');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('','','','');
+INSERT INTO `book`(`ID`, `COUNT`, `PUBLISHYEAR`, `TITLE`) VALUES ('','','','');
