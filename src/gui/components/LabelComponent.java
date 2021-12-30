@@ -6,14 +6,14 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class InfoComponent extends JPanel{
+public class LabelComponent extends JPanel{
     private JLabel caption;
     
-    public InfoComponent(int widthWindow, int heightPanel, String text) {
-        initComponents(widthWindow, heightPanel, text);
+    public LabelComponent(int widthWindow, int heightPanel, String text, int fontSize, int fontStyle) {
+        initComponents(widthWindow, heightPanel, text, fontSize, fontStyle);
     }
 
-    private void initComponents(int widthWindow, int heightPanel, String text) {
+    private void initComponents(int widthWindow, int heightPanel, String text, int fontSize, int fontStyle) {
         this.setPreferredSize(new Dimension(widthWindow, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
@@ -23,7 +23,7 @@ public class InfoComponent extends JPanel{
         caption.setMinimumSize(caption.getPreferredSize());
         caption.setMaximumSize(caption.getPreferredSize());
         caption.setHorizontalAlignment(JLabel.CENTER);
-        caption.setFont(new Font("Tahoma", 0, 14));
+        caption.setFont(new Font("Tahoma", fontStyle, fontSize));
         this.add(caption);
     }
     
