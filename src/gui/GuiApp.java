@@ -14,6 +14,7 @@ import gui.components.LabelComponent;
 import gui.components.EditComponent;
 import gui.components.ListAuthorsComponent;
 import gui.components.ListBooksComponent;
+import gui.components.ListHistorysComponent;
 import gui.components.ListReadersComponent;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -38,6 +39,8 @@ public class GuiApp extends JFrame{
     private LabelComponent addAuthorInfo;
     private LabelComponent takeBookCaption;
     private LabelComponent takeBookInfo;
+    private LabelComponent extendBookCaption;
+    private LabelComponent extendBookInfo;
     
     private EditComponent readerName;
     private EditComponent readerSurename;
@@ -48,15 +51,18 @@ public class GuiApp extends JFrame{
     private EditComponent authorName;
     private EditComponent authorSurename;
     private EditComponent authorBornYear;
+    private EditComponent extendBookWeeks;
     
     private ListAuthorsComponent addBookAuthorsList;
     private ListBooksComponent takeBookBooksList;
     private ListReadersComponent takeBookReadersList;
+    private ListHistorysComponent extendBookList;
     
     private ButtonComponent addReaderButton;
     private ButtonComponent addBookButton;
     private ButtonComponent addAuthorButton;
     private ButtonComponent takeBookButton;
+    private ButtonComponent extendBookButton;
     
     public GuiApp() {
         initComponents();
@@ -272,6 +278,33 @@ public class GuiApp extends JFrame{
             
         JPanel extendBookPanel = new JPanel();
         tabs.addTab("Продлить книгу", extendBookPanel);
+            extendBookCaption = new LabelComponent(WINDOW_WIDTH, 30, "Продлить срок даты сдачи книги", 18, 1);
+            extendBookPanel.add(extendBookCaption);
+            extendBookInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о продлении книги", 14, 0);
+            extendBookPanel.add(extendBookInfo);
+            extendBookList = new ListHistorysComponent(350, "Взятые книги", WINDOW_WIDTH, 150);
+            extendBookPanel.add(extendBookList);
+            extendBookWeeks = new EditComponent(350, "Количество недель", WINDOW_WIDTH, 30);
+            extendBookPanel.add(extendBookWeeks);
+            extendBookButton = new ButtonComponent("Продлить книгу", WINDOW_WIDTH, 30, 200);
+            extendBookPanel.add(extendBookButton);
+            extendBookButton.getButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    History history = extendBookList.getList().getSelectedValue();
+                    
+                    history.setReturnDate(localdateToDate(dateToLocaldate(history.getReturnDate()).plusWeeks(Math.abs(Integer.parseInt(extendBookWeeks.getEditor().getText())))));
+                    
+                    HistoryFacade historyFacade = new HistoryFacade(History.class);
+                    try {
+                        historyFacade.edit(history);
+                        extendBookList.getList().clearSelection();
+                        extendBookWeeks.getEditor().setText("");
+                    } catch (Exception e) {
+                        return;
+                    }
+                }
+                });
             
         JPanel returnBookPanel = new JPanel();
         tabs.addTab("Вернуть книгу", returnBookPanel);
@@ -301,5 +334,9 @@ public class GuiApp extends JFrame{
     
     private Date localdateToDate(LocalDate dateToConvert){
         return Date.from(dateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+    
+    private LocalDate dateToLocaldate(Date dateToConvert){
+	return dateToConvert.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
