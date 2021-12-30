@@ -41,6 +41,8 @@ public class GuiApp extends JFrame{
     private LabelComponent takeBookInfo;
     private LabelComponent extendBookCaption;
     private LabelComponent extendBookInfo;
+    private LabelComponent returnBookCaption;
+    private LabelComponent returnBookInfo;
     
     private EditComponent readerName;
     private EditComponent readerSurename;
@@ -57,12 +59,14 @@ public class GuiApp extends JFrame{
     private ListBooksComponent takeBookBooksList;
     private ListReadersComponent takeBookReadersList;
     private ListHistorysComponent extendBookList;
+    private ListBooksComponent returnBookBooksList;
     
     private ButtonComponent addReaderButton;
     private ButtonComponent addBookButton;
     private ButtonComponent addAuthorButton;
     private ButtonComponent takeBookButton;
     private ButtonComponent extendBookButton;
+    private ButtonComponent returnBookButton;
     
     public GuiApp() {
         initComponents();
@@ -308,11 +312,24 @@ public class GuiApp extends JFrame{
             
         JPanel returnBookPanel = new JPanel();
         tabs.addTab("Вернуть книгу", returnBookPanel);
-            //code...
+            returnBookCaption = new LabelComponent(WINDOW_WIDTH, 30, "Вернуть книгу", 18, 1);
+            returnBookPanel.add(returnBookCaption);
+            returnBookInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о возвращении книги", 14, 0);
+            returnBookPanel.add(returnBookInfo);
+            returnBookBooksList = new ListBooksComponent(300, "Книги", WINDOW_WIDTH, 200);
+            returnBookPanel.add(returnBookBooksList);
+            returnBookButton = new ButtonComponent("Вернуть книгу", WINDOW_WIDTH, 30, 150);
+            returnBookPanel.add(returnBookButton);
+            returnBookButton.getButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    
+                }
+                });
             
         JPanel changeBookPanel = new JPanel();
         tabs.addTab("Изменить книгу", changeBookPanel);
-            //code...
+            //code..
             
         JPanel changeReaderPanel = new JPanel();
         tabs.addTab("Изменить читателя", changeReaderPanel);

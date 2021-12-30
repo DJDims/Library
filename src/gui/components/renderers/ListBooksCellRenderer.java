@@ -19,10 +19,10 @@ public class ListBooksCellRenderer extends DefaultListCellRenderer{
         if(component instanceof JLabel){
             JLabel label = (JLabel) component;
             Book book = (Book) value;
-            label.setText(String.format("%d. %s %s.",
+            label.setText(String.format("%d) %s (%s)",
                     book.getId(),
                     book.getTitle(),
-                    "(" + book.getPublishYear() + ")"
+                    book.getPublishYear()
             ));
             if(!isSelected){
                 label.setBackground(index % 2 == 0 ? background : defaultBackground);

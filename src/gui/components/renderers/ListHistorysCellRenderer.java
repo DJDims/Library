@@ -19,9 +19,9 @@ public class ListHistorysCellRenderer extends DefaultListCellRenderer{
         if(component instanceof JLabel){
             JLabel label = (JLabel) component;
             History history = (History) value;
-            label.setText(String.format("%d. %s %s %s",
+            label.setText(String.format("%d) \"%s\" %s %s",
                     history.getId(),
-                    "\"" + history.getBook().getTitle() + "\"",
+                    history.getBook().getTitle(),
                     history.getReader().getFirstname(),
                     history.getReturnDate()
             ));

@@ -20,7 +20,7 @@ public class ListReadersCellRenderer extends DefaultListCellRenderer{
         if(component instanceof JLabel){
             JLabel label = (JLabel) component;
             Reader reader = (Reader) value;
-            label.setText(String.format("%d. %s %s. %s",
+            label.setText(String.format("%d) %s %s %s",
                     reader.getId(),
                     reader.getFirstname(),
                     reader.getSurename(),
