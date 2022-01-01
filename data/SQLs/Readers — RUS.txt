@@ -1,0 +1,10 @@
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('1','Дмитрий','Крейвальд','+37224645044');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('2','Евгений','Крейвальд','+37289352629');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('3','Александр','Крюков','+37240414711');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('4','Тимофей','Обметко','+37261735060');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('5','Арсений','Чистяков','+37234316633');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('6','Юлия','Баданова','+37295838013');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('7','Алексей','Каримов','+37268321920');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('8','Алексей','Козлов','+37220102599');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('9','Максим','Гришин','+37241020773');
+INSERT INTO `reader`(`ID`, `FIRSTNAME`, `SURENAME`, `PHONENUMBER`) VALUES ('10','Валерия','Тарлыкова','+37261789371');

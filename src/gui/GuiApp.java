@@ -16,6 +16,7 @@ import gui.components.ListAuthorsComponent;
 import gui.components.ListBooksComponent;
 import gui.components.ListHistorysComponent;
 import gui.components.ListReadersComponent;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -105,24 +106,35 @@ public class GuiApp extends JFrame{
                 public void actionPerformed(ActionEvent ae) {
                     Reader reader = new Reader();
                     
-                    if (readerName.getEditor().getText().isEmpty()) {
+                    if (readerName.getEditor().getText().trim().isEmpty()) {
+                        System.out.println("Проблема с именем");
+                        addReaderInfo.getLabel().setForeground(Color.red);
+                        addReaderInfo.getLabel().setText("Введите имя читателя");
                         return;
                     }
-                    reader.setFirstname(readerName.getEditor().getText());
+                    reader.setFirstname(readerName.getEditor().getText().trim());
                     
-                    if (readerSurename.getEditor().getText().isEmpty()) {
+                    if (readerSurename.getEditor().getText().trim().isEmpty()) {
+                        System.out.println("Проблема с фамилией");
+                        addReaderInfo.getLabel().setForeground(Color.red);
+                        addReaderInfo.getLabel().setText("Введите фамилию читателя");
                         return;
                     }
-                    reader.setSurename(readerSurename.getEditor().getText());
+                    reader.setSurename(readerSurename.getEditor().getText().trim());
                     
-                    if (readerPhone.getEditor().getText().isEmpty()) {
+                    if (readerPhone.getEditor().getText().trim().isEmpty()) {
+                        System.out.println("Проблема с телефоном");
+                        addReaderInfo.getLabel().setForeground(Color.red);
+                        addReaderInfo.getLabel().setText("Введите телефон читателя");
                         return;
                     }
-                    reader.setPhoneNumber(readerPhone.getEditor().getText());
+                    reader.setPhoneNumber(readerPhone.getEditor().getText().trim());
                     
                     ReaderFacade readerFacade = new ReaderFacade(Reader.class);
                     try {
                         readerFacade.create(reader);
+                        addReaderInfo.getLabel().setForeground(Color.green);
+                        addReaderInfo.getLabel().setText("Читатель успешно добавлен");
                         readerName.getEditor().setText("");
                         readerSurename.getEditor().setText("");
                         readerPhone.getEditor().setText("");
@@ -153,34 +165,46 @@ public class GuiApp extends JFrame{
                 public void actionPerformed(ActionEvent ae) {
                     Book book = new Book();
                     
-                    if (addBookTitle.getEditor().getText().isEmpty()) {
+                    if (addBookTitle.getEditor().getText().trim().isEmpty()) {
+                        System.out.println("Проблема с именем");
+                        addBookInfo.getLabel().setForeground(Color.red);
+                        addBookInfo.getLabel().setText("Введите название книги");
                         return;
                     }
-                    book.setTitle(addBookTitle.getEditor().getText());
+                    book.setTitle(addBookTitle.getEditor().getText().trim());
                     
                     List<Author> bookAuthors = addBookAuthorsList.getList().getSelectedValuesList();
                     if (bookAuthors.isEmpty()) {
+                        System.out.println("Не выбран автор");
+                        addBookInfo.getLabel().setForeground(Color.red);
+                        addBookInfo.getLabel().setText("Выберите автора(ов) книги");
                         return;
                     }
                     book.setAuthors(bookAuthors);
                     
                     try {
-                        book.setPublishYear(Integer.parseInt(pubslishingYear.getEditor().getText()));
+                        book.setPublishYear(Integer.parseInt(pubslishingYear.getEditor().getText().trim()));
                     } catch (Exception e) {
                         System.out.println("Проблема с годом");
+                        addBookInfo.getLabel().setForeground(Color.red);
+                        addBookInfo.getLabel().setText("Введите год публикации книги");
                         return;
                     }
                     
                     try {
-                        book.setCount(Integer.parseInt(count.getEditor().getText()));
+                        book.setCount(Integer.parseInt(count.getEditor().getText().trim()));
                     } catch (Exception e) {
                         System.out.println("Проблема с количеством");
+                        addBookInfo.getLabel().setForeground(Color.red);
+                        addBookInfo.getLabel().setText("Введите количество книг");
                         return;
                     }
                     
                     BookFacade bookFacade = new BookFacade(Book.class);
                     try {
                         bookFacade.create(book);
+                        addBookInfo.getLabel().setForeground(Color.green);
+                        addBookInfo.getLabel().setText("Книга успешно добавлена");
                         addBookTitle.getEditor().setText("");
                         addBookAuthorsList.getList().clearSelection();
                         pubslishingYear.getEditor().setText("");
@@ -210,25 +234,36 @@ public class GuiApp extends JFrame{
             public void actionPerformed(ActionEvent ae) {
                 Author author = new Author();
                 
-                if (authorName.getEditor().getText().isEmpty()) {
+                if (authorName.getEditor().getText().trim().isEmpty()) {
+                    System.out.println("Проблема с именем");
+                    addAuthorInfo.getLabel().setForeground(Color.red);
+                    addAuthorInfo.getLabel().setText("Введите имя автора");
                     return;
                 }
-                author.setName(authorName.getEditor().getText());
+                author.setName(authorName.getEditor().getText().trim());
                 
-                if (authorSurename.getEditor().getText().isEmpty()) {
+                if (authorSurename.getEditor().getText().trim().isEmpty()) {
+                    System.out.println("Проблема с фамилией");
+                    addAuthorInfo.getLabel().setForeground(Color.red);
+                    addAuthorInfo.getLabel().setText("Введите фамилию автора");
                     return;
                 }
-                author.setSurename(authorSurename.getEditor().getText());
+                author.setSurename(authorSurename.getEditor().getText().trim());
                 
                 try {
-                    author.setBornYear(Integer.parseInt(authorBornYear.getEditor().getText()));
+                    author.setBornYear(Integer.parseInt(authorBornYear.getEditor().getText().trim()));
                 } catch (Exception e) {
+                    System.out.println("Проблема с годом");
+                    addAuthorInfo.getLabel().setForeground(Color.red);
+                    addAuthorInfo.getLabel().setText("Введите год рождения автора");
                     return;
                 }
                 
                 AuthorFacade authorFacade = new AuthorFacade(Author.class);
                 try {
                     authorFacade.create(author);
+                    addAuthorInfo.getLabel().setForeground(Color.green);
+                    addAuthorInfo.getLabel().setText("Автор успешно добавлен");
                     authorName.getEditor().setText("");
                     authorSurename.getEditor().setText("");
                     authorBornYear.getEditor().setText("");
@@ -255,26 +290,39 @@ public class GuiApp extends JFrame{
                 public void actionPerformed(ActionEvent ae) {
                     History history = new History();
                     
-                    try {
-                        history.setBook(takeBookBooksList.getList().getSelectedValue());
-                    } catch (Exception e) {
+                    if (takeBookBooksList.getList().isSelectionEmpty()) {
+                        System.out.println("Не выбрана книга");
+                        takeBookInfo.getLabel().setForeground(Color.red);
+                        takeBookInfo.getLabel().setText("Выберите книгу");
                         return;
                     }
-                    try {
-                        history.setReader(takeBookReadersList.getList().getSelectedValue());
-                    } catch (Exception e) {
+                    history.setBook(takeBookBooksList.getList().getSelectedValue());
+
+                    if (takeBookReadersList.getList().isSelectionEmpty()) {
+                        System.out.println("Не выбран читатель");
+                        takeBookInfo.getLabel().setForeground(Color.red);
+                        takeBookInfo.getLabel().setText("Выберите читателя");
                         return;
                     }
+                    history.setReader(takeBookReadersList.getList().getSelectedValue());
                     
                     history.setIssueDate(localdateToDate(LocalDate.now()));
                     history.setReturnDate(localdateToDate(LocalDate.now().plusWeeks(2)));
                     
+                    history.getBook().takeBook();
+                    
                     HistoryFacade historyFacade = new HistoryFacade(History.class);
+                    BookFacade bookFacade = new BookFacade(Book.class);
+                    
                     try {
                         historyFacade.edit(history);
+                        bookFacade.edit(history.getBook());
+                        takeBookInfo.getLabel().setForeground(Color.green);
+                        takeBookInfo.getLabel().setText("Информация о взятой книге успешно добавлена");
                         takeBookBooksList.getList().clearSelection();
                         takeBookReadersList.getList().clearSelection();
                     } catch (Exception e) {
+                        System.out.println("Что-то пошло не так");
                         return;
                     }
                 }
@@ -295,17 +343,37 @@ public class GuiApp extends JFrame{
             extendBookButton.getButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    History history = extendBookList.getList().getSelectedValue();
+                    History history;
+                    int countWeeks;
                     
-                    history.setReturnDate(localdateToDate(dateToLocaldate(history.getReturnDate()).plusWeeks(Math.abs(Integer.parseInt(extendBookWeeks.getEditor().getText())))));
+                    if (extendBookList.getList().isSelectionEmpty()) {
+                        System.out.println("Не выбрана запись");
+                        extendBookInfo.getLabel().setForeground(Color.red);
+                        extendBookInfo.getLabel().setText("Выберите запись");
+                        return;
+                    }
+                    history = extendBookList.getList().getSelectedValue();
+                    
+                    try {
+                        countWeeks = Math.abs(Integer.parseInt(extendBookWeeks.getEditor().getText().trim()));
+                    } catch (Exception e) {
+                        System.out.println("Проблема с неделями");
+                        extendBookInfo.getLabel().setForeground(Color.red);
+                        extendBookInfo.getLabel().setText("Введите срок продления");
+                        return;
+                    }
+                    
+                    history.setReturnDate(localdateToDate(dateToLocaldate(history.getReturnDate()).plusWeeks(countWeeks)));
                     
                     HistoryFacade historyFacade = new HistoryFacade(History.class);
                     try {
                         historyFacade.edit(history);
+                        extendBookInfo.getLabel().setForeground(Color.green);
+                        extendBookInfo.getLabel().setText("Срок сдачи книги успешно продлен");
                         extendBookList.getList().clearSelection();
                         extendBookWeeks.getEditor().setText("");
                     } catch (Exception e) {
-                        return;
+                        System.out.println("Что-то пошло не так");
                     }
                 }
                 });
