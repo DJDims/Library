@@ -1,6 +1,7 @@
 
 package gui.components;
 
+import gui.GuiApp;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.Box;
@@ -13,18 +14,18 @@ public class EditComponent extends JPanel{
     private JLabel title;
     private JTextField editor;
     
-    public EditComponent(int widthEditor, String text, int widthWindow, int heightPanel) {
-        initComponents(widthEditor, text, widthWindow, heightPanel);
+    public EditComponent(int widthEditor, String text, int heightPanel) {
+        initComponents(widthEditor, text, heightPanel);
     }
 
-    private void initComponents(int widthEditor, String text, int widthWindow, int heightPanel) {
-        this.setPreferredSize(new Dimension(widthWindow, heightPanel));
+    private void initComponents(int widthEditor, String text, int heightPanel) {
+        this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
         title = new JLabel(text);
-        title.setPreferredSize(new Dimension(widthWindow/3, 25));
+        title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
         title.setMinimumSize(title.getPreferredSize());
         title.setMaximumSize(title.getPreferredSize());
         title.setHorizontalAlignment(JLabel.RIGHT);

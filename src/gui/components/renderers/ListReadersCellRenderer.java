@@ -1,8 +1,8 @@
 
 package gui.components.renderers;
 
-import classes.Author;
-import classes.Reader;
+import entitys.Author;
+import entitys.Reader;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;

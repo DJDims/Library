@@ -1,7 +1,7 @@
 
 package tools;
 
-import classes.Author;
+import entitys.Author;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,9 +11,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import classes.Book;
-import classes.History;
-import classes.Reader;
+import entitys.Book;
+import entitys.History;
+import entitys.Reader;
 import ui.Keeping;
 
 import java.util.logging.Level;

@@ -1,8 +1,9 @@
 
 package gui.components;
 
-import classes.History;
+import entitys.History;
 import facade.HistoryFacade;
+import gui.GuiApp;
 import gui.components.renderers.ListHistorysCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -21,18 +22,18 @@ public class ListHistorysComponent extends JPanel{
     private JLabel title;
     private JList<History> list;
     
-    public ListHistorysComponent(int widthList, String text, int widthWindow, int heightPanel) {
-        initComponents(widthList, text, widthWindow, heightPanel);
+    public ListHistorysComponent(int widthList, String text, int heightPanel) {
+        initComponents(widthList, text, heightPanel);
     }
 
-    private void initComponents(int widthList, String text, int widthWindow, int heightPanel) {
-        this.setPreferredSize(new Dimension(widthWindow, heightPanel));
+    private void initComponents(int widthList, String text, int heightPanel) {
+        this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
         title = new JLabel(text);
-        title.setPreferredSize(new Dimension(widthWindow/3, 25));
+        title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
         title.setMinimumSize(title.getPreferredSize());
         title.setMaximumSize(title.getPreferredSize());
         title.setHorizontalAlignment(JLabel.RIGHT);

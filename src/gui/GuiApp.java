@@ -1,10 +1,10 @@
 
 package gui;
 
-import classes.Author;
-import classes.Book;
-import classes.History;
-import classes.Reader;
+import entitys.Author;
+import entitys.Book;
+import entitys.History;
+import entitys.Reader;
 import facade.AuthorFacade;
 import facade.BookFacade;
 import facade.HistoryFacade;
@@ -16,6 +16,7 @@ import gui.components.ListAuthorsComponent;
 import gui.components.ListBooksComponent;
 import gui.components.ListHistorysComponent;
 import gui.components.ListReadersComponent;
+import gui.components.SpinnerComponent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -49,12 +50,12 @@ public class GuiApp extends JFrame{
     private EditComponent readerSurename;
     private EditComponent readerPhone;
     private EditComponent addBookTitle;
-    private EditComponent count;
+//    private EditComponent count;
     private EditComponent pubslishingYear;
     private EditComponent authorName;
     private EditComponent authorSurename;
     private EditComponent authorBornYear;
-    private EditComponent extendBookWeeks;
+//    private EditComponent extendBookWeeks;
     
     private ListAuthorsComponent addBookAuthorsList;
     private ListBooksComponent takeBookBooksList;
@@ -68,6 +69,12 @@ public class GuiApp extends JFrame{
     private ButtonComponent takeBookButton;
     private ButtonComponent extendBookButton;
     private ButtonComponent returnBookButton;
+    
+    private SpinnerComponent addBookCount;
+    private SpinnerComponent extendBookWeeks;
+    
+    private ButtonComponent testButton;
+    private SpinnerComponent testSpinner;
     
     public GuiApp() {
         initComponents();
@@ -87,19 +94,34 @@ public class GuiApp extends JFrame{
         tabs.setMaximumSize(tabs.getPreferredSize());
         this.add(tabs);
         
+        JPanel testTab = new JPanel();
+        tabs.addTab("Для тестов", testTab);
+            testSpinner = new SpinnerComponent(30, "лолкек", 100, 100);
+            testTab.add(testSpinner);
+            testButton = new ButtonComponent("", 30, 100);
+            testTab.add(testButton);
+            testButton.getButton().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    System.out.println(testSpinner.getSpinner().getValue());
+                    System.out.println(testSpinner.getSpinner().getValue().getClass());
+                }
+                });
+        
+//<editor-fold>
         JPanel addReaderPanel = new JPanel();
         tabs.addTab("Добавить читателя", addReaderPanel);
-            addReaderCaption = new LabelComponent(WINDOW_WIDTH, 50, "Добавление читателя", 18, 1);
+            addReaderCaption = new LabelComponent(50, "Добавление читателя", 18, 1);
             addReaderPanel.add(addReaderCaption);
-            addReaderInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о добавлении читателя", 14, 0);
+            addReaderInfo = new LabelComponent(30, "Информация о добавлении читателя", 14, 0);
             addReaderPanel.add(addReaderInfo);
-            readerName = new EditComponent(250, "Имя читателя", WINDOW_WIDTH, 30);
+            readerName = new EditComponent(250, "Имя читателя", 30);
             addReaderPanel.add(readerName);
-            readerSurename = new EditComponent(250, "Фамилия читателя", WINDOW_WIDTH, 30);
+            readerSurename = new EditComponent(250, "Фамилия читателя", 30);
             addReaderPanel.add(readerSurename);
-            readerPhone = new EditComponent(250, "Телефон читателя", WINDOW_WIDTH, 30);
+            readerPhone = new EditComponent(250, "Телефон читателя", 30);
             addReaderPanel.add(readerPhone);
-            addReaderButton = new ButtonComponent("Добавить читателя", WINDOW_WIDTH, 30, 150);
+            addReaderButton = new ButtonComponent("Добавить читателя", 30, 150);
             addReaderPanel.add(addReaderButton);
             addReaderButton.getButton().addActionListener(new ActionListener() {
                 @Override
@@ -146,19 +168,23 @@ public class GuiApp extends JFrame{
         
         JPanel addBookPanel = new JPanel();
         tabs.addTab("Добавить книгу", addBookPanel);
-            addBookCaption = new LabelComponent(WINDOW_WIDTH, 50, "Добавление книги", 18, 1);
+            addBookCaption = new LabelComponent(50, "Добавление книги", 18, 1);
             addBookPanel.add(addBookCaption);
-            addBookInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о добавлении книги", 14, 0);
+            addBookInfo = new LabelComponent(30, "Информация о добавлении книги", 14, 0);
             addBookPanel.add(addBookInfo);
-            addBookTitle = new EditComponent(250, "Название книги", WINDOW_WIDTH, 30);
+            addBookTitle = new EditComponent(250, "Название книги", 30);
             addBookPanel.add(addBookTitle);
-            addBookAuthorsList = new ListAuthorsComponent(250, "Список авторов", WINDOW_WIDTH, 150);
+            addBookAuthorsList = new ListAuthorsComponent(250, "Список авторов", 150);
             addBookPanel.add(addBookAuthorsList);
-            pubslishingYear = new EditComponent(250, "Год публикации", WINDOW_WIDTH, 30);
+            pubslishingYear = new EditComponent(250, "Год публикации", 30);
             addBookPanel.add(pubslishingYear);
-            count = new EditComponent(250, "Количество книг", WINDOW_WIDTH, 30);
-            addBookPanel.add(count);
-            addBookButton = new ButtonComponent("Добавить книгу", WINDOW_WIDTH, 30, 150);
+            
+//            count = new EditComponent(250, "Количество книг", 30);
+//            addBookPanel.add(count);
+            addBookCount = new SpinnerComponent(30, "Количество книг", 100, 50);
+            addBookPanel.add(addBookCount);
+            
+            addBookButton = new ButtonComponent("Добавить книгу", 30, 150);
             addBookPanel.add(addBookButton);
             addBookButton.getButton().addActionListener(new ActionListener() {
                 @Override
@@ -182,23 +208,30 @@ public class GuiApp extends JFrame{
                     }
                     book.setAuthors(bookAuthors);
                     
-                    try {
-                        book.setPublishYear(Integer.parseInt(pubslishingYear.getEditor().getText().trim()));
-                    } catch (Exception e) {
-                        System.out.println("Проблема с годом");
+                    if (pubslishingYear.getEditor().getText().trim().isEmpty()) {
                         addBookInfo.getLabel().setForeground(Color.red);
                         addBookInfo.getLabel().setText("Введите год публикации книги");
                         return;
                     }
                     
                     try {
-                        book.setCount(Integer.parseInt(count.getEditor().getText().trim()));
+                        book.setPublishYear(Integer.parseInt(pubslishingYear.getEditor().getText().trim()));
                     } catch (Exception e) {
-                        System.out.println("Проблема с количеством");
+                        System.out.println("Проблема с годом");
                         addBookInfo.getLabel().setForeground(Color.red);
-                        addBookInfo.getLabel().setText("Введите количество книг");
+                        addBookInfo.getLabel().setText("Введите год публикации книги цифрами");
                         return;
                     }
+                    
+//                    try {
+//                        book.setCount(Integer.parseInt(count.getEditor().getText().trim()));
+//                    } catch (Exception e) {
+//                        System.out.println("Проблема с количеством");
+//                        addBookInfo.getLabel().setForeground(Color.red);
+//                        addBookInfo.getLabel().setText("Введите количество книг");
+//                        return;
+//                    }
+                    book.setCount((int) addBookCount.getSpinner().getValue());
                     
                     BookFacade bookFacade = new BookFacade(Book.class);
                     try {
@@ -208,7 +241,7 @@ public class GuiApp extends JFrame{
                         addBookTitle.getEditor().setText("");
                         addBookAuthorsList.getList().clearSelection();
                         pubslishingYear.getEditor().setText("");
-                        count.getEditor().setText("");
+//                        count.getEditor().setText("");
                     } catch (Exception e) {
                         return;
                     }
@@ -217,17 +250,17 @@ public class GuiApp extends JFrame{
             
         JPanel addAuthorPanel = new JPanel();
         tabs.addTab("Добавить автора", addAuthorPanel);
-            addAuthorCaption = new LabelComponent(WINDOW_WIDTH, 50, "Добавление автора", 18, 1);
+            addAuthorCaption = new LabelComponent(50, "Добавление автора", 18, 1);
             addAuthorPanel.add(addAuthorCaption);
-            addAuthorInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о добавлении автора", 14, 0);
+            addAuthorInfo = new LabelComponent(30, "Информация о добавлении автора", 14, 0);
             addAuthorPanel.add(addAuthorInfo);
-            authorName = new EditComponent(250, "Имя автора", WINDOW_WIDTH, 30);
+            authorName = new EditComponent(250, "Имя автора", 30);
             addAuthorPanel.add(authorName);
-            authorSurename = new EditComponent(250, "Фамилия автора", WINDOW_WIDTH, 30);
+            authorSurename = new EditComponent(250, "Фамилия автора", 30);
             addAuthorPanel.add(authorSurename);
-            authorBornYear = new EditComponent(250, "Год рождения", WINDOW_WIDTH, 30);
+            authorBornYear = new EditComponent(250, "Год рождения", 30);
             addAuthorPanel.add(authorBornYear);
-            addAuthorButton = new ButtonComponent("Добавить автора", WINDOW_WIDTH, 30, 150);
+            addAuthorButton = new ButtonComponent("Добавить автора", 30, 150);
             addAuthorPanel.add(addAuthorButton);
             addAuthorButton.getButton().addActionListener(new ActionListener() {
             @Override
@@ -275,15 +308,15 @@ public class GuiApp extends JFrame{
                 
         JPanel takeBookPanel = new JPanel();
         tabs.addTab("Взять книгу", takeBookPanel);
-            takeBookCaption = new LabelComponent(WINDOW_WIDTH, 30, "Взять книгу", 18, 1);
+            takeBookCaption = new LabelComponent(30, "Взять книгу", 18, 1);
             takeBookPanel.add(takeBookCaption);
-            takeBookInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о взятой книги", 14, 0);
+            takeBookInfo = new LabelComponent(30, "Информация о взятой книги", 14, 0);
             takeBookPanel.add(takeBookInfo);
-            takeBookBooksList = new ListBooksComponent(300, "Книги", WINDOW_WIDTH, 200);
+            takeBookBooksList = new ListBooksComponent(300, "Книги", 200);
             takeBookPanel.add(takeBookBooksList);
-            takeBookReadersList = new ListReadersComponent(300, "Читатели", WINDOW_WIDTH, 200);
+            takeBookReadersList = new ListReadersComponent(300, "Читатели", 200);
             takeBookPanel.add(takeBookReadersList);
-            takeBookButton = new ButtonComponent("Взять книгу", WINDOW_WIDTH, 30, 150);
+            takeBookButton = new ButtonComponent("Взять книгу", 30, 150);
             takeBookPanel.add(takeBookButton);
             takeBookButton.getButton().addActionListener(new ActionListener() {
                 @Override
@@ -330,15 +363,19 @@ public class GuiApp extends JFrame{
             
         JPanel extendBookPanel = new JPanel();
         tabs.addTab("Продлить книгу", extendBookPanel);
-            extendBookCaption = new LabelComponent(WINDOW_WIDTH, 30, "Продлить срок даты сдачи книги", 18, 1);
+            extendBookCaption = new LabelComponent(30, "Продлить срок даты сдачи книги", 18, 1);
             extendBookPanel.add(extendBookCaption);
-            extendBookInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о продлении книги", 14, 0);
+            extendBookInfo = new LabelComponent(30, "Информация о продлении книги", 14, 0);
             extendBookPanel.add(extendBookInfo);
-            extendBookList = new ListHistorysComponent(350, "Взятые книги", WINDOW_WIDTH, 150);
+            extendBookList = new ListHistorysComponent(350, "Взятые книги", 150);
             extendBookPanel.add(extendBookList);
-            extendBookWeeks = new EditComponent(350, "Количество недель", WINDOW_WIDTH, 30);
+            
+//            extendBookWeeks = new EditComponent(350, "Количество недель", 30);
+//            extendBookPanel.add(extendBookWeeks);
+            extendBookWeeks = new SpinnerComponent(30, "Количество недель", 100, 4);
             extendBookPanel.add(extendBookWeeks);
-            extendBookButton = new ButtonComponent("Продлить книгу", WINDOW_WIDTH, 30, 200);
+            
+            extendBookButton = new ButtonComponent("Продлить книгу", 30, 200);
             extendBookPanel.add(extendBookButton);
             extendBookButton.getButton().addActionListener(new ActionListener() {
                 @Override
@@ -354,15 +391,16 @@ public class GuiApp extends JFrame{
                     }
                     history = extendBookList.getList().getSelectedValue();
                     
-                    try {
-                        countWeeks = Math.abs(Integer.parseInt(extendBookWeeks.getEditor().getText().trim()));
-                    } catch (Exception e) {
-                        System.out.println("Проблема с неделями");
-                        extendBookInfo.getLabel().setForeground(Color.red);
-                        extendBookInfo.getLabel().setText("Введите срок продления");
-                        return;
-                    }
-                    
+//                    try {
+//                        countWeeks = Math.abs(Integer.parseInt(extendBookWeeks.getEditor().getText().trim()));
+//                    } catch (Exception e) {
+//                        System.out.println("Проблема с неделями");
+//                        extendBookInfo.getLabel().setForeground(Color.red);
+//                        extendBookInfo.getLabel().setText("Введите срок продления");
+//                        return;
+//                    }
+                    countWeeks = (int) extendBookWeeks.getSpinner().getValue();
+
                     history.setReturnDate(localdateToDate(dateToLocaldate(history.getReturnDate()).plusWeeks(countWeeks)));
                     
                     HistoryFacade historyFacade = new HistoryFacade(History.class);
@@ -371,22 +409,23 @@ public class GuiApp extends JFrame{
                         extendBookInfo.getLabel().setForeground(Color.green);
                         extendBookInfo.getLabel().setText("Срок сдачи книги успешно продлен");
                         extendBookList.getList().clearSelection();
-                        extendBookWeeks.getEditor().setText("");
+//                        extendBookWeeks.getEditor().setText("");
                     } catch (Exception e) {
                         System.out.println("Что-то пошло не так");
                     }
                 }
                 });
+//</editor-fold>
             
         JPanel returnBookPanel = new JPanel();
         tabs.addTab("Вернуть книгу", returnBookPanel);
-            returnBookCaption = new LabelComponent(WINDOW_WIDTH, 30, "Вернуть книгу", 18, 1);
+            returnBookCaption = new LabelComponent(30, "Вернуть книгу", 18, 1);
             returnBookPanel.add(returnBookCaption);
-            returnBookInfo = new LabelComponent(WINDOW_WIDTH, 30, "Информация о возвращении книги", 14, 0);
+            returnBookInfo = new LabelComponent(30, "Информация о возвращении книги", 14, 0);
             returnBookPanel.add(returnBookInfo);
-            returnBookBooksList = new ListBooksComponent(300, "Книги", WINDOW_WIDTH, 200);
+            returnBookBooksList = new ListBooksComponent(300, "Книги", 200);
             returnBookPanel.add(returnBookBooksList);
-            returnBookButton = new ButtonComponent("Вернуть книгу", WINDOW_WIDTH, 30, 150);
+            returnBookButton = new ButtonComponent("Вернуть книгу", 30, 150);
             returnBookPanel.add(returnBookButton);
             returnBookButton.getButton().addActionListener(new ActionListener() {
                 @Override
@@ -395,17 +434,17 @@ public class GuiApp extends JFrame{
                 }
                 });
             
-        JPanel changeBookPanel = new JPanel();
-        tabs.addTab("Изменить книгу", changeBookPanel);
-            //code..
-            
-        JPanel changeReaderPanel = new JPanel();
-        tabs.addTab("Изменить читателя", changeReaderPanel);
-            //code...
-            
-        JPanel changeAuthorPanel = new JPanel();
-        tabs.addTab("Изменить автора", changeAuthorPanel);
-            //code...
+//        JPanel changeBookPanel = new JPanel();
+//        tabs.addTab("Изменить книгу", changeBookPanel);
+//            //code...
+//            
+//        JPanel changeReaderPanel = new JPanel();
+//        tabs.addTab("Изменить читателя", changeReaderPanel);
+//            //code...
+//            
+//        JPanel changeAuthorPanel = new JPanel();
+//        tabs.addTab("Изменить автора", changeAuthorPanel);
+//            //code...
             
     }
     

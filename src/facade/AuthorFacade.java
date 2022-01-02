@@ -1,7 +1,7 @@
 
 package facade;
 
-import classes.Author;
+import entitys.Author;
 import tools.Singleton;
 import javax.persistence.EntityManager;
 

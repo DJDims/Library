@@ -1,5 +1,5 @@
 
-package classes;
+package entitys;
 
 import java.io.Serializable;
 import java.util.Date;

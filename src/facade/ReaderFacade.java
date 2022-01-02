@@ -1,7 +1,7 @@
 
 package facade;
 
-import classes.Reader;
+import entitys.Reader;
 import tools.Singleton;
 import javax.persistence.EntityManager;
 

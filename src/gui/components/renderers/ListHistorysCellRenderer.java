@@ -1,7 +1,7 @@
 
 package gui.components.renderers;
 
-import classes.History;
+import entitys.History;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.DefaultListCellRenderer;

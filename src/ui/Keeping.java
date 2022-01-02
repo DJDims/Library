@@ -3,10 +3,10 @@ package ui;
 
 import java.util.List;
 
-import classes.Author;
-import classes.Book;
-import classes.History;
-import classes.Reader;
+import entitys.Author;
+import entitys.Book;
+import entitys.History;
+import entitys.Reader;
 
 public interface Keeping {
     public void saveReaders(List <Reader> readersArray);

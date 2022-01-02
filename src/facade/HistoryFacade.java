@@ -1,7 +1,7 @@
 
 package facade;
 
-import classes.History;
+import entitys.History;
 import tools.Singleton;
 import javax.persistence.EntityManager;
 
