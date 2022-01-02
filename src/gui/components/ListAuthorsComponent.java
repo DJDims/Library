@@ -6,10 +6,10 @@ import facade.AuthorFacade;
 import gui.GuiApp;
 import gui.components.renderers.ListAuthorsCellRenderer;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -30,13 +30,9 @@ public class ListAuthorsComponent extends JPanel{
         this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         title = new JLabel(text);
-        title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
-        title.setMinimumSize(title.getPreferredSize());
-        title.setMaximumSize(title.getPreferredSize());
-        title.setHorizontalAlignment(JLabel.RIGHT);
         title.setAlignmentY(TOP_ALIGNMENT);
         title.setFont(new Font("Tahoma", 0, 12));
         this.add(title);

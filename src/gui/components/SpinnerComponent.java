@@ -4,6 +4,7 @@ package gui.components;
 import gui.GuiApp;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,12 +25,9 @@ public class SpinnerComponent extends JPanel{
         this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         label = new JLabel(text);
-        label.setPreferredSize(new Dimension((GuiApp.WINDOW_WIDTH/3), heightPanel));
-        label.setMinimumSize(label.getPreferredSize());
-        label.setMaximumSize(label.getPreferredSize());
         label.setHorizontalAlignment(JLabel.RIGHT);
         label.setFont(new Font("Tahoma", 0, 12));
         this.add(label);

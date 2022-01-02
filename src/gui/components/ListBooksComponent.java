@@ -6,6 +6,7 @@ import facade.BookFacade;
 import gui.GuiApp;
 import gui.components.renderers.ListBooksCellRenderer;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.Box;
@@ -30,13 +31,9 @@ public class ListBooksComponent extends JPanel{
         this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
-        this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         title = new JLabel(text);
-        title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
-        title.setMinimumSize(title.getPreferredSize());
-        title.setMaximumSize(title.getPreferredSize());
-        title.setHorizontalAlignment(JLabel.RIGHT);
         title.setAlignmentY(TOP_ALIGNMENT);
         title.setFont(new Font("Tahoma", 0, 12));
         this.add(title);

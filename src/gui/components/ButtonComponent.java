@@ -3,8 +3,7 @@ package gui.components;
 
 import gui.GuiApp;
 import java.awt.Dimension;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,12 +18,12 @@ public class ButtonComponent extends JPanel{
        this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
        this.setMinimumSize(this.getPreferredSize());
        this.setMaximumSize(this.getPreferredSize());
-       this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+       this.setLayout(new FlowLayout(FlowLayout.CENTER));
        
-       this.add(Box.createRigidArea(new Dimension((GuiApp.WINDOW_WIDTH/2) - (widthButton/2), 0)));
+//       this.add(Box.createRigidArea(new Dimension((GuiApp.WINDOW_WIDTH/2) - (widthButton/2), 0)));
        
        button = new JButton(text);
-       button.setPreferredSize(new Dimension(widthButton, 27));
+       button.setPreferredSize(new Dimension(widthButton, 25));
        button.setMinimumSize(button.getPreferredSize());
        button.setMaximumSize(button.getPreferredSize());
        this.add(button);

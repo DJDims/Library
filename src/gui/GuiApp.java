@@ -96,17 +96,7 @@ public class GuiApp extends JFrame{
         
         JPanel testTab = new JPanel();
         tabs.addTab("Для тестов", testTab);
-            testSpinner = new SpinnerComponent(30, "лолкек", 100, 100);
-            testTab.add(testSpinner);
-            testButton = new ButtonComponent("", 30, 100);
-            testTab.add(testButton);
-            testButton.getButton().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    System.out.println(testSpinner.getSpinner().getValue());
-                    System.out.println(testSpinner.getSpinner().getValue().getClass());
-                }
-                });
+            
         
 //<editor-fold>
         JPanel addReaderPanel = new JPanel();
