@@ -1,7 +1,6 @@
 
 package gui.components.renderers;
 
-import entitys.Author;
 import entitys.Reader;
 import java.awt.Color;
 import java.awt.Component;

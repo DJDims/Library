@@ -10,8 +10,8 @@ import facade.BookFacade;
 import facade.HistoryFacade;
 import facade.ReaderFacade;
 import gui.components.ButtonComponent;
-import gui.components.LabelComponent;
 import gui.components.EditComponent;
+import gui.components.LabelComponent;
 import gui.components.ListAuthorsComponent;
 import gui.components.ListBooksComponent;
 import gui.components.ListHistorysComponent;
@@ -19,12 +19,14 @@ import gui.components.ListReadersComponent;
 import gui.components.SpinnerComponent;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -96,17 +98,13 @@ public class GuiApp extends JFrame{
         
         JPanel testTab = new JPanel();
         tabs.addTab("Для тестов", testTab);
-            testSpinner = new SpinnerComponent(30, "лолкек", 100, 100);
-            testTab.add(testSpinner);
-            testButton = new ButtonComponent("", 30, 100);
-            testTab.add(testButton);
-            testButton.getButton().addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    System.out.println(testSpinner.getSpinner().getValue());
-                    System.out.println(testSpinner.getSpinner().getValue().getClass());
-                }
-                });
+            JPanel a = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+            a.setPreferredSize(new Dimension(WINDOW_WIDTH, 30));
+            JButton bc = new JButton("aaaa");
+            JButton bc2 = new JButton("aaaaaaaaaaaa");
+            a.add(bc);
+            a.add(bc2);
+            testTab.add(a);
         
 //<editor-fold>
         JPanel addReaderPanel = new JPanel();
