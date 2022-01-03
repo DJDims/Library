@@ -30,6 +30,9 @@ public class History implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
     
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date returnedDate;
+    
     private boolean expired;
 
     public Long getId() {
@@ -70,6 +73,14 @@ public class History implements Serializable{
 
     public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public Date getReturnedDate() {
+        return returnedDate;
+    }
+
+    public void setReturnedDate(Date returnedDate) {
+        this.returnedDate = returnedDate;
     }
 
     public void setExpired(){

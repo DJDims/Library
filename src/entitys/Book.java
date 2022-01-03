@@ -19,6 +19,7 @@ public class Book implements Serializable {
     @OneToOne
     private List<Author> authors;
     private int publishYear;
+    private int quantity;
     private int count;
 
     public Book() {
@@ -60,6 +61,14 @@ public class Book implements Serializable {
         return count;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+    
     public void setCount(int count) {
         this.count = count;
     }
