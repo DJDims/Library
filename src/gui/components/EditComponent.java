@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class EditComponent extends JPanel{
-    private JLabel title;
+    private JLabel label;
     private JTextField editor;
     
     public EditComponent(int widthEditor, String text, int heightPanel) {
@@ -24,13 +24,13 @@ public class EditComponent extends JPanel{
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
-        title = new JLabel(text);
-        title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
-        title.setMinimumSize(title.getPreferredSize());
-        title.setMaximumSize(title.getPreferredSize());
-        title.setHorizontalAlignment(JLabel.RIGHT);
-        title.setFont(new Font("Tahoma", 0, 12));
-        this.add(title);
+        label = new JLabel(text);
+        label.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
+        label.setMinimumSize(label.getPreferredSize());
+        label.setMaximumSize(label.getPreferredSize());
+        label.setHorizontalAlignment(JLabel.RIGHT);
+        label.setFont(new Font("Tahoma", 0, 12));
+        this.add(label);
         
         this.add(Box.createRigidArea(new Dimension(10,0)));
         

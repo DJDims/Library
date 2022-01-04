@@ -1,10 +1,10 @@
 
-package gui.components;
+package gui.components.Lists;
 
-import entitys.Reader;
-import facade.ReaderFacade;
+import entitys.Book;
+import facade.BookFacade;
 import gui.GuiApp;
-import gui.components.renderers.ListReadersCellRenderer;
+import gui.components.renderers.ListBooksCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -18,11 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-public class ListReadersComponent extends JPanel{
+public class ListBooksComponent extends JPanel{
     private JLabel title;
-    private JList<Reader> list;
+    private JList<Book> list;
     
-    public ListReadersComponent(int widthList, String text, int heightPanel) {
+    public ListBooksComponent(int widthList, String text, int heightPanel) {
         initComponents(widthList, text, heightPanel);
     }
 
@@ -45,7 +45,7 @@ public class ListReadersComponent extends JPanel{
         
         list = new JList<>();
         list.setModel(getListModel());
-        list.setCellRenderer(new ListReadersCellRenderer());
+        list.setCellRenderer(new ListBooksCellRenderer());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         
@@ -58,17 +58,17 @@ public class ListReadersComponent extends JPanel{
         this.add(scrollPane);
     }
 
-    private ListModel<Reader> getListModel() {
-        ReaderFacade readerFacade = new ReaderFacade(Reader.class);
-        List<Reader> readersArray = readerFacade.findAll();
-        DefaultListModel<Reader> defaultListModel = new DefaultListModel<>();
-        for (Reader readersArray1 : readersArray) {
-            defaultListModel.addElement(readersArray1);
+    private ListModel<Book> getListModel() {
+        BookFacade bookFacade = new BookFacade(Book.class);
+        List<Book> booksArray = bookFacade.findAll();
+        DefaultListModel<Book> defaultListModel = new DefaultListModel<>();
+        for (Book booksArray1 : booksArray) {
+            defaultListModel.addElement(booksArray1);
         }
         return defaultListModel;
     }
     
-    public JList<Reader> getList() {
+    public JList<Book> getList() {
         return list;
     }
 }

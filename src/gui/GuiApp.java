@@ -10,12 +10,13 @@ import facade.BookFacade;
 import facade.HistoryFacade;
 import facade.ReaderFacade;
 import gui.components.ButtonComponent;
+import gui.components.ComboboxAuthorsComponent;
 import gui.components.EditComponent;
 import gui.components.LabelComponent;
-import gui.components.ListAuthorsComponent;
-import gui.components.ListBooksComponent;
-import gui.components.ListHistorysComponent;
-import gui.components.ListReadersComponent;
+import gui.components.Lists.ListAuthorsComponent;
+import gui.components.Lists.ListBooksComponent;
+import gui.components.Lists.ListHistorysComponent;
+import gui.components.Lists.ListReadersComponent;
 import gui.components.SpinnerComponent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -71,12 +72,6 @@ public class GuiApp extends JFrame{
     private EditComponent changeAuthorSurname;
     private EditComponent changeAuthorBornYear;
     
-    private ListAuthorsComponent addBookAuthorsList;
-    private ListBooksComponent takeBookBooksList;
-    private ListReadersComponent takeBookReadersList;
-    private ListHistorysComponent extendBookBooksList;
-    private ListBooksComponent returnBookBooksList;
-    
     private ButtonComponent addReaderButton;
     private ButtonComponent addBookButton;
     private ButtonComponent addAuthorButton;
@@ -86,8 +81,17 @@ public class GuiApp extends JFrame{
     private ButtonComponent changeReaderButton;
     private ButtonComponent changeAuthorButton;
     
+    private ListAuthorsComponent addBookAuthorsList;
+    private ListBooksComponent takeBookBooksList;
+    private ListReadersComponent takeBookReadersList;
+    private ListHistorysComponent extendBookBooksList;
+    private ListBooksComponent returnBookBooksList;
+    
+    
     private SpinnerComponent addBookCount;
     private SpinnerComponent extendBookWeeks;
+    
+    private ComboboxAuthorsComponent changeAuthorCombobox;
     
     public GuiApp() {
         initComponents();
@@ -453,6 +457,8 @@ public class GuiApp extends JFrame{
             changeAuthorPanel.add(changeAuthorCaption);
             changeAuthorInfo = new LabelComponent(30, "Данные о изменении автора", 14, 0);
             changeAuthorPanel.add(changeAuthorInfo);
+            changeAuthorCombobox = new ComboboxAuthorsComponent(30, "Авторы", 350);
+            changeAuthorPanel.add(changeAuthorCombobox);
             changeAuthorName = new EditComponent(100, "Имя", 30);
             changeAuthorPanel.add(changeAuthorName);
             changeAuthorSurname = new EditComponent(100, "Фамилия", 30);
@@ -461,31 +467,44 @@ public class GuiApp extends JFrame{
             changeAuthorPanel.add(changeAuthorBornYear);
             changeAuthorButton = new ButtonComponent("Обновить данные", 30, 150);
             changeAuthorPanel.add(changeAuthorButton);
+            
+            changeAuthorCombobox.getCombobox().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    Author author = (Author) changeAuthorCombobox.getCombobox().getSelectedItem();
+                    changeAuthorName.getEditor().setText(author.getName());
+                    changeAuthorSurname.getEditor().setText(author.getSurename());
+                    changeAuthorBornYear.getEditor().setText(Integer.toString(author.getBornYear()));
+                }
+            });
+            
             changeAuthorButton.getButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
+                    Author author = (Author) changeAuthorCombobox.getCombobox().getSelectedItem();
+                    
                     if (changeAuthorName.getEditor().getText().trim().isEmpty()) {
                         editLabel("Введите имя читателя", changeAuthorInfo, Color.red);
                         return;
                     }
-//                    reader.setFirstname(changeAuthorName.getEditor().getText().trim());
+                    author.setName(changeAuthorName.getEditor().getText().trim());
                     
                     if (changeAuthorSurname.getEditor().getText().trim().isEmpty()) {
                         editLabel("Введите фамилию читателя", changeAuthorInfo, Color.red);
                         return;
                     }
-//                    reader.setSurename(changeAuthorSurname.getEditor().getText().trim());
+                    author.setSurename(changeAuthorSurname.getEditor().getText().trim());
                     
                     if (changeAuthorBornYear.getEditor().getText().trim().isEmpty()) {
                         editLabel("Введите телефон читателя", changeAuthorInfo, Color.red);
                         return;
                     }
-//                    reader.setPhoneNumber(changeAuthorBornYear.getEditor().getText().trim());
+                    author.setBornYear(Integer.parseInt(changeAuthorBornYear.getEditor().getText().trim()));
                     
-                    ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+                    AuthorFacade authorFacade = new AuthorFacade(Author.class);
                     try {
-//                        readerFacade.edit(reader);
-                        editLabel("Читатель успешно обновлен", changeAuthorInfo, Color.green);
+                        authorFacade.edit(author);
+                        editLabel("Автор успешно обновлен", changeAuthorInfo, Color.green);
                         changeAuthorName.getEditor().setText("");
                         changeAuthorSurname.getEditor().setText("");
                         changeAuthorBornYear.getEditor().setText("");

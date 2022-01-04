@@ -1,10 +1,10 @@
 
-package gui.components;
+package gui.components.Lists;
 
-import entitys.History;
-import facade.HistoryFacade;
+import entitys.Reader;
+import facade.ReaderFacade;
 import gui.GuiApp;
-import gui.components.renderers.ListHistorysCellRenderer;
+import gui.components.renderers.ListReadersCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -18,11 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-public class ListHistorysComponent extends JPanel{
+public class ListReadersComponent extends JPanel{
     private JLabel title;
-    private JList<History> list;
+    private JList<Reader> list;
     
-    public ListHistorysComponent(int widthList, String text, int heightPanel) {
+    public ListReadersComponent(int widthList, String text, int heightPanel) {
         initComponents(widthList, text, heightPanel);
     }
 
@@ -45,7 +45,7 @@ public class ListHistorysComponent extends JPanel{
         
         list = new JList<>();
         list.setModel(getListModel());
-        list.setCellRenderer(new ListHistorysCellRenderer());
+        list.setCellRenderer(new ListReadersCellRenderer());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         
@@ -58,17 +58,17 @@ public class ListHistorysComponent extends JPanel{
         this.add(scrollPane);
     }
 
-    private ListModel<History> getListModel() {
-        HistoryFacade historyFacade = new HistoryFacade(History.class);
-        List<History> historysArray = historyFacade.findAll();
-        DefaultListModel<History> defaultListModel = new DefaultListModel<>();
-        for (History historysArray1 : historysArray) {
-            defaultListModel.addElement(historysArray1);
+    private ListModel<Reader> getListModel() {
+        ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+        List<Reader> readersArray = readerFacade.findAll();
+        DefaultListModel<Reader> defaultListModel = new DefaultListModel<>();
+        for (Reader readersArray1 : readersArray) {
+            defaultListModel.addElement(readersArray1);
         }
         return defaultListModel;
     }
     
-    public JList<History> getList() {
+    public JList<Reader> getList() {
         return list;
     }
 }

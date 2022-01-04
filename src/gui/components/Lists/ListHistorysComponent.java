@@ -1,10 +1,10 @@
 
-package gui.components;
+package gui.components.Lists;
 
-import entitys.Author;
-import facade.AuthorFacade;
+import entitys.History;
+import facade.HistoryFacade;
 import gui.GuiApp;
-import gui.components.renderers.ListAuthorsCellRenderer;
+import gui.components.renderers.ListHistorysCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -18,11 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-public class ListAuthorsComponent extends JPanel{
+public class ListHistorysComponent extends JPanel{
     private JLabel title;
-    private JList<Author> list;
+    private JList<History> list;
     
-    public ListAuthorsComponent(int widthList, String text, int heightPanel) {
+    public ListHistorysComponent(int widthList, String text, int heightPanel) {
         initComponents(widthList, text, heightPanel);
     }
 
@@ -45,8 +45,8 @@ public class ListAuthorsComponent extends JPanel{
         
         list = new JList<>();
         list.setModel(getListModel());
-        list.setCellRenderer(new ListAuthorsCellRenderer());
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        list.setCellRenderer(new ListHistorysCellRenderer());
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         
         JScrollPane scrollPane = new JScrollPane(list);
@@ -58,17 +58,17 @@ public class ListAuthorsComponent extends JPanel{
         this.add(scrollPane);
     }
 
-    private ListModel<Author> getListModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
-        List<Author> authorsArray = authorFacade.findAll();
-        DefaultListModel<Author> defaultListModel = new DefaultListModel<>();
-        for (Author authorsArray1 : authorsArray) {
-            defaultListModel.addElement(authorsArray1);
+    private ListModel<History> getListModel() {
+        HistoryFacade historyFacade = new HistoryFacade(History.class);
+        List<History> historysArray = historyFacade.findAll();
+        DefaultListModel<History> defaultListModel = new DefaultListModel<>();
+        for (History historysArray1 : historysArray) {
+            defaultListModel.addElement(historysArray1);
         }
         return defaultListModel;
     }
     
-    public JList<Author> getList() {
+    public JList<History> getList() {
         return list;
     }
 }
