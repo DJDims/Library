@@ -22,17 +22,17 @@ public class ListBooksComponent extends JPanel{
     private JLabel title;
     private JList<Book> list;
     
-    public ListBooksComponent(int widthList, String text, int heightPanel) {
-        initComponents(widthList, text, heightPanel);
+    public ListBooksComponent(int widthList, int heightPanel) {
+        initComponents(widthList, heightPanel);
     }
 
-    private void initComponents(int widthList, String text, int heightPanel) {
+    private void initComponents(int widthList, int heightPanel) {
         this.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH, heightPanel));
         this.setMinimumSize(this.getPreferredSize());
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
-        title = new JLabel(text);
+        title = new JLabel("Список книг");
         title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
         title.setMinimumSize(title.getPreferredSize());
         title.setMaximumSize(title.getPreferredSize());

@@ -1,10 +1,10 @@
 
 package gui.components;
 
-import entitys.Author;
-import facade.AuthorFacade;
+import entitys.Book;
+import facade.BookFacade;
 import gui.GuiApp;
-import gui.components.renderers.ComboxAuthorsRenderer;
+import gui.components.renderers.ComboxBooksRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -16,11 +16,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ComboboxAuthorsComponent extends JPanel{
+public class ComboboxBooksComponent extends JPanel{
     JLabel label;
     JComboBox combobox;
     
-    public ComboboxAuthorsComponent(int heightPanel, int comboboxWidth) {
+    public ComboboxBooksComponent(int heightPanel, int comboboxWidth) {
         initComponents(heightPanel, comboboxWidth);
     }
     
@@ -30,7 +30,7 @@ public class ComboboxAuthorsComponent extends JPanel{
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
-        label = new JLabel("Список авторов");
+        label = new JLabel("Список книг");
         label.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, heightPanel));
         label.setMinimumSize(label.getPreferredSize());
         label.setMaximumSize(label.getPreferredSize());
@@ -45,16 +45,16 @@ public class ComboboxAuthorsComponent extends JPanel{
         combobox.setMinimumSize(combobox.getPreferredSize());
         combobox.setMaximumSize(combobox.getPreferredSize());
         combobox.setModel(getComboboxModel());
-        combobox.setRenderer(new ComboxAuthorsRenderer());
+        combobox.setRenderer(new ComboxBooksRenderer());
         this.add(combobox);
     }
 
-    private ComboBoxModel<Author> getComboboxModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
-        List<Author> authorsArray = authorFacade.findAll();
-        DefaultComboBoxModel<Author> defaultComboBoxModel = new DefaultComboBoxModel<>();
-        for (Author authorsArray1 : authorsArray) {
-            defaultComboBoxModel.addElement(authorsArray1);
+    private ComboBoxModel<Book> getComboboxModel() {
+        BookFacade bookFacade = new BookFacade(Book.class);
+        List<Book> booksArray = bookFacade.findAll();
+        DefaultComboBoxModel<Book> defaultComboBoxModel = new DefaultComboBoxModel<>();
+        for (Book booksArray1 : booksArray) {
+            defaultComboBoxModel.addElement(booksArray1);
         }
         return defaultComboBoxModel;
     }
