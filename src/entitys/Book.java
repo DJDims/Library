@@ -57,16 +57,16 @@ public class Book implements Serializable {
         this.publishYear = publishYear;
     }
 
-    public int getCount() {
-        return count;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+    
+    public int getCount() {
+        return count;
     }
     
     public void setCount(int count) {

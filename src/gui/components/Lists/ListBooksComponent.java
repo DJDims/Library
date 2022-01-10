@@ -63,7 +63,9 @@ public class ListBooksComponent extends JPanel{
         List<Book> booksArray = bookFacade.findAll();
         DefaultListModel<Book> defaultListModel = new DefaultListModel<>();
         for (Book booksArray1 : booksArray) {
-            defaultListModel.addElement(booksArray1);
+            if (booksArray1.getCount() > 0) {
+                defaultListModel.addElement(booksArray1);
+            }
         }
         return defaultListModel;
     }

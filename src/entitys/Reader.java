@@ -2,6 +2,7 @@
 package entitys;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -51,6 +52,52 @@ public class Reader implements Serializable{
 
     @Override
     public String toString() {
-        return "Reader{" + "firstname=" + firstname + ", surename=" + surename + ", phoneNumber=" + phoneNumber + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Reader{")
+                .append("firstname=")
+                .append(firstname)
+                .append(", surename=")
+                .append(surename)
+                .append(", phoneNumber=")
+                .append(phoneNumber)
+                .append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.firstname);
+        hash = 97 * hash + Objects.hashCode(this.surename);
+        hash = 97 * hash + Objects.hashCode(this.phoneNumber);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Reader other = (Reader) obj;
+        if (!Objects.equals(this.firstname, other.firstname)) {
+            return false;
+        }
+        if (!Objects.equals(this.surename, other.surename)) {
+            return false;
+        }
+        if (!Objects.equals(this.phoneNumber, other.phoneNumber)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 }

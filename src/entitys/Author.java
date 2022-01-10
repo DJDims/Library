@@ -50,7 +50,16 @@ public class Author implements Serializable {
 
     @Override
     public String toString() {
-        return "Author{" + "name=" + name + ", surename=" + surename + ", bornYear=" + bornYear + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Author{")
+                .append("name=")
+                .append(name)
+                .append(", surename=")
+                .append(surename)
+                .append(", bornYear=")
+                .append(bornYear)
+                .append('}');
+        return sb.toString();
     }
 
     @Override

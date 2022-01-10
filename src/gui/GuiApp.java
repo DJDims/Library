@@ -16,9 +16,6 @@ import facade.RoleFacade;
 import facade.UserFacade;
 import facade.UserRolesFacade;
 import gui.components.ButtonComponent;
-import gui.components.ComboboxAuthorsComponent;
-import gui.components.ComboboxBooksComponent;
-import gui.components.ComboboxReadersComponent;
 import gui.components.DoubleListComponent;
 import gui.components.EditComponent;
 import gui.components.LabelComponent;
@@ -40,6 +37,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class GuiApp extends JFrame{
     public static final int WINDOW_WIDTH = 1100;
@@ -68,12 +67,10 @@ public class GuiApp extends JFrame{
     private EditComponent addReaderSurename;
     private EditComponent addReaderPhone;
     private EditComponent addBookTitle;
-//    private EditComponent count;
     private EditComponent addBookPublishYear;
     private EditComponent addAuthorName;
     private EditComponent addAuthorSurename;
     private EditComponent addAuthorBornYear;
-//    private EditComponent extendBookWeeks;
     private EditComponent changeReaderName;
     private EditComponent changeReaderSurname;
     private EditComponent changeReaderPhone;
@@ -91,18 +88,17 @@ public class GuiApp extends JFrame{
     private ButtonComponent changeAuthorButton;
     
     private ListAuthorsComponent addBookAuthorsList;
+    private ListAuthorsComponent changeAuthorAuthorsList;
     private ListBooksComponent takeBookBooksList;
+    private ListBooksComponent changeBookBooksList;
     private ListReadersComponent takeBookReadersList;
+    private ListReadersComponent changeReaderReadersList;
     private ListHistorysComponent extendBookBooksList;
     private ListHistorysComponent extendBookHistorysList;
     
     
     private SpinnerComponent addBookCount;
     private SpinnerComponent extendBookWeeks;
-    
-    private ComboboxBooksComponent changeBookCombobox;
-    private ComboboxAuthorsComponent changeAuthorCombobox;
-    private ComboboxReadersComponent changeReaderCombobox;
     
     private UserFacade userFacade = new UserFacade();
     private RoleFacade roleFacade = new RoleFacade();
@@ -132,7 +128,9 @@ public class GuiApp extends JFrame{
         tabs.setMaximumSize(tabs.getPreferredSize());
         this.add(tabs);
         
-//<editor-fold>
+        JPanel login = new JPanel();
+        tabs.addTab("Вход", login);
+        
         JPanel addReaderPanel = new JPanel();
         tabs.addTab("Добавить читателя", addReaderPanel);
             addReaderCaption = new LabelComponent(30, "Добавление читателя", 18, 1);
@@ -193,12 +191,8 @@ public class GuiApp extends JFrame{
             addBookPanel.add(addBookAuthorsList);
             addBookPublishYear = new EditComponent(250, "Год публикации", 30);
             addBookPanel.add(addBookPublishYear);
-//------------------------------------------------------------------------------------------------------------------------------------
-//            count = new EditComponent(250, "Количество книг", 30);
-//            addBookPanel.add(count);
-            addBookCount = new SpinnerComponent(30, "Количество книг", 100, 50);
+            addBookCount = new SpinnerComponent(30, "Количество книг", 250, 50);
             addBookPanel.add(addBookCount);
-//------------------------------------------------------------------------------------------------------------------------------------
             addBookButton = new ButtonComponent("Добавить книгу", 30, 150);
             addBookPanel.add(addBookButton);
             addBookButton.getButton().addActionListener(new ActionListener() {
@@ -229,15 +223,9 @@ public class GuiApp extends JFrame{
                         editLabel("Введите год публикации книги цифрами", addBookInfo, Color.red);
                         return;
                     }
-//------------------------------------------------------------------------------------------------------------------------------------
-//                    try {
-//                        book.setCount(Integer.parseInt(count.getEditor().getText().trim()));
-//                    } catch (Exception e) {
-//                        editLabel("Введите количество книг", addBookInfo, Color.red);
-//                        return;
-//                    }
-//------------------------------------------------------------------------------------------------------------------------------------
-                    book.setCount((int) addBookCount.getSpinner().getValue());
+
+                    book.setQuantity((int) addBookCount.getSpinner().getValue());
+                    book.setCount(book.getQuantity());
                     
                     BookFacade bookFacade = new BookFacade();
                     try {
@@ -246,7 +234,7 @@ public class GuiApp extends JFrame{
                         addBookTitle.getEditor().setText("");
                         addBookAuthorsList.getList().clearSelection();
                         addBookPublishYear.getEditor().setText("");
-//                        count.getEditor().setText("");
+                        addBookCount.getSpinner().setValue(1);
                     } catch (Exception e) {
                     }
                 }
@@ -332,6 +320,10 @@ public class GuiApp extends JFrame{
                     history.setIssueDate(localdateToDate(LocalDate.now()));
                     history.setReturnDate(localdateToDate(LocalDate.now().plusWeeks(2)));
                     
+                    if (history.getBook().getCount() == 0) {
+                        editLabel("Экземпляры книги закончились", takeBookInfo, Color.red);
+                        return;
+                    }
                     history.getBook().takeBook();
                     
                     HistoryFacade historyFacade = new HistoryFacade();
@@ -357,9 +349,7 @@ public class GuiApp extends JFrame{
             extendBookBooksList = new ListHistorysComponent(350, 150);
             extendBookPanel.add(extendBookBooksList);
             
-//            extendBookWeeks = new EditComponent(350, "Количество недель", 30);
-//            extendBookPanel.add(extendBookWeeks);
-            extendBookWeeks = new SpinnerComponent(30, "Количество недель", 100, 4);
+            extendBookWeeks = new SpinnerComponent(30, "Количество недель", 350, 4);
             extendBookPanel.add(extendBookWeeks);
             
             extendBookButton = new ButtonComponent("Продлить книгу", 30, 200);
@@ -368,23 +358,14 @@ public class GuiApp extends JFrame{
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     History history;
-                    int countWeeks;
                     
                     if (extendBookBooksList.getList().isSelectionEmpty()) {
-                        System.out.println("Не выбрана запись");
                         editLabel("Выберите запись", extendBookInfo, Color.red);
                         return;
                     }
                     history = extendBookBooksList.getList().getSelectedValue();
-//------------------------------------------------------------------------------------------------------------------------------------
-//                    try {
-//                        countWeeks = Math.abs(Integer.parseInt(extendBookWeeks.getEditor().getText().trim()));
-//                    } catch (Exception e) {
-//                        editLabel("Введите срок продления", extendBookInfo, Color.red);
-//                        return;
-//                    }
-//------------------------------------------------------------------------------------------------------------------------------------
-                    countWeeks = (int) extendBookWeeks.getSpinner().getValue();
+
+                    int countWeeks = (int) extendBookWeeks.getSpinner().getValue();
 
                     history.setReturnDate(localdateToDate(dateToLocaldate(history.getReturnDate()).plusWeeks(countWeeks)));
                     
@@ -393,12 +374,10 @@ public class GuiApp extends JFrame{
                         historyFacade.edit(history);
                         editLabel("Срок сдачи книги успешно продлен", extendBookInfo, Color.green);
                         extendBookBooksList.getList().clearSelection();
-//                        extendBookWeeks.getEditor().setText("");
                     } catch (Exception e) {
                     }
                 }
             });
-//</editor-fold>
             
         JPanel returnBookPanel = new JPanel();
         tabs.addTab("Вернуть книгу", returnBookPanel);
@@ -413,7 +392,25 @@ public class GuiApp extends JFrame{
             returnBookButton.getButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
+                    if (extendBookHistorysList.getList().isSelectionEmpty()) {
+                        editLabel("Выберите запись для возвращения", returnBookInfo, Color.red);
+                        return;
+                    }
+                    History history = extendBookHistorysList.getList().getSelectedValue();
+                    history.setReturnedDate(localdateToDate(LocalDate.now()));
+                    Book book = history.getBook();
+                    book.returnBook();
                     
+                    HistoryFacade historyFacade = new HistoryFacade();
+                    BookFacade bookFacade = new BookFacade();
+                    try {
+                        historyFacade.edit(history);
+                        bookFacade.edit(book);
+//                        extendBookHistorysList.getList().;
+                        extendBookHistorysList.getList().clearSelection();
+                        editLabel("Книга успешно возвращена", returnBookInfo, Color.green);
+                    } catch (Exception e) {
+                    }
                 }
             });
             
@@ -423,8 +420,8 @@ public class GuiApp extends JFrame{
             changeBookPanel.add(changeBookCaption);
             changeBookInfo = new LabelComponent(30, "Данные об изменении книги", 14, 0);
             changeBookPanel.add(changeBookInfo);
-            changeBookCombobox = new ComboboxBooksComponent(30, 200);
-            changeBookPanel.add(changeBookCombobox);
+            changeBookBooksList = new ListBooksComponent(350, 100);
+            changeBookPanel.add(changeBookBooksList);
 //------------------------------------------------------------------------------------------------------------------------------------
             doubleListComponent = new DoubleListComponent();
             changeBookPanel.add(doubleListComponent);
@@ -436,8 +433,8 @@ public class GuiApp extends JFrame{
             changeReaderPanel.add(changeReaderCaption);
             changeReaderInfo = new LabelComponent(30, "Данные о изменении читателя", 14, 0);
             changeReaderPanel.add(changeReaderInfo);
-            changeReaderCombobox = new ComboboxReadersComponent(30, 350);
-            changeReaderPanel.add(changeReaderCombobox);
+            changeReaderReadersList = new ListReadersComponent(350, 100);
+            changeReaderPanel.add(changeReaderReadersList);
             changeReaderName = new EditComponent(350, "Имя", 30);
             changeReaderPanel.add(changeReaderName);
             changeReaderSurname = new EditComponent(350, "Фамилия", 30);
@@ -446,21 +443,19 @@ public class GuiApp extends JFrame{
             changeReaderPanel.add(changeReaderPhone);
             changeReaderButton = new ButtonComponent("Обновить данные", 30, 150);
             changeReaderPanel.add(changeReaderButton);
-//------------------------------------------------------------------------------------------------------------------------------------
-            changeReaderCombobox.getCombobox().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                Reader reader = (Reader) changeReaderCombobox.getCombobox().getSelectedItem();
-                changeReaderName.getEditor().setText(reader.getFirstname());
-                changeReaderSurname.getEditor().setText(reader.getSurename());
-                changeReaderPhone.getEditor().setText(reader.getPhoneNumber());
-            }
+            changeReaderReadersList.getList().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent lse) {
+                    Reader reader = (Reader) changeReaderReadersList.getList().getSelectedValue();
+                    changeReaderName.getEditor().setText(reader.getFirstname());
+                    changeReaderSurname.getEditor().setText(reader.getSurename());
+                    changeReaderPhone.getEditor().setText(reader.getPhoneNumber());
+                }
             });
-//------------------------------------------------------------------------------------------------------------------------------------
             changeReaderButton.getButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    Reader reader = (Reader) changeReaderCombobox.getCombobox().getSelectedItem();
+                    Reader reader = (Reader) changeReaderReadersList.getList().getSelectedValue();
                     
                     if (changeReaderName.getEditor().getText().trim().isEmpty()) {
                         editLabel("Введите имя читателя", changeReaderInfo, Color.red);
@@ -491,15 +486,14 @@ public class GuiApp extends JFrame{
                 }
             });
             
-//<editor-fold>
         JPanel changeAuthorPanel = new JPanel();
         tabs.addTab("Изменить автора", changeAuthorPanel);
             changeAuthorCaption = new LabelComponent(30, "Изменить автора", 18, 1);
             changeAuthorPanel.add(changeAuthorCaption);
             changeAuthorInfo = new LabelComponent(30, "Данные о изменении автора", 14, 0);
             changeAuthorPanel.add(changeAuthorInfo);
-            changeAuthorCombobox = new ComboboxAuthorsComponent(30, 350);
-            changeAuthorPanel.add(changeAuthorCombobox);
+            changeAuthorAuthorsList = new ListAuthorsComponent(350, 100);
+            changeAuthorPanel.add(changeAuthorAuthorsList);
             changeAuthorName = new EditComponent(350, "Имя", 30);
             changeAuthorPanel.add(changeAuthorName);
             changeAuthorSurname = new EditComponent(350, "Фамилия", 30);
@@ -508,22 +502,19 @@ public class GuiApp extends JFrame{
             changeAuthorPanel.add(changeAuthorBornYear);
             changeAuthorButton = new ButtonComponent("Обновить данные", 30, 150);
             changeAuthorPanel.add(changeAuthorButton);
-//------------------------------------------------------------------------------------------------------------------------------------
-            changeAuthorCombobox.getCombobox().addActionListener(new ActionListener() {
+            changeAuthorAuthorsList.getList().addListSelectionListener(new ListSelectionListener() {
                 @Override
-                public void actionPerformed(ActionEvent ae) {
-                    Author author = (Author) changeAuthorCombobox.getCombobox().getSelectedItem();
+                public void valueChanged(ListSelectionEvent lse) {
+                    Author author = (Author) changeAuthorAuthorsList.getList().getSelectedValue();
                     changeAuthorName.getEditor().setText(author.getName());
                     changeAuthorSurname.getEditor().setText(author.getSurename());
                     changeAuthorBornYear.getEditor().setText(Integer.toString(author.getBornYear()));
                 }
             });
-//------------------------------------------------------------------------------------------------------------------------------------
-
             changeAuthorButton.getButton().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
-                    Author author = (Author) changeAuthorCombobox.getCombobox().getSelectedItem();
+                    Author author = (Author) changeAuthorAuthorsList.getList().getSelectedValue();
                     
                     if (changeAuthorName.getEditor().getText().trim().isEmpty()) {
                         editLabel("Введите имя автора", changeAuthorInfo, Color.red);
@@ -590,7 +581,6 @@ public class GuiApp extends JFrame{
         label.getLabel().setForeground(color);
         label.getLabel().setText(text);
     }
-//</editor-fold>
 
     private void superAdmin() {
         List<User> users = userFacade.findAll();

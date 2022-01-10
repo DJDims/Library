@@ -63,7 +63,9 @@ public class ListHistorysComponent extends JPanel{
         List<History> historysArray = historyFacade.findAll();
         DefaultListModel<History> defaultListModel = new DefaultListModel<>();
         for (History historysArray1 : historysArray) {
-            defaultListModel.addElement(historysArray1);
+            if (historysArray1.getReturnedDate() == null) {
+                defaultListModel.addElement(historysArray1);
+            }
         }
         return defaultListModel;
     }
