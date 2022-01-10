@@ -50,7 +50,7 @@ public class ComboboxBooksComponent extends JPanel{
     }
 
     private ComboBoxModel<Book> getComboboxModel() {
-        BookFacade bookFacade = new BookFacade(Book.class);
+        BookFacade bookFacade = new BookFacade();
         List<Book> booksArray = bookFacade.findAll();
         DefaultComboBoxModel<Book> defaultComboBoxModel = new DefaultComboBoxModel<>();
         for (Book booksArray1 : booksArray) {

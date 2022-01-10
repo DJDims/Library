@@ -74,7 +74,7 @@ public class DoubleListComponent extends JPanel{
     }
     
     private ListModel<Author> getListBaseModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
+        AuthorFacade authorFacade = new AuthorFacade();
         List<Author> authorsArray = authorFacade.findAll();
         DefaultListModel<Author> defaultListModel = new DefaultListModel<>();
         for (Author authorsArray1 : authorsArray) {
@@ -84,7 +84,7 @@ public class DoubleListComponent extends JPanel{
     }
     
     private ListModel<Author> getListThisModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
+        AuthorFacade authorFacade = new AuthorFacade();
         List<Author> authorsArray = authorFacade.findAll();
         DefaultListModel<Author> defaultListModel = new DefaultListModel<>();
         for (Author authorsArray1 : authorsArray) {

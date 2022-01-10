@@ -59,7 +59,7 @@ public class ListReadersComponent extends JPanel{
     }
 
     private ListModel<Reader> getListModel() {
-        ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+        ReaderFacade readerFacade = new ReaderFacade();
         List<Reader> readersArray = readerFacade.findAll();
         DefaultListModel<Reader> defaultListModel = new DefaultListModel<>();
         for (Reader readersArray1 : readersArray) {

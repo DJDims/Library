@@ -50,7 +50,7 @@ public class ComboboxAuthorsComponent extends JPanel{
     }
 
     private ComboBoxModel<Author> getComboboxModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
+        AuthorFacade authorFacade = new AuthorFacade();
         List<Author> authorsArray = authorFacade.findAll();
         DefaultComboBoxModel<Author> defaultComboBoxModel = new DefaultComboBoxModel<>();
         for (Author authorsArray1 : authorsArray) {

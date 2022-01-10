@@ -1,16 +1,16 @@
 
 package facade;
 
-import entitys.Author;
+import entitys.Role;
 import tools.Singleton;
 import javax.persistence.EntityManager;
 
-public class AuthorFacade extends AbstractFacade<Author>{
+public class RoleFacade extends AbstractFacade<Role>{
     
     private EntityManager em;
 
-    public AuthorFacade() {
-        super(Author.class);
+    public RoleFacade() {
+        super(Role.class);
         init();
     }
     

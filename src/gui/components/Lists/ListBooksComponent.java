@@ -59,7 +59,7 @@ public class ListBooksComponent extends JPanel{
     }
 
     private ListModel<Book> getListModel() {
-        BookFacade bookFacade = new BookFacade(Book.class);
+        BookFacade bookFacade = new BookFacade();
         List<Book> booksArray = bookFacade.findAll();
         DefaultListModel<Book> defaultListModel = new DefaultListModel<>();
         for (Book booksArray1 : booksArray) {

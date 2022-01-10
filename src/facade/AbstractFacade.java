@@ -39,8 +39,4 @@ public abstract class AbstractFacade<T> {
         getEntityManager().getTransaction().commit();
     }
     
-//    public void deleteById(int id){
-//        getEntityManager().createQuery("DELETE FROM `book_author` WHERE Book_ID = " + id);
-//        getEntityManager().createQuery("DELETE FROM `book` WHERE ID = " + id);
-//    }
 }

@@ -50,7 +50,7 @@ public class ComboboxReadersComponent extends JPanel{
     }
 
     private ComboBoxModel<Reader> getComboboxModel() {
-        ReaderFacade readerFacade = new ReaderFacade(Reader.class);
+        ReaderFacade readerFacade = new ReaderFacade();
         List<Reader> readersArray = readerFacade.findAll();
         DefaultComboBoxModel<Reader> defaultComboBoxModel = new DefaultComboBoxModel<>();
         for (Reader readersArray1 : readersArray) {

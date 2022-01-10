@@ -30,10 +30,10 @@ public class App {
     }
     
     private void init(){
-        authorsFacade = new AuthorFacade(Author.class);
-        booksFacade = new BookFacade(Book.class);
-        historysFacade = new HistoryFacade(History.class);
-        readersFacade = new ReaderFacade(Reader.class);
+        authorsFacade = new AuthorFacade();
+        booksFacade = new BookFacade();
+        historysFacade = new HistoryFacade();
+        readersFacade = new ReaderFacade();
     }
         
     public void run(){

@@ -59,7 +59,7 @@ public class ListAuthorsComponent extends JPanel{
     }
 
     private ListModel<Author> getListModel() {
-        AuthorFacade authorFacade = new AuthorFacade(Author.class);
+        AuthorFacade authorFacade = new AuthorFacade();
         List<Author> authorsArray = authorFacade.findAll();
         DefaultListModel<Author> defaultListModel = new DefaultListModel<>();
         for (Author authorsArray1 : authorsArray) {

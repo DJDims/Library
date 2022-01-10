@@ -9,8 +9,8 @@ public class ReaderFacade extends AbstractFacade<Reader>{
     
     private EntityManager em;
 
-    public ReaderFacade(Class<Reader> entityClass) {
-        super(entityClass);
+    public ReaderFacade() {
+        super(Reader.class);
         init();
     }
     
