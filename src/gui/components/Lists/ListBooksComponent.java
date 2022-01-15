@@ -19,7 +19,7 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
 public class ListBooksComponent extends JPanel{
-    private JLabel title;
+    private JLabel label;
     private JList<Book> list;
     
     public ListBooksComponent(int widthList, int heightPanel) {
@@ -32,16 +32,13 @@ public class ListBooksComponent extends JPanel{
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
-        title = new JLabel("Список книг");
-        title.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
-        title.setMinimumSize(title.getPreferredSize());
-        title.setMaximumSize(title.getPreferredSize());
-        title.setHorizontalAlignment(JLabel.RIGHT);
-        title.setAlignmentY(TOP_ALIGNMENT);
-        title.setFont(new Font("Tahoma", 0, 12));
-        this.add(title);
-        
-        this.add(Box.createRigidArea(new Dimension(10,0)));
+        label = new JLabel("Список книг");
+        label.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
+        label.setMinimumSize(label.getPreferredSize());
+        label.setMaximumSize(label.getPreferredSize());
+        label.setHorizontalAlignment(JLabel.RIGHT);
+        label.setAlignmentY(TOP_ALIGNMENT);
+        label.setFont(new Font("Tahoma", 0, 12));
         
         list = new JList<>();
         list.setModel(getListModel());
@@ -55,6 +52,15 @@ public class ListBooksComponent extends JPanel{
         scrollPane.setMaximumSize(scrollPane.getPreferredSize());
         scrollPane.setAlignmentX(LEFT_ALIGNMENT);
         scrollPane.setAlignmentY(TOP_ALIGNMENT);
+
+        this.add(Box.createRigidArea(new Dimension(
+                this.getPreferredSize().width/2 - 
+                        scrollPane.getPreferredSize().width/2 - 
+                        label.getPreferredSize().width - 
+                        10
+                , 0)));
+        this.add(label);
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(scrollPane);
     }
 

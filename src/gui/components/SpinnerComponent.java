@@ -32,9 +32,6 @@ public class SpinnerComponent extends JPanel{
         label.setMaximumSize(label.getPreferredSize());
         label.setHorizontalAlignment(JLabel.RIGHT);
         label.setFont(new Font("Tahoma", 0, 12));
-        this.add(label);
-        
-        this.add(Box.createRigidArea(new Dimension(10, 0)));
         
         spinner = new JSpinner();
         spinner.setPreferredSize(new Dimension(widthSpinner, 30));
@@ -43,6 +40,15 @@ public class SpinnerComponent extends JPanel{
         spinner.setModel(new SpinnerNumberModel(1, 1, maxValue, 1));
         ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setEditable(false);
         ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setBackground(Color.white);
+        
+        this.add(Box.createRigidArea(new Dimension(
+                this.getPreferredSize().width/2 - 
+                        spinner.getPreferredSize().width/2 - 
+                        label.getPreferredSize().width - 
+                        10
+                , 0)));
+        this.add(label);
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(spinner);
     }
     
