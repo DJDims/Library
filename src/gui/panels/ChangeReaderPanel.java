@@ -8,7 +8,7 @@ import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.ButtonComponent;
 import gui.components.EditComponent;
 import gui.components.LabelComponent;
-import gui.components.Lists.ListReadersComponent;
+import gui.components.lists.ListReadersComponent;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -64,30 +64,30 @@ public class ChangeReaderPanel extends JPanel{
             public void actionPerformed(ActionEvent ae) {
                 Reader reader = (Reader) changeReaderReadersList.getList().getSelectedValue();
 
-                if (changeReaderName.getEditor().getText().trim().isEmpty()) {
+                if (changeReaderName.getText().isEmpty()) {
                     editLabel("Введите имя читателя", changeReaderInfo, Color.red);
                     return;
                 }
-                if (changeReaderSurname.getEditor().getText().trim().isEmpty()) {
+                if (changeReaderSurname.getText().isEmpty()) {
                     editLabel("Введите фамилию читателя", changeReaderInfo, Color.red);
                     return;
                 }
-                if (changeReaderPhone.getEditor().getText().trim().isEmpty()) {
+                if (changeReaderPhone.getText().isEmpty()) {
                     editLabel("Введите телефон читателя", changeReaderInfo, Color.red);
                     return;
                 }
 
-                reader.setFirstname(changeReaderName.getEditor().getText().trim());
-                reader.setSurename(changeReaderSurname.getEditor().getText().trim());
-                reader.setPhoneNumber(changeReaderPhone.getEditor().getText().trim());
+                reader.setFirstname(changeReaderName.getText());
+                reader.setSurename(changeReaderSurname.getText());
+                reader.setPhoneNumber(changeReaderPhone.getText());
 
                 ReaderFacade readerFacade = new ReaderFacade();
                 try {
                     readerFacade.edit(reader);
                     editLabel("Читатель успешно обновлен", changeReaderInfo, Color.green);
-                    changeReaderName.getEditor().setText("");
-                    changeReaderSurname.getEditor().setText("");
-                    changeReaderPhone.getEditor().setText("");
+                    changeReaderName.clear();
+                    changeReaderSurname.clear();
+                    changeReaderPhone.clear();
                 } catch (Exception e) {
                 }
             }

@@ -53,4 +53,12 @@ public class EditComponent extends JPanel{
         return editor;
     }
     
+    public String getText(){
+        return editor.getText().trim();
+    }
+    
+    public void clear(){
+        editor.setText("");
+    }
+    
 }

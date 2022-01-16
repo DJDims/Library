@@ -8,7 +8,7 @@ import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.ButtonComponent;
 import gui.components.EditComponent;
 import gui.components.LabelComponent;
-import gui.components.Lists.ListAuthorsComponent;
+import gui.components.lists.ListAuthorsComponent;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -64,30 +64,30 @@ public class ChangeAuthorPanel extends JPanel{
             public void actionPerformed(ActionEvent ae) {
                 Author author = (Author) changeAuthorAuthorsList.getList().getSelectedValue();
 
-                if (changeAuthorName.getEditor().getText().trim().isEmpty()) {
+                if (changeAuthorName.getText().isEmpty()) {
                     editLabel("Введите имя автора", changeAuthorInfo, Color.red);
                     return;
                 }
-                if (changeAuthorSurname.getEditor().getText().trim().isEmpty()) {
+                if (changeAuthorSurname.getText().isEmpty()) {
                     editLabel("Введите фамилию автора", changeAuthorInfo, Color.red);
                     return;
                 }
-                if (changeAuthorBornYear.getEditor().getText().trim().isEmpty()) {
+                if (changeAuthorBornYear.getText().isEmpty()) {
                     editLabel("Введите год рождения автора", changeAuthorInfo, Color.red);
                     return;
                 }
 
-                author.setName(changeAuthorName.getEditor().getText().trim());
-                author.setSurename(changeAuthorSurname.getEditor().getText().trim());
-                author.setBornYear(Integer.parseInt(changeAuthorBornYear.getEditor().getText().trim()));
+                author.setName(changeAuthorName.getText().trim());
+                author.setSurename(changeAuthorSurname.getText().trim());
+                author.setBornYear(Integer.parseInt(changeAuthorBornYear.getText().trim()));
 
                 AuthorFacade authorFacade = new AuthorFacade();
                 try {
                     authorFacade.edit(author);
                     editLabel("Автор успешно обновлен", changeAuthorInfo, Color.green);
-                    changeAuthorName.getEditor().setText("");
-                    changeAuthorSurname.getEditor().setText("");
-                    changeAuthorBornYear.getEditor().setText("");
+                    changeAuthorName.clear();
+                    changeAuthorSurname.clear();
+                    changeAuthorBornYear.clear();
                 } catch (Exception e) {
                 }
             }

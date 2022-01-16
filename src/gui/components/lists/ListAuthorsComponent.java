@@ -1,10 +1,10 @@
 
-package gui.components.Lists;
+package gui.components.lists;
 
-import entitys.History;
-import facade.HistoryFacade;
+import entitys.Author;
+import facade.AuthorFacade;
 import gui.GuiApp;
-import gui.components.renderers.ListHistorysCellRenderer;
+import gui.components.renderers.ListAuthorsCellRenderer;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
@@ -18,11 +18,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 
-public class ListHistorysComponent extends JPanel{
+public class ListAuthorsComponent extends JPanel{
     private JLabel label;
-    private JList<History> list;
+    private JList<Author> list;
     
-    public ListHistorysComponent(int widthList, int heightPanel) {
+    public ListAuthorsComponent(int widthList, int heightPanel) {
         initComponents(widthList, heightPanel);
     }
 
@@ -32,7 +32,7 @@ public class ListHistorysComponent extends JPanel{
         this.setMaximumSize(this.getPreferredSize());
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         
-        label = new JLabel("Список историй");
+        label = new JLabel("Список авторов");
         label.setPreferredSize(new Dimension(GuiApp.WINDOW_WIDTH/3, 25));
         label.setMinimumSize(label.getPreferredSize());
         label.setMaximumSize(label.getPreferredSize());
@@ -42,8 +42,8 @@ public class ListHistorysComponent extends JPanel{
         
         list = new JList<>();
         list.setModel(getListModel());
-        list.setCellRenderer(new ListHistorysCellRenderer());
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setCellRenderer(new ListAuthorsCellRenderer());
+        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         list.setLayoutOrientation(JList.VERTICAL);
         
         JScrollPane scrollPane = new JScrollPane(list);
@@ -53,31 +53,28 @@ public class ListHistorysComponent extends JPanel{
         scrollPane.setAlignmentX(LEFT_ALIGNMENT);
         scrollPane.setAlignmentY(TOP_ALIGNMENT);
         
-
         this.add(Box.createRigidArea(new Dimension(
                 this.getPreferredSize().width/2 - 
                         scrollPane.getPreferredSize().width/2 - 
                         label.getPreferredSize().width - 
                         10
-                ,0)));
+                , 0)));
         this.add(label);
-        this.add(Box.createRigidArea(new Dimension(10,0)));
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(scrollPane);
     }
 
-    private ListModel<History> getListModel() {
-        HistoryFacade historyFacade = new HistoryFacade();
-        List<History> historysArray = historyFacade.findAll();
-        DefaultListModel<History> defaultListModel = new DefaultListModel<>();
-        for (History historysArray1 : historysArray) {
-            if (historysArray1.getReturnedDate() == null) {
-                defaultListModel.addElement(historysArray1);
-            }
+    private ListModel<Author> getListModel() {
+        AuthorFacade authorFacade = new AuthorFacade();
+        List<Author> authorsArray = authorFacade.findAll();
+        DefaultListModel<Author> defaultListModel = new DefaultListModel<>();
+        for (Author authorsArray1 : authorsArray) {
+            defaultListModel.addElement(authorsArray1);
         }
         return defaultListModel;
     }
     
-    public JList<History> getList() {
+    public JList<Author> getList() {
         return list;
     }
 }

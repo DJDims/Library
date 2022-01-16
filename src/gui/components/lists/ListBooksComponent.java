@@ -1,5 +1,5 @@
 
-package gui.components.Lists;
+package gui.components.lists;
 
 import entitys.Book;
 import facade.BookFacade;

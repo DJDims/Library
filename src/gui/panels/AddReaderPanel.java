@@ -49,30 +49,30 @@ public class AddReaderPanel extends JPanel{
             public void actionPerformed(ActionEvent ae) {
                 Reader reader = new Reader();
 
-                if (addReaderName.getEditor().getText().trim().isEmpty()) {
+                if (addReaderName.getText().isEmpty()) {
                     editLabel("Введите имя читателя", addReaderInfo, Color.red);
                     return;
                 }
-                if (addReaderSurename.getEditor().getText().trim().isEmpty()) {
+                if (addReaderSurename.getText().isEmpty()) {
                     editLabel("Введите фамилию читателя", addReaderInfo, Color.red);
                     return;
                 }
-                if (addReaderPhone.getEditor().getText().trim().isEmpty()) {
+                if (addReaderPhone.getText().isEmpty()) {
                     editLabel("Введите телефон читателя", addReaderInfo, Color.red);
                     return;
                 }
 
-                reader.setFirstname(addReaderName.getEditor().getText().trim());
-                reader.setSurename(addReaderSurename.getEditor().getText().trim());
-                reader.setPhoneNumber(addReaderPhone.getEditor().getText().trim());
+                reader.setFirstname(addReaderName.getText());
+                reader.setSurename(addReaderSurename.getText());
+                reader.setPhoneNumber(addReaderPhone.getText());
 
                 ReaderFacade readerFacade = new ReaderFacade();
                 try {
                     readerFacade.create(reader);
                     editLabel("Читатель успешно добавлен", addReaderInfo, Color.green);
-                    addReaderName.getEditor().setText("");
-                    addReaderSurename.getEditor().setText("");
-                    addReaderPhone.getEditor().setText("");
+                    addReaderName.clear();
+                    addReaderSurename.clear();
+                    addReaderPhone.clear();
                 } catch (Exception e) {
                 }
             }

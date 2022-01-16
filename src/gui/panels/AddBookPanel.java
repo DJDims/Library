@@ -9,7 +9,7 @@ import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.ButtonComponent;
 import gui.components.EditComponent;
 import gui.components.LabelComponent;
-import gui.components.Lists.ListAuthorsComponent;
+import gui.components.lists.ListAuthorsComponent;
 import gui.components.SpinnerComponent;
 import java.awt.Color;
 import javax.swing.JPanel;
@@ -65,16 +65,16 @@ public class AddBookPanel extends JPanel{
                     editLabel("Выберите автора(ов) книги", addBookInfo, Color.red);
                     return;
                 }
-                if (addBookPublishYear.getEditor().getText().trim().isEmpty()) {
+                if (addBookPublishYear.getText().isEmpty()) {
                     editLabel("Введите год публикации книги", addBookInfo, Color.red);
                     return;
                 }
 
-                book.setTitle(addBookTitle.getEditor().getText().trim());
+                book.setTitle(addBookTitle.getText());
                 book.setAuthors(bookAuthors);
 
                 try {
-                    book.setPublishYear(Integer.parseInt(addBookPublishYear.getEditor().getText().trim()));
+                    book.setPublishYear(Integer.parseInt(addBookPublishYear.getText().trim()));
                 } catch (Exception e) {
                     editLabel("Введите год публикации книги цифрами", addBookInfo, Color.red);
                     return;
@@ -87,9 +87,9 @@ public class AddBookPanel extends JPanel{
                 try {
                     bookFacade.create(book);
                     editLabel("Книга успешно добавлена", addBookInfo, Color.green);
-                    addBookTitle.getEditor().setText("");
+                    addBookTitle.clear();
                     addBookAuthorsList.getList().clearSelection();
-                    addBookPublishYear.getEditor().setText("");
+                    addBookPublishYear.clear();
                     addBookCount.getSpinner().setValue(1);
                 } catch (Exception e) {
                 }

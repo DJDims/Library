@@ -49,19 +49,19 @@ public class AddAuthorPanel extends JPanel{
             public void actionPerformed(ActionEvent ae) {
                 Author author = new Author();
 
-                if (addAuthorName.getEditor().getText().trim().isEmpty()) {
+                if (addAuthorName.getText().isEmpty()) {
                     editLabel("Введите имя автора", addAuthorInfo, Color.red);
                     return;
                 }
-                if (addAuthorSurename.getEditor().getText().trim().isEmpty()) {
+                if (addAuthorSurename.getText().isEmpty()) {
                     editLabel("Введите фамилию автора", addAuthorInfo, Color.red);
                     return;
                 }
-                author.setName(addAuthorName.getEditor().getText().trim());
-                author.setSurename(addAuthorSurename.getEditor().getText().trim());
+                author.setName(addAuthorName.getText());
+                author.setSurename(addAuthorSurename.getText());
 
                 try {
-                    author.setBornYear(Integer.parseInt(addAuthorBornYear.getEditor().getText().trim()));
+                    author.setBornYear(Integer.parseInt(addAuthorBornYear.getText()));
                 } catch (Exception e) {
                     editLabel("Введите год рождения автора", addAuthorInfo, Color.red);
                     return;
@@ -71,9 +71,9 @@ public class AddAuthorPanel extends JPanel{
                 try {
                     authorFacade.create(author);
                     editLabel("Автор успешно добавлен", addAuthorInfo, Color.green);
-                    addAuthorName.getEditor().setText("");
-                    addAuthorSurename.getEditor().setText("");
-                    addAuthorBornYear.getEditor().setText("");
+                    addAuthorName.clear();
+                    addAuthorSurename.clear();
+                    addAuthorBornYear.clear();
                 } catch (Exception e) {
                 }
             }

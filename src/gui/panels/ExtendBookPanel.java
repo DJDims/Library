@@ -7,7 +7,7 @@ import static gui.GuiApp.WINDOW_HEIGHT;
 import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.ButtonComponent;
 import gui.components.LabelComponent;
-import gui.components.Lists.ListHistorysComponent;
+import gui.components.lists.ListHistorysComponent;
 import gui.components.SpinnerComponent;
 import java.awt.Color;
 import javax.swing.JPanel;

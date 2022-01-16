@@ -5,7 +5,7 @@ import static gui.GuiApp.WINDOW_HEIGHT;
 import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.DoubleListComponent;
 import gui.components.LabelComponent;
-import gui.components.Lists.ListBooksComponent;
+import gui.components.lists.ListBooksComponent;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
