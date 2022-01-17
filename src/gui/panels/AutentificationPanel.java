@@ -12,7 +12,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.JPanel;
 
 public class AutentificationPanel extends JPanel{
@@ -52,7 +51,6 @@ public class AutentificationPanel extends JPanel{
             @Override
             public void actionPerformed(ActionEvent ae) {
                 User user = new User();
-                List<User> usersArray = userFacade.findAll();
                 
                 if (loginField.getText().isEmpty()) {
                     editLabel("Введите имя пользователя", аutentificationInfo, Color.red);
@@ -62,28 +60,20 @@ public class AutentificationPanel extends JPanel{
                     editLabel("Введите пароль", аutentificationInfo, Color.red);
                     return;
                 }
-                for (int i = 0; i < usersArray.size(); i++) {
-                    if (usersArray.get(i).getLogin().equals(loginField.getText())) {
-                        user = usersArray.get(i);
-                        break;
-                    }
-                }
-                if (user.getLogin() == null) {
+                if (userFacade.findByLogin(loginField.getText()) == null) {
                     editLabel("Пользователь с таким именем не зарегистрирован", аutentificationInfo, Color.red);
                     return;
                 }
+                user = userFacade.findByLogin(loginField.getText());
+                
                 if (!user.getPassword().equals(passwordField.getText())) {
                     editLabel("Неверный пароль", аutentificationInfo, Color.red);
                     return;
                 }
                 
+                
             }
         });
-    }
-    
-    public void update(){
-        this.removeAll();
-        initComponents();
     }
     
     private void editLabel(String text, LabelComponent label, Color color){
