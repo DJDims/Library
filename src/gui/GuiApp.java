@@ -21,6 +21,8 @@ import gui.panels.ExtendBookPanel;
 import gui.panels.PermissionsPanel;
 import gui.panels.RegisterPanel;
 import gui.panels.ReturnBookPanel;
+import gui.panels.ShowAuthors;
+import gui.panels.ShowBooks;
 import gui.panels.TakeBookPanel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -34,20 +36,22 @@ public class GuiApp extends JFrame{
     public static final int WINDOW_WIDTH = 1100;
     public static final int WINDOW_HEIGHT = 700;
     
-    private JTabbedPane tabs;
+    private static JTabbedPane tabs;
     
-    private AutentificationPanel autentificationPanel;
-    private RegisterPanel registerPanel;
-    private PermissionsPanel permissionsPanel;
-    private AddAuthorPanel addAuthorPanel;
-    private AddBookPanel addBookPanel;
-    private AddReaderPanel addReaderPanel;
-    private ChangeAuthorPanel changeAuthorPanel;
-    private ChangeBookPanel changeBookPanel;
-    private ChangeReaderPanel changeReaderPanel;
-    private ExtendBookPanel extendBookPanel;
-    private ReturnBookPanel returnBookPanel;
-    private TakeBookPanel takeBookPanel;
+    private static AutentificationPanel autentificationPanel;
+    private static RegisterPanel registerPanel;
+    private static PermissionsPanel permissionsPanel;
+    private static AddAuthorPanel addAuthorPanel;
+    private static AddBookPanel addBookPanel;
+    private static AddReaderPanel addReaderPanel;
+    private static ChangeAuthorPanel changeAuthorPanel;
+    private static ChangeBookPanel changeBookPanel;
+    private static ChangeReaderPanel changeReaderPanel;
+    private static ExtendBookPanel extendBookPanel;
+    private static ReturnBookPanel returnBookPanel;
+    private static TakeBookPanel takeBookPanel;
+    private ShowAuthors showAuthors;
+    private ShowBooks showBooks;
     
     private UserFacade userFacade = new UserFacade();
     private RoleFacade roleFacade = new RoleFacade();
@@ -78,6 +82,8 @@ public class GuiApp extends JFrame{
         
         registerPanel = new RegisterPanel();
         tabs.addTab("Регистрация", registerPanel);
+        
+        guestTabs();
 
         tabs.addChangeListener(new ChangeListener() {
             @Override
@@ -93,13 +99,13 @@ public class GuiApp extends JFrame{
         });
     }
     
-    private void administratorTabs(){
+    public static void administratorTabs(){
         permissionsPanel = new PermissionsPanel();
         tabs.addTab("Назначение прав пользователям", permissionsPanel);
         
     }
     
-    private void managerTabs(){
+    public static void managerTabs(){
         addBookPanel = new AddBookPanel();
         tabs.addTab("Добавить книгу", addBookPanel);
             
@@ -122,9 +128,9 @@ public class GuiApp extends JFrame{
         tabs.addTab("Изменить автора", changeAuthorPanel);
     }
     
-    private void readerTabs(){
-        addReaderPanel = new AddReaderPanel();
-        tabs.addTab("Добавить читателя", addReaderPanel);
+    public static void readerTabs(){
+//        addReaderPanel = new AddReaderPanel();
+//        tabs.addTab("Добавить читателя", addReaderPanel);
         
         takeBookPanel = new TakeBookPanel();
         tabs.addTab("Взять книгу", takeBookPanel);
@@ -134,12 +140,13 @@ public class GuiApp extends JFrame{
     }
     
     private void guestTabs(){
-        
+        showBooks = new ShowBooks();
+        tabs.addTab("Просмотр книг", showBooks);
     }
     
-//
-//        
-//            
+    private void resetTabs(){
+        
+    }
     
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Runnable(){

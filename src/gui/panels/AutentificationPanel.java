@@ -3,6 +3,8 @@ package gui.panels;
 
 import entitys.User;
 import facade.UserFacade;
+import facade.UserRolesFacade;
+import gui.GuiApp;
 import static gui.GuiApp.WINDOW_HEIGHT;
 import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.ButtonComponent;
@@ -24,6 +26,7 @@ public class AutentificationPanel extends JPanel{
     private ButtonComponent logoutButton;
     
     private UserFacade userFacade = new UserFacade();
+    private UserRolesFacade userRolesFacade = new UserRolesFacade();
     
     public AutentificationPanel() {
         initComponents();
@@ -71,7 +74,32 @@ public class AutentificationPanel extends JPanel{
                     return;
                 }
                 
+                editLabel("Вы авторизовались", аutentificationInfo, Color.green);
+                loginField.clear();
+                passwordField.clear();
+                loginButton.setEnabled(false);
+                logoutButton.setEnabled(true);
                 
+                
+                
+                switch (userRolesFacade.getTopRole(user)) {
+                    case "ADMINISTRATOR":
+                        GuiApp.administratorTabs();
+                        break;
+                    case "MANAGER":
+                        GuiApp.managerTabs();
+                        break;
+                    case "READER":
+                        GuiApp.readerTabs();
+                        break;
+                }
+            }
+        });
+        logoutButton.getButton().addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                GuiApp.
             }
         });
     }
