@@ -12,6 +12,8 @@ public class PermissionsPanel extends JPanel{
     private LabelComponent permissionCaption;
     private LabelComponent permissionInfo;
     
+//    private JList permissions;
+    
     public PermissionsPanel() {
         initComponents();
     }

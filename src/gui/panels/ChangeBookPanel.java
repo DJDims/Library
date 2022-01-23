@@ -15,6 +15,7 @@ import gui.components.renderers.ListAuthorsCellRenderer;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
@@ -71,50 +73,70 @@ public class ChangeBookPanel extends JPanel{
         
         doubleList = new JPanel();
         
-        authorsBase = new JList();
-        authorsBase.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        authorsBase.setCellRenderer(new ListAuthorsCellRenderer());
-        authorsBase.setModel(getListBaseModel());
-        
-        JScrollPane scrollBase = new JScrollPane(authorsBase);
-        scrollBase.setPreferredSize(new Dimension(250, 150));
-        scrollBase.setMinimumSize(scrollBase.getPreferredSize());
-        scrollBase.setMaximumSize(scrollBase.getPreferredSize());
-        scrollBase.setAlignmentX(LEFT_ALIGNMENT);
-        scrollBase.setAlignmentY(TOP_ALIGNMENT);
-        
-        authorsThis = new JList();
-        authorsThis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        authorsThis.setCellRenderer(new ListAuthorsCellRenderer());
-        
-        JScrollPane scrollThis = new JScrollPane(authorsThis);
-        scrollThis.setPreferredSize(new Dimension(250, 150));
-        scrollThis.setMinimumSize(scrollThis.getPreferredSize());
-        scrollThis.setMaximumSize(scrollThis.getPreferredSize());
-        scrollThis.setAlignmentX(LEFT_ALIGNMENT);
-        scrollThis.setAlignmentY(TOP_ALIGNMENT);
-        
-        addButton = new JButton();
-        addButton.setPreferredSize(new Dimension(130, 20));
-        addButton.setMinimumSize(addButton.getPreferredSize());
-        addButton.setMaximumSize(addButton.getPreferredSize());
-        addButton.setText("Добавить -->");
-        
-        removeButton = new JButton();
-        removeButton.setPreferredSize(new Dimension(130, 20));
-        removeButton.setMinimumSize(removeButton.getPreferredSize());
-        removeButton.setMaximumSize(removeButton.getPreferredSize());
-        removeButton.setText("<-- Удалить");
-        
-        buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
-        buttonsPanel.add(addButton);
-        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        buttonsPanel.add(removeButton);
-        
-        doubleList.add(scrollBase);
-        doubleList.add(buttonsPanel);
-        doubleList.add(scrollThis);
+            JPanel authorBasePanel = new JPanel();
+            authorBasePanel.setLayout(new BoxLayout(authorBasePanel, BoxLayout.Y_AXIS));
+
+                JLabel authorBaseLabel = new JLabel();
+                authorBaseLabel.setText("База авторов");
+                authorBaseLabel.setFont(new Font("Tahoma", 0, 12));
+
+                authorsBase = new JList();
+                authorsBase.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                authorsBase.setCellRenderer(new ListAuthorsCellRenderer());
+                authorsBase.setModel(getListBaseModel());
+
+                JScrollPane scrollBase = new JScrollPane(authorsBase);
+                scrollBase.setPreferredSize(new Dimension(250, 150));
+                scrollBase.setMinimumSize(scrollBase.getPreferredSize());
+                scrollBase.setMaximumSize(scrollBase.getPreferredSize());
+                scrollBase.setAlignmentX(LEFT_ALIGNMENT);
+                scrollBase.setAlignmentY(TOP_ALIGNMENT);
+
+            authorBasePanel.add(authorBaseLabel);
+            authorBasePanel.add(scrollBase);
+
+            JPanel authorThisPanel = new JPanel();
+            authorThisPanel.setLayout(new BoxLayout(authorThisPanel, BoxLayout.Y_AXIS));
+
+                JLabel authorThisLabel = new JLabel();
+                authorThisLabel.setText("Авторы этой книги");
+                authorThisLabel.setFont(new Font("Tahoma", 0, 12));
+
+                authorsThis = new JList();
+                authorsThis.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+                authorsThis.setCellRenderer(new ListAuthorsCellRenderer());
+
+                JScrollPane scrollThis = new JScrollPane(authorsThis);
+                scrollThis.setPreferredSize(new Dimension(250, 150));
+                scrollThis.setMinimumSize(scrollThis.getPreferredSize());
+                scrollThis.setMaximumSize(scrollThis.getPreferredSize());
+                scrollThis.setAlignmentX(LEFT_ALIGNMENT);
+                scrollThis.setAlignmentY(TOP_ALIGNMENT);
+
+            authorThisPanel.add(authorThisLabel);
+            authorThisPanel.add(scrollThis);
+
+            addButton = new JButton();
+            addButton.setPreferredSize(new Dimension(130, 20));
+            addButton.setMinimumSize(addButton.getPreferredSize());
+            addButton.setMaximumSize(addButton.getPreferredSize());
+            addButton.setText("Добавить -->");
+
+            removeButton = new JButton();
+            removeButton.setPreferredSize(new Dimension(130, 20));
+            removeButton.setMinimumSize(removeButton.getPreferredSize());
+            removeButton.setMaximumSize(removeButton.getPreferredSize());
+            removeButton.setText("<-- Удалить");
+
+            buttonsPanel = new JPanel();
+            buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+            buttonsPanel.add(addButton);
+            buttonsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            buttonsPanel.add(removeButton);
+
+            doubleList.add(authorBasePanel);
+            doubleList.add(buttonsPanel);
+            doubleList.add(authorThisPanel);
         
         updateButton = new ButtonComponent("Обновить данные", 30, 180);
         
