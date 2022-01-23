@@ -23,6 +23,7 @@ import gui.panels.RegisterPanel;
 import gui.panels.ReturnBookPanel;
 import gui.panels.ShowAuthors;
 import gui.panels.ShowBooks;
+import gui.panels.ShowReaders;
 import gui.panels.TakeBookPanel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -50,8 +51,9 @@ public class GuiApp extends JFrame{
     private static ExtendBookPanel extendBookPanel;
     private static ReturnBookPanel returnBookPanel;
     private static TakeBookPanel takeBookPanel;
-    private ShowAuthors showAuthors;
-    private ShowBooks showBooks;
+    private static ShowAuthors showAuthors;
+    private static ShowBooks showBooks;
+    private static ShowReaders showReaders;
     
     private UserFacade userFacade = new UserFacade();
     private RoleFacade roleFacade = new RoleFacade();
@@ -77,14 +79,8 @@ public class GuiApp extends JFrame{
         tabs.setMaximumSize(tabs.getPreferredSize());
         this.add(tabs);
         
-        autentificationPanel = new AutentificationPanel();
-        tabs.addTab("Вход в аккаунт", autentificationPanel);
+        helloTabs();
         
-        registerPanel = new RegisterPanel();
-        tabs.addTab("Регистрация", registerPanel);
-        
-        guestTabs();
-
         tabs.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent ce) {
@@ -99,53 +95,62 @@ public class GuiApp extends JFrame{
         });
     }
     
+    public static void helloTabs(){
+        autentificationPanel = new AutentificationPanel();
+        tabs.addTab("Вход в аккаунт", autentificationPanel);
+        registerPanel = new RegisterPanel();
+        tabs.addTab("Регистрация", registerPanel);
+        showBooks = new ShowBooks();
+        tabs.addTab("Просмотр книг", showBooks);
+        showAuthors = new ShowAuthors();
+        tabs.addTab("Просмотр авторов", showAuthors);
+    }
+    
     public static void administratorTabs(){
+        tabs.remove(3);
+        tabs.remove(2);
+        tabs.remove(1);
+        
         permissionsPanel = new PermissionsPanel();
         tabs.addTab("Назначение прав пользователям", permissionsPanel);
         
     }
     
     public static void managerTabs(){
+        tabs.remove(3);
+        tabs.remove(2);
+        tabs.remove(1);
+        
         addBookPanel = new AddBookPanel();
         tabs.addTab("Добавить книгу", addBookPanel);
-            
         addAuthorPanel = new AddAuthorPanel();
         tabs.addTab("Добавить автора", addAuthorPanel);
-        
         takeBookPanel = new TakeBookPanel();
         tabs.addTab("Взять книгу", takeBookPanel);
-            
         extendBookPanel = new ExtendBookPanel();
         tabs.addTab("Продлить книгу", extendBookPanel);
-        
         returnBookPanel = new ReturnBookPanel();
         tabs.addTab("Вернуть книгу", returnBookPanel);
-        
         changeBookPanel = new ChangeBookPanel();
         tabs.addTab("Изменить книгу", changeBookPanel);
-        
         changeAuthorPanel = new ChangeAuthorPanel();
         tabs.addTab("Изменить автора", changeAuthorPanel);
     }
     
     public static void readerTabs(){
-//        addReaderPanel = new AddReaderPanel();
-//        tabs.addTab("Добавить читателя", addReaderPanel);
+        tabs.remove(3);
+        tabs.remove(2);
+        tabs.remove(1);
         
         takeBookPanel = new TakeBookPanel();
         tabs.addTab("Взять книгу", takeBookPanel);
-        
         changeReaderPanel = new ChangeReaderPanel();
         tabs.addTab("Изменить читателя", changeReaderPanel);
     }
     
-    private void guestTabs(){
-        showBooks = new ShowBooks();
-        tabs.addTab("Просмотр книг", showBooks);
-    }
-    
-    private void resetTabs(){
-        
+    public static void resetTabs(){
+        tabs.removeAll();
+        helloTabs();
     }
     
     public static void main(String[] args) {

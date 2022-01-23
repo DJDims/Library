@@ -77,10 +77,10 @@ public class AutentificationPanel extends JPanel{
                 editLabel("Вы авторизовались", аutentificationInfo, Color.green);
                 loginField.clear();
                 passwordField.clear();
-                loginButton.setEnabled(false);
-                logoutButton.setEnabled(true);
+                loginButton.getButton().setEnabled(false);
+                logoutButton.getButton().setEnabled(true);
                 
-                
+
                 
                 switch (userRolesFacade.getTopRole(user)) {
                     case "ADMINISTRATOR":
@@ -95,11 +95,14 @@ public class AutentificationPanel extends JPanel{
                 }
             }
         });
+        
         logoutButton.getButton().addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-//                GuiApp.
+                loginButton.getButton().setEnabled(true);
+                logoutButton.getButton().setEnabled(false);
+                editLabel("Вы вышли из аккаунта", аutentificationInfo, Color.green);
+                GuiApp.resetTabs();
             }
         });
     }
