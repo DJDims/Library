@@ -5,6 +5,7 @@ import static gui.GuiApp.WINDOW_HEIGHT;
 import static gui.GuiApp.WINDOW_WIDTH;
 import gui.components.LabelComponent;
 import java.awt.Dimension;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 public class PermissionsPanel extends JPanel{
@@ -12,7 +13,7 @@ public class PermissionsPanel extends JPanel{
     private LabelComponent permissionCaption;
     private LabelComponent permissionInfo;
     
-//    private JList permissions;
+    private JList permissions;
     
     public PermissionsPanel() {
         initComponents();
@@ -27,6 +28,8 @@ public class PermissionsPanel extends JPanel{
         this.add(permissionCaption);
         permissionInfo = new LabelComponent(30, "Информация о назначении прав пользователям", 14, 0);
         this.add(permissionInfo);
+        
+        
     }
     
 }

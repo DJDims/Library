@@ -3,12 +3,14 @@ package gui.panels;
 
 import gui.GuiApp;
 import gui.components.LabelComponent;
+import gui.components.lists.ListAuthorsComponent;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 
 public class ShowAuthors extends JPanel{
 
     LabelComponent caption;
+    ListAuthorsComponent listAuthors;
     
     public ShowAuthors() {
         initComponents();
@@ -21,5 +23,8 @@ public class ShowAuthors extends JPanel{
         
         caption = new LabelComponent(30, "Просмотр авторов", 18, 1);
         this.add(caption);
+        
+        listAuthors = new ListAuthorsComponent(300, 200);
+        this.add(listAuthors);
     }
 }

@@ -3,12 +3,14 @@ package gui.panels;
 
 import gui.GuiApp;
 import gui.components.LabelComponent;
+import gui.components.lists.ListBooksComponent;
 import java.awt.Dimension;
 import javax.swing.JPanel;
 
 public class ShowBooks extends JPanel{
     
     LabelComponent caption;
+    ListBooksComponent listBooks;
     
     public ShowBooks() {
         initComponents();
@@ -21,5 +23,8 @@ public class ShowBooks extends JPanel{
         
         caption = new LabelComponent(30, "Просмотр книг", 18, 1);
         this.add(caption);
+        
+        listBooks = new ListBooksComponent(300, 200);
+        this.add(listBooks);
     }
 }
